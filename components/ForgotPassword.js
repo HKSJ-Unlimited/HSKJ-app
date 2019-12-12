@@ -29,7 +29,7 @@ export default class ForgotPassword extends Component {
                 <View style={{ marginTop: '15%' }}></View>
                 <Content>
                     <Text style={{ fontSize: 24, textAlign: 'center', fontFamily: 'Cocon-Regular', color: '#000' }}>
-                        Forget Password
+                        Forgot Password ?
                     </Text>
                     <Text style={{ fontSize: 12, textAlign: 'center', color: '#999999' }}>
                         {"\n"}Enter your registered email to recieve a link{"\n"} to reset your password

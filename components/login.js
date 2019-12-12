@@ -63,7 +63,8 @@ export default class Login extends Component {
   }
 
   _emailSignIn = async () => {
-    if (this._validate()) {
+    this.props.navigation.navigate('dashboard');
+    // if (this._validate()) {
     //   fetch(API_endpoints.LOGIN, {
     //     method: "POST",
     //     body: JSON.stringify({
@@ -82,7 +83,7 @@ export default class Login extends Component {
     //           this._goToHome(res.username)
     //       })
     //   })
-    }
+    // }
   }
 
 

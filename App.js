@@ -1,14 +1,18 @@
 import React from 'react';
 import {
-  createAppContainer
+  createAppContainer,
+  createSwitchNavigator
 } from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack'
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import Login from './components/login'
 import register from './components/register';
 import ForgotPassword from './components/ForgotPassword';
+import CustomDrawer from './CustomDrawer';
+import About from './components/About';
 
-const App = createStackNavigator({
+const MainNavigator = createStackNavigator({
     login: { 
       screen: Login 
     },
@@ -22,4 +26,18 @@ const App = createStackNavigator({
     headerMode:'none'
   })
 
-export default createAppContainer(App)
+ const AppDrawerNavigator = createDrawerNavigator({
+   about :{screen:About}
+ },{
+  contentComponent:CustomDrawer,
+  drawerLockMode: "locked-closed",
+  overlayColor: 0,
+  initialRouteName: "about",
+ })
+
+ const AppSwitchNavigator = createSwitchNavigator({
+  home: { screen: MainNavigator },
+  dashboard: { screen: AppDrawerNavigator },
+});
+
+export default createAppContainer(AppSwitchNavigator)

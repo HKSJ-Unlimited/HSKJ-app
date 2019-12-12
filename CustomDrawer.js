@@ -25,7 +25,7 @@ const MenuItems = [
     {
         id: 3,
         name: "Schemes ",
-        navigate: "",
+        navigate: "schemes",
         icon: "ballot-outline"
     },
     {

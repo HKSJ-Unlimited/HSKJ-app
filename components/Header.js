@@ -28,7 +28,7 @@ class TopHeader extends Component {
                         <Button
                             transparent
                             onPress={() => {
-                                this.props.navigation.openDrawer()
+                                this.props.navigation.goBack()
                             }}
                         >
                             <Icon size={25} color="#eee" name="arrow-back" type="MaterialIcons" />

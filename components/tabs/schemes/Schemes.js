@@ -1,15 +1,18 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Container, ScrollableTab, Tabs, Tab } from 'native-base'
+import { Container, ScrollableTab, Tabs, Tab, StyleProvider } from 'native-base'
 
 import TopHeader from '../../Header'
 import All from '../schemes/All'
+import getTheme from '../../../native-base-theme/components';
+import material from '../../../native-base-theme/variables/material';
 
 const Schemes = () => {
     return (
-        <Container>
-            <TopHeader text="Schemes"/>
-                <Tabs renderTabBar={() => <ScrollableTab />}>
+        <StyleProvider style={getTheme(material)}>
+            <Container>
+                <TopHeader text="Schemes" />
+                <Tabs renderTabBar={() => <ScrollableTab style={{ backgroundColor: "#fff" }} />}>
                     <Tab heading="All">
                         <All />
                     </Tab>
@@ -20,8 +23,9 @@ const Schemes = () => {
                         <All />
                     </Tab>
                 </Tabs>
-            {/* </TopHeader> */}
-        </Container>
+                {/* </TopHeader> */}
+            </Container>
+        </StyleProvider>
     )
 }
 

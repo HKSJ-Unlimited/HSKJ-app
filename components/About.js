@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
-import { Container, Content, Header, Left, Button,Icon, Body, Right } from 'native-base'
+import { Container, Content, Left, Button,Icon, Body, Right } from 'native-base'
+import { Colors } from './Theme';
+import TopHeader from './Header';
 
 export default class About extends Component {
 static navigationOptions = {
@@ -9,9 +11,10 @@ static navigationOptions = {
     render() {
         return (
             <Container>
-                <Header>
+                <TopHeader >
                     <Left>
                         <Button
+                        transparent
                         onPress={() => {
                             this.props.navigation.openDrawer()
                           }}
@@ -21,7 +24,7 @@ static navigationOptions = {
                     </Left>
                     <Body />
                     <Right />
-                </Header>
+                </TopHeader>
                 <Content>
 
                 </Content>

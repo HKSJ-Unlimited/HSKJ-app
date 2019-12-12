@@ -31,9 +31,9 @@ const MainNavigator = createStackNavigator({
  },{
   contentComponent:CustomDrawer,
   drawerLockMode: "locked-closed",
-  overlayColor: 0,
   initialRouteName: "about",
- })
+  drawerType :'slide',
+  })
 
  const AppSwitchNavigator = createSwitchNavigator({
   home: { screen: MainNavigator },

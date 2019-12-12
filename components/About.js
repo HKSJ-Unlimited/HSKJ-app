@@ -11,20 +11,7 @@ static navigationOptions = {
     render() {
         return (
             <Container>
-                <TopHeader >
-                    <Left>
-                        <Button
-                        transparent
-                        onPress={() => {
-                            this.props.navigation.openDrawer()
-                          }}
-                        >
-                        <Icon size={25} color="#eee" name="menu" type="MaterialIcons" />
-                        </Button>
-                    </Left>
-                    <Body />
-                    <Right />
-                </TopHeader>
+                <TopHeader drawer="true" text="About"/>
                 <Content>
 
                 </Content>

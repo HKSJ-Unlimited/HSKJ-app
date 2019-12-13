@@ -67,7 +67,7 @@ const MenuItems = [
     {
         id: 10,
         name: "Contact",
-        navigate: "",
+        navigate: "contact",
         icon: "contacts"
     },
     {

@@ -9,9 +9,10 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import Login from './components/login'
 import register from './components/register';
 import ForgotPassword from './components/ForgotPassword';
-import CustomDrawer from './CustomDrawer';
+import CustomDrawer from './components/CustomDrawer';
 import About from './components/About';
 import Schemes from './components/tabs/schemes/Schemes';
+import Contact from './components/tabs/Contact';
 
 const MainNavigator = createStackNavigator({
     login: { 
@@ -29,7 +30,8 @@ const MainNavigator = createStackNavigator({
 
  const AppDrawerNavigator = createDrawerNavigator({
    about :{screen:About},
-   schemes :{screen:Schemes}
+   schemes :{screen:Schemes},
+   contact:{screen:Contact}
  },{
   contentComponent:CustomDrawer,
   drawerLockMode: "locked-closed",

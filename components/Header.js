@@ -36,7 +36,7 @@ class TopHeader extends Component {
                     </Left>
                 }
                 <Body style={{position: "absolute"}}>
-                    <Text style={{fontWeight:'bold',fontSize:15,color:'#eee'}}>{text}</Text>
+                    <Text style={{fontWeight:'bold',fontSize:18,color:'#eee'}}>{text}</Text>
                 </Body>
                 <Right />
 

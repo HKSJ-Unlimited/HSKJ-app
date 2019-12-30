@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import { Content, List, Left, Right, Body, ListItem, Container} from "native-base";
+import { Content, List, Left, Right, Body, ListItem, Container } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const MenuItems = [
@@ -22,60 +22,60 @@ const MenuItems = [
         navigate: "",
         icon: "chess-king"
     },
-    {
-        id: 3,
-        name: "Schemes ",
-        navigate: "schemes",
-        icon: "ballot-outline"
-    },
-    {
-        id: 4,
-        name: "Business Directory ",
-        navigate: "",
-        icon: "worker"
-    },
-    {
-        id: 5,
-        name: "News",
-        navigate: "",
-        icon: "hackernews"
-    },
-    {
-        id: 6,
-        name: "Events",
-        navigate: "",
-        icon: "walk"
-    },
-    {
-        id: 7,
-        name: "Donate Now ",
-        navigate: "",
-        icon: "alpha-m-circle"
-    },
-    {
-        id: 8,
-        name: "Vastipatra",
-        navigate: "",
-        icon: "human-greeting"
-    },
-    {
-        id: 9,
-        name: "Search ",
-        navigate: "",
-        icon: "database-search"
-    },
-    {
-        id: 10,
-        name: "Contact",
-        navigate: "contact",
-        icon: "contacts"
-    },
-    {
-        id:11,
-        name:"Edit profile",
-        navigate: "",
-        icon: "database-edit"
-    },
+    // {
+    //     id: 3,
+    //     name: "Schemes ",
+    //     navigate: "schemes",
+    //     icon: "ballot-outline"
+    // },
+    // {
+    //     id: 4,
+    //     name: "Business Directory ",
+    //     navigate: "",
+    //     icon: "worker"
+    // },
+    // {
+    //     id: 5,
+    //     name: "News",
+    //     navigate: "",
+    //     icon: "hackernews"
+    // },
+    // {
+    //     id: 6,
+    //     name: "Events",
+    //     navigate: "",
+    //     icon: "walk"
+    // },
+    // {
+    //     id: 7,
+    //     name: "Donate Now ",
+    //     navigate: "",
+    //     icon: "alpha-m-circle"
+    // },
+    // {
+    //     id: 8,
+    //     name: "Vastipatra",
+    //     navigate: "",
+    //     icon: "human-greeting"
+    // },
+    // {
+    //     id: 9,
+    //     name: "Search ",
+    //     navigate: "",
+    //     icon: "database-search"
+    // },
+    // {
+    //     id: 10,
+    //     name: "Contact",
+    //     navigate: "contact",
+    //     icon: "contacts"
+    // },
+    // {
+    //     id:11,
+    //     name:"Edit profile",
+    //     navigate: "",
+    //     icon: "database-edit"
+    // },
 ];
 
 
@@ -97,49 +97,50 @@ export default class CustomDrawer extends Component {
         </List>
     render() {
         return (
-            <Container   
-            style={{
-                flex: 1,
-              }}>
-                <Content 
+            <Container
+                style={{
+                    flex: 1,
+                }}>
+                {/* <Content 
                 contentContainerStyle={{
                     flexGrow: 1,
-                }} >
-                    <View style={{ flex: 1, marginTop: '15%' }}>
-                        <FlatList
-                            data={MenuItems}
-                            renderItem={({ item }) => this._renderItem(item)}
-                        />
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            onPress={() => {
-                                Alert.alert(
-                                    "Encore Stores",
-                                    "Are you sure you want to logout ?",
-                                    [
-                                        {
-                                            text: "NO",
-                                            onPress: () => console.log("cancelled"),
-                                            style: "cancel"
-                                        },
-                                        {
-                                            text: "YES",
-                                            onPress: () => {
-                                                this.logout();
-                                                this.props.navigation.navigate("register");
-                                            }
+                }} > */}
+                <View style={{ flex: 1, marginTop: '15%' }}>
+                    <FlatList
+                        data={MenuItems}
+                        renderItem={({ item }) => this._renderItem(item)}
+                        keyExtractor={item => item.id}
+                    />
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            Alert.alert(
+                                "Encore Stores",
+                                "Are you sure you want to logout ?",
+                                [
+                                    {
+                                        text: "NO",
+                                        onPress: () => console.log("cancelled"),
+                                        style: "cancel"
+                                    },
+                                    {
+                                        text: "YES",
+                                        onPress: () => {
+                                            this.logout();
+                                            this.props.navigation.navigate("register");
                                         }
-                                    ]
-                                );
-                            }}
-                        >
-                            <View style={styles.iconText}>
-                                <Icon name="exit-to-app" size={20} style={styles.iconStyle} />
-                                <Text style={styles.navTxtStyle}>Logout</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </Content>
+                                    }
+                                ]
+                            );
+                        }}
+                    >
+                        <View style={styles.iconText}>
+                            <Icon name="exit-to-app" size={20} style={styles.iconStyle} />
+                            <Text style={styles.navTxtStyle}>Logout</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                {/* </Content> */}
             </Container>
         )
     }
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingVertical: 10,
         borderBottomWidth: 1,
-        marginTop:10,
+        marginTop: 10,
         justifyContent: 'center'
     },
     iconStyle: {

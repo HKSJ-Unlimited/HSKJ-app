@@ -13,7 +13,11 @@ export default class About extends Component {
         result: []
     }
     componentDidMount() {
-        fetch('https://gounlimited.to/api/account/info?key',)
+        fetch('https://gounlimited.to/api/account/info?key', {
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0'
+                },
+            })
             .then((response) => response.json())
             .then((responseData) => {
                 alert(responseData)

@@ -18,7 +18,7 @@ const MenuItems = [
     },
     {
         id: 2,
-        name: "Governance",
+        name: "Categories",
         navigate: "",
         icon: "chess-king"
     },
@@ -111,34 +111,6 @@ export default class CustomDrawer extends Component {
                         renderItem={({ item }) => this._renderItem(item)}
                         keyExtractor={item => item.id}
                     />
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() => {
-                            Alert.alert(
-                                "Encore Stores",
-                                "Are you sure you want to logout ?",
-                                [
-                                    {
-                                        text: "NO",
-                                        onPress: () => console.log("cancelled"),
-                                        style: "cancel"
-                                    },
-                                    {
-                                        text: "YES",
-                                        onPress: () => {
-                                            this.logout();
-                                            this.props.navigation.navigate("register");
-                                        }
-                                    }
-                                ]
-                            );
-                        }}
-                    >
-                        <View style={styles.iconText}>
-                            <Icon name="exit-to-app" size={20} style={styles.iconStyle} />
-                            <Text style={styles.navTxtStyle}>Logout</Text>
-                        </View>
-                    </TouchableOpacity>
                 </View>
                 {/* </Content> */}
             </Container>

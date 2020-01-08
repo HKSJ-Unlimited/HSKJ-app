@@ -19,7 +19,7 @@ const MenuItems = [
     {
         id: 2,
         name: "Categories",
-        navigate: "",
+        navigate: "categories",
         icon: "chess-king"
     },
     // {

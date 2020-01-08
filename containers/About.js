@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet } from 'react-native'
-import { Container, Content, Button, Icon, Body, Right } from 'native-base'
-import TopHeader from '../components/Header';
+import { Text } from 'react-native'
+
+import Layout from '../components/Layout';
 
 export default class About extends Component {
     static navigationOptions = {
@@ -10,20 +10,10 @@ export default class About extends Component {
 
     render() {
         return (
-            <Container>
-                <TopHeader drawer="true" text="About" />
-                <Content contentContainerStyle={styles.content}>
-                <Text>KEK</Text>
-                </Content>
-            </Container>
+           <Layout name="About">
+               <Text>KEK</Text>
+           </Layout>
         )
     }
 }
-const styles = StyleSheet.create({
-    content: {
-        flex: 1,
-        padding: 10,
-        marginTop: '10%',
-        fontFamily: 'roboto'
-    }
-})
+

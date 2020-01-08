@@ -11,6 +11,7 @@ import register from './containers/register';
 import ForgotPassword from './containers/ForgotPassword';
 import CustomDrawer from './containers/CustomDrawer';
 import About from './containers/About';
+import Categories from './containers/Categories';
 
 const MainNavigator = createStackNavigator({
     login: { 
@@ -28,6 +29,7 @@ const MainNavigator = createStackNavigator({
 
  const AppDrawerNavigator = createDrawerNavigator({
    about :{screen:About},
+   categories:{screen:Categories}
  },{
   contentComponent:CustomDrawer,
   drawerLockMode: "locked-closed",

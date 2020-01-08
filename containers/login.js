@@ -95,7 +95,7 @@ export default class Login extends Component {
         <View style={{ marginTop: '15%' }}></View>
         <Content>
           <Text style={{ fontSize: 23, textAlign: 'center', fontFamily: 'Cocon-Regular', color: '#000' }}>
-            Welcome to SVDM
+            Welcome to HKSJ
           </Text>
           <Text style={{ fontSize: 14, textAlign: 'center', color: '#999999' }}>
             {"\n"}Enter your email & password to{"\n"} continue your journey with Us {"\n"}

@@ -12,6 +12,7 @@ import ForgotPassword from './containers/ForgotPassword';
 import CustomDrawer from './containers/CustomDrawer';
 import About from './containers/About';
 import Categories from './containers/Categories';
+import VideosLayout from './components/VideosLayout';
 
 const MainNavigator = createStackNavigator({
     login: { 
@@ -29,7 +30,8 @@ const MainNavigator = createStackNavigator({
 
  const AppDrawerNavigator = createDrawerNavigator({
    about :{screen:About},
-   categories:{screen:Categories}
+   categories:{screen:Categories},
+   videosLayout:{screen:VideosLayout}
  },{
   contentComponent:CustomDrawer,
   drawerLockMode: "locked-closed",

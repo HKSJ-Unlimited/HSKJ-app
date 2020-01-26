@@ -8,17 +8,17 @@ import { List, ListItem } from 'native-base';
 export default function Categories({navigation}) {
 
     const [data, setRes] = useState([])
-    const fetchData = async () => {
-        const response = await get('folder')
-        let filter = response.folders.filter(e => e.fld_id != "43517")
-        setRes(filter)
-    }
     useEffect(() => {
-        fetchData('response')
-    }, ['response'])
+        fetchData()
+    })
+
+    const fetchData = async () => {
+        const response = await get()
+        setRes(response)
+    }
 
    const _renderList = item => <List>
-        <ListItem onPress={()=>navigation.navigate('videosLayout',{name:item.name,id:item.fld_id})}>
+        <ListItem onPress={()=>navigation.navigate('videosLayout',{name:item.name})}>
         <Text>{item.name}</Text>
         </ListItem>
     </List>
@@ -27,7 +27,7 @@ export default function Categories({navigation}) {
             <FlatList
                 data={data}
                 renderItem={({ item }) => _renderList(item)}
-                keyExtractor= {item =>item.fld_id}
+                key= {item =>item.id}
             />
         </Layout>
     )

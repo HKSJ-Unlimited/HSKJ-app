@@ -40,7 +40,7 @@ const MainNavigator = createStackNavigator({
   })
 
  const AppSwitchNavigator = createSwitchNavigator({
-  home: { screen: MainNavigator },
+  // home: { screen: MainNavigator },
   dashboard: { screen: AppDrawerNavigator },
 });
 

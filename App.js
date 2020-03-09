@@ -13,6 +13,7 @@ import CustomDrawer from './containers/CustomDrawer';
 import About from './containers/About';
 import Categories from './containers/Categories';
 import VideosLayout from './components/VideosLayout';
+import SelectedCategory from './containers/SelectedCategory';
 
 const MainNavigator = createStackNavigator({
     login: { 
@@ -31,6 +32,7 @@ const MainNavigator = createStackNavigator({
  const AppDrawerNavigator = createDrawerNavigator({
    about :{screen:About},
    categories:{screen:Categories},
+   selectedCategory:{screen:SelectedCategory},
    videosLayout:{screen:VideosLayout}
  },{
   contentComponent:CustomDrawer,

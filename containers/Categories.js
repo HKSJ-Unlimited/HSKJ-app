@@ -18,7 +18,7 @@ export default function Categories({navigation}) {
     }
 
    const _renderList = item => <List>
-        <ListItem onPress={()=>navigation.navigate('videosLayout',{name:item.name})}>
+        <ListItem onPress={()=>navigation.navigate('selectedCategory',{name:item.name})}>
         <Text>{item.name}</Text>
         </ListItem>
     </List>

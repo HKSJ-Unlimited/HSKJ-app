@@ -15,19 +15,6 @@ import Categories from './containers/Categories';
 import VideosLayout from './components/VideosLayout';
 import SelectedCategory from './containers/SelectedCategory';
 
-const MainNavigator = createStackNavigator({
-    login: { 
-      screen: Login 
-    },
-    register:{
-      screen:register
-    },
-    forgetPassword:{
-      screen:ForgotPassword
-    }
-  },{
-    headerMode:'none'
-  })
 
  const AppDrawerNavigator = createDrawerNavigator({
    about :{screen:About},
@@ -42,7 +29,6 @@ const MainNavigator = createStackNavigator({
   })
 
  const AppSwitchNavigator = createSwitchNavigator({
-  // home: { screen: MainNavigator },
   dashboard: { screen: AppDrawerNavigator },
 });
 

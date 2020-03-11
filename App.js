@@ -1,35 +1,28 @@
-import React from 'react';
-import {
-  createAppContainer,
-  createSwitchNavigator
-} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack'
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
-import Login from './containers/login'
-import register from './containers/register';
-import ForgotPassword from './containers/ForgotPassword';
-import CustomDrawer from './containers/CustomDrawer';
-import About from './containers/About';
+import settings from './containers/settings';
 import Categories from './containers/Categories';
 import VideosLayout from './components/VideosLayout';
 import SelectedCategory from './containers/SelectedCategory';
+import Home from './containers/Home';
 
+const AppNavigator = createStackNavigator(
+  {
+    home:{screen:Home},
+    categories: {screen: Categories},
+    selectedCategory: {screen: SelectedCategory},
+    videosLayout: {screen: VideosLayout},
+    settings: {screen: settings},
+  },
+  {
+    initialRouteName: 'home',
+    headerMode: 'none',
+  },
+);
 
- const AppDrawerNavigator = createDrawerNavigator({
-   about :{screen:About},
-   categories:{screen:Categories},
-   selectedCategory:{screen:SelectedCategory},
-   videosLayout:{screen:VideosLayout}
- },{
-  contentComponent:CustomDrawer,
-  drawerLockMode: "locked-closed",
-  initialRouteName: "about",
-  drawerType :'slide',
-  })
-
- const AppSwitchNavigator = createSwitchNavigator({
-  dashboard: { screen: AppDrawerNavigator },
+const AppSwitchNavigator = createSwitchNavigator({
+  dashboard: {screen: AppNavigator},
 });
 
-export default createAppContainer(AppSwitchNavigator)
+export default createAppContainer(AppSwitchNavigator);

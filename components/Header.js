@@ -18,10 +18,10 @@ class TopHeader extends Component {
                         <Button
                             transparent
                             onPress={() => {
-                                this.props.navigation.openDrawer()
+                                this.props.navigation.navigate('settings')
                             }}
                         >
-                            <Icon size={25} color="#eee" name="menu" type="MaterialIcons" />
+                            <Icon size={25} color="#eee" name="md-settings" type="Ionicons" />
                         </Button>
                     </Left> :
                     <Left style={{ position: "absolute", left: 0 }}>

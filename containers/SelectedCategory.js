@@ -9,9 +9,7 @@ const SelectedCategory = ({navigation}) => {
 
   useEffect(() => {
     fetchData();
-    BackHandler.addEventListener('hardwareBackPress',()=>navigation.navigate('categories'))
-    return()=> BackHandler.removeEventListener('hardwareBackPress',()=>navigation.navigate('categories'))
-
+    return(()=>setRes(0))
   },[navigation]);
 
   const fetchData = async () => {

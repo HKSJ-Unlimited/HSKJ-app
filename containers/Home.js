@@ -7,15 +7,12 @@ import {
   Image,
   Text,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
-import {
-  Card,
-  CardItem,
-  Left,
-} from 'native-base';
+import {Card, CardItem, Left} from 'native-base';
 
+import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -44,7 +41,7 @@ const MyCarousel = ({navigation}) => {
       </CardItem>
       <CardItem>
         <Left>
-          <Text style={{fontSize:20}}>{item.name}</Text>
+          <Text style={{fontSize: 20}}>{item.name}</Text>
         </Left>
       </CardItem>
     </Card>
@@ -52,7 +49,11 @@ const MyCarousel = ({navigation}) => {
 
   const _renderItem = ({item, index}, parallaxProps) => {
     return (
-        <TouchableOpacity style={styles.item}  onPress={() => navigation.navigate('selectedCategory', {name: item.id})}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() =>
+          navigation.navigate('selectedCategory', {name: item.id})
+        }>
         <ParallaxImage
           source={{uri: item.uri}}
           containerStyle={styles.imageContainer}
@@ -65,7 +66,7 @@ const MyCarousel = ({navigation}) => {
         <Text style={styles.title} numberOfLines={2}>
           {item.name}
         </Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
 
@@ -87,9 +88,9 @@ const MyCarousel = ({navigation}) => {
         autoplayDelay={2000}
         autoplayInterval={5000}
       />
-      <Text style={{fontSize:20,margin:5}}>All Categories</Text>
+      <Text style={{fontSize: 20, margin: 5}}>All Categories</Text>
       <FlatList
-        style={{marginTop: 10,height:'50%'}}
+        style={{marginTop: 10, height: '50%'}}
         data={allCategories}
         renderItem={({item}) => _renderList(item)}
         key={({item, index}) => index}
@@ -99,6 +100,7 @@ const MyCarousel = ({navigation}) => {
         maxToRenderPerBatch={100} // Increase time between renders
         windowSize={7} // Reduce the window size
       />
+        <GoogleADBanner />
     </View>
   );
 };
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   item: {
-    width: screenWidth -60,
+    width: screenWidth - 60,
     height: screenWidth - 130,
   },
   imageContainer: {
@@ -131,8 +133,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginBottom: 10,
   },
-  card:{
-      width:screenWidth-80,
-      alignSelf:'center'
-  }
+  card: {
+    width: screenWidth - 80,
+    alignSelf: 'center',
+  },
 });

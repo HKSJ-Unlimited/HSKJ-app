@@ -3,10 +3,26 @@ import {Text, FlatList,BackHandler} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
 import { List, ListItem } from 'native-base';
+import { InterstitialAd, TestIds } from '@react-native-firebase/admob';
+import { AdEventType } from '@react-native-firebase/admob';
+ 
+import { INTERSTITIAL } from '../ADS/AD-IDs';
+
+const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+});
+
+interstitial.onAdEvent((type) => {
+    if (type === AdEventType.LOADED) {
+      interstitial.show();
+    }
+  });  
 
 const SelectedCategory = ({navigation}) => {
   const [data, setRes] = useState([]);
-
+if(navigation.state.routeName==='selectedCategory'){
+  interstitial.load();
+}
   useEffect(() => {
     fetchData();
     return(()=>setRes(0))

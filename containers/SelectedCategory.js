@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {Text, FlatList,BackHandler} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
 import { List, ListItem } from 'native-base';
 
 const SelectedCategory = ({navigation}) => {
   const [data, setRes] = useState([]);
+
   useEffect(() => {
     fetchData();
-  });
+    BackHandler.addEventListener('hardwareBackPress',()=>navigation.navigate('categories'))
+    return()=> BackHandler.removeEventListener('hardwareBackPress',()=>navigation.navigate('categories'))
+
+  },[navigation]);
 
   const fetchData = async () => {
     const response = await get(navigation.getParam('name')+'/');
@@ -29,8 +33,6 @@ const SelectedCategory = ({navigation}) => {
       </List>
       )
   }
-
-
 
   return (
     <Layout name={navigation.getParam('name').slice(0,28)}>

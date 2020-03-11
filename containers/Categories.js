@@ -10,11 +10,12 @@ export default function Categories({navigation}) {
     const [data, setRes] = useState([])
     useEffect(() => {
         fetchData()
-    })
+    },[])
 
     const fetchData = async () => {
         const response = await get()
         setRes(response)
+        console.log(data)
     }
 
    const _renderList = item => <List>

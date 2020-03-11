@@ -3,14 +3,14 @@ import { Text } from 'react-native'
 
 import Layout from '../components/Layout';
 
-export default class About extends Component {
+export default class settings extends Component {
     static navigationOptions = {
         drawerLockMode: "unlocked"
     };
 
     render() {
         return (
-           <Layout name="About">
+           <Layout name="Settings">
                <Text>KEK</Text>
            </Layout>
         )

@@ -74,7 +74,7 @@ export const HotPicks = [
       },
       {
         name:'NubilePorn/21st Century Porn/PassionHD',
-        id:'Art-wow-21st-nubile-Passion-simila',
+        id:'Art-wow-21st-nubile-Passion-similar',
         uri:''
       },
       {

@@ -2,11 +2,11 @@ import React from 'react';
 import { BannerAd, BannerAdSize,TestIds } from '@react-native-firebase/admob';
 import { BANNER_ID } from './AD-IDs';
  
-function HomeScreen() {
+function HomeScreen(props) {
   return (
     <BannerAd
       unitId={BANNER_ID}
-      size={BannerAdSize.FULL_BANNER}
+      size={props.type}
       requestOptions={{
         requestNonPersonalizedAdsOnly: true,
       }}
@@ -14,7 +14,7 @@ function HomeScreen() {
         console.log('Advert loaded');
       }}
       onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
+        console.log('Advert failed to load: ', error);
       }}
     />
   );

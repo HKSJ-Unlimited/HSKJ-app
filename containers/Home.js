@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Card, CardItem, Left} from 'native-base';
+import {BannerAdSize} from '@react-native-firebase/admob';
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
@@ -88,7 +89,7 @@ const MyCarousel = ({navigation}) => {
         autoplayDelay={2000}
         autoplayInterval={5000}
       />
-      <Text style={{fontSize: 20, margin: 5}}>All Categories</Text>
+      <Text style={{fontSize: 20, marginLeft: 40,}}>All Categories</Text>
       <FlatList
         style={{marginTop: 10, height: '50%'}}
         data={allCategories}
@@ -100,7 +101,7 @@ const MyCarousel = ({navigation}) => {
         maxToRenderPerBatch={100} // Increase time between renders
         windowSize={7} // Reduce the window size
       />
-        <GoogleADBanner />
+        <View style={styles.banner}><GoogleADBanner type={BannerAdSize.BANNER}/></View>
     </View>
   );
 };
@@ -137,4 +138,10 @@ const styles = StyleSheet.create({
     width: screenWidth - 80,
     alignSelf: 'center',
   },
+  banner:{
+    width:screenWidth-80,
+    flex:0,
+    alignContent:'center',
+    alignSelf:'center'
+  }
 });

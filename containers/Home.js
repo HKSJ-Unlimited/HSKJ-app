@@ -9,13 +9,14 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {Card, CardItem, Left} from 'native-base';
+import {Card, CardItem, Left, Footer, FooterTab, Container} from 'native-base';
 import {BannerAdSize} from '@react-native-firebase/admob';
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
 
 const {width: screenWidth} = Dimensions.get('window');
+const {height: screenHeight} = Dimensions.get('window');
 
 const MyCarousel = ({navigation}) => {
   const carouselRef = useRef(null);
@@ -72,7 +73,7 @@ const MyCarousel = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
       <Text style={styles.text}>🔥🔥 HOT PICKS 🔥🔥</Text>
       <Carousel
         ref={carouselRef}
@@ -91,7 +92,7 @@ const MyCarousel = ({navigation}) => {
       />
       <Text style={{fontSize: 20, marginLeft: 40,}}>All Categories</Text>
       <FlatList
-        style={{marginTop: 10, height: '50%'}}
+        style={{marginTop: 10, height: screenHeight-370}}
         data={allCategories}
         renderItem={({item}) => _renderList(item)}
         key={({item, index}) => index}
@@ -101,8 +102,12 @@ const MyCarousel = ({navigation}) => {
         maxToRenderPerBatch={100} // Increase time between renders
         windowSize={7} // Reduce the window size
       />
-        <View style={styles.banner}><GoogleADBanner type={BannerAdSize.BANNER}/></View>
-    </View>
+        <Footer style={{ backgroundColor:'#fff'}}>
+          <FooterTab style={styles.banner}>
+         <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER}/>
+          </FooterTab> 
+        </Footer>
+    </Container>
   );
 };
 export default MyCarousel;
@@ -113,7 +118,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: screenWidth - 60,
-    height: screenWidth - 130,
+    height: screenWidth-210,
   },
   imageContainer: {
     flex: 1,
@@ -142,6 +147,7 @@ const styles = StyleSheet.create({
     width:screenWidth-80,
     flex:0,
     alignContent:'center',
-    alignSelf:'center'
+    alignSelf:'center',
+    backgroundColor:'#fff'
   }
 });

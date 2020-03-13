@@ -1,12 +1,18 @@
 import React from 'react';
-import {Text,Dimensions,StyleSheet,View,PermissionsAndroid} from 'react-native';
+import {
+  Text,
+  Dimensions,
+  StyleSheet,
+  View,
+  PermissionsAndroid,
+} from 'react-native';
 import {Container, Button} from 'native-base';
 import {BASE_URL} from 'react-native-dotenv';
 import {WebView} from 'react-native-webview';
 import {BannerAdSize} from '@react-native-firebase/admob';
-import RNFetchBlob from 'rn-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob';
 import TopHeader from './Header';
-import GoogleADBanner from '../ADS/GoogleADBanner'
+import GoogleADBanner from '../ADS/GoogleADBanner';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -16,7 +22,7 @@ export default function VideosLayout({navigation}) {
   async function requestStoragePermission() {
     try {
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, 
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
           title: 'HKSJ needs Storage Permission',
           message:
@@ -28,40 +34,48 @@ export default function VideosLayout({navigation}) {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        let dirs = RNFetchBlob.fs.dirs.DownloadDir+"/HKSJ";
+        let dirs = RNFetchBlob.fs.dirs.DownloadDir + '/HKSJ';
         const android = RNFetchBlob.android;
-        const fileName = name.replace(BASE_URL,'');
-        RNFetchBlob
-        .config({
-            addAndroidDownloads : {
-                useDownloadManager : true, 
-                notification : true,
-                description : 'File downloaded.',
-                path: dirs + `/${fileName}` ,
-                mediaScannable : true,
-                title:fileName
-            }
+        const fileName = name.replace(BASE_URL, '');
+        RNFetchBlob.config({
+          addAndroidDownloads: {
+            useDownloadManager: true,
+            notification: true,
+            description: 'File downloaded.',
+            path: dirs + `/${fileName}`,
+            mediaScannable: true,
+            title: fileName,
+          },
         })
-        .fetch('GET', name)
-        .then((res) => {
-          android.actionViewIntent(res.path(), 'image/png')
-        })  .catch((err) => {
-          alert('Deer you canceled the download')
-        })
-       
+          .fetch('GET', name)
+          .then(res => {
+            android.actionViewIntent(res.path(), 'image/png');
+          })
+          .catch(err => {
+            alert('Deer you canceled the download');
+          });
       } else {
-        Alert("Cum on Nibba you want to download or not?");
+        Alert('Cum on Nibba you want to download or not?');
       }
     } catch (err) {
       console.log(err);
     }
   }
-  const onPress = () => {
-    requestStoragePermission()
+  const download = () => {
+    requestStoragePermission();
   };
   return (
     <Container>
       <TopHeader drawer="true" text="HKSJ" />
+      <View
+        style={{
+          width: screenWidth ,
+          flex: 0,
+          alignContent: 'center',
+          alignSelf: 'center',
+        }}>
+         <GoogleADBanner type={BannerAdSize.SMART_BANNER} />
+      </View>
       <WebView
         style={styles.Video}
         allowsFullscreenVideo={true}
@@ -76,12 +90,12 @@ export default function VideosLayout({navigation}) {
           `,
         }}
       />
+      <Button full style={styles.button} onPress={() => download()}>
+        <Text style={{color:'#eee'}}>Download</Text>
+      </Button>
       <View style={styles.banner}>
-      <GoogleADBanner type={BannerAdSize.MEDIUM_RECTANGLE}/>
+        <GoogleADBanner type={BannerAdSize.MEDIUM_RECTANGLE} />
       </View>
-      {/* <Button onPress={()=>onPress()}>
-        <Text>p</Text>
-      </Button> */}
     </Container>
   );
 }
@@ -89,13 +103,19 @@ export default function VideosLayout({navigation}) {
 const styles = StyleSheet.create({
   Video: {
     width: 1,
-    width:  Dimensions.get('window').width * 1.6,
+    width: Dimensions.get('window').width * 1.6,
     height: (Dimensions.get('window').height * 9) / 25,
+    marginTop: 50,
   },
-  banner:{
-    width:screenWidth-90,
-    flex:0.5,
-    alignContent:'center',
-    alignSelf:'center'
-  }
+  banner: {
+    width: screenWidth - 90,
+    flex: 0,
+    alignContent: 'flex-end',
+    alignSelf: 'center',
+  },
+  button: {
+    marginHorizontal: '10%',
+    marginBottom:30,
+    backgroundColor:'#C2913F'
+  },
 });

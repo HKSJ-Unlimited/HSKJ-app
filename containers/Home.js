@@ -1,26 +1,29 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {
   View,
   Dimensions,
   StyleSheet,
   Image,
-  Text,
+  ScrollView,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
 import {Card, CardItem, Left, Footer, FooterTab, Container} from 'native-base';
 import {BannerAdSize} from '@react-native-firebase/admob';
+import {Layout, Text, Toggle} from '@ui-kitten/components';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
+import {ThemeContext} from '../theme-context';
 
 const {width: screenWidth} = Dimensions.get('window');
 const {height: screenHeight} = Dimensions.get('window');
 
 const MyCarousel = ({navigation}) => {
   const carouselRef = useRef(null);
-
+  const themeContext = React.useContext(ThemeContext);
   // setInterval(()=>{
   //         carouselRef.current.snapToNext()
 
@@ -41,11 +44,9 @@ const MyCarousel = ({navigation}) => {
           style={{height: 150, width: null, flex: 1}}
         />
       </CardItem>
-      <CardItem>
-        <Left>
-          <Text style={{fontSize: 20}}>{item.name}</Text>
-        </Left>
-      </CardItem>
+      <Layout>
+        <Text style={{fontSize: 20, marginTop: 15}}>{item.name}</Text>
+      </Layout>
     </Card>
   );
 
@@ -71,54 +72,109 @@ const MyCarousel = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+  const [checked, setChecked] = React.useState(false);
+  const [checkedText, setCheckedText] = React.useState(' ');
+
+  const _checkData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('theme');
+      if (value !== null) {
+        if(value==='Light') setChecked(false)
+        else {setChecked(true); themeContext.toggleTheme();}
+        setCheckedText(value);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+  useEffect(() => {
+    _checkData();
+  },[]);
+
+  useEffect(()=>{
+    _storeData();
+  },[checkedText])
+
+  const onCheckedChange = isChecked => {
+    setChecked(isChecked);
+    themeContext.toggleTheme();
+    if (isChecked) setCheckedText('Dark')
+    else setCheckedText('Light')
+  };
+
+  const _storeData = async () => {
+    try {
+      await AsyncStorage.setItem('theme', checkedText);
+    } catch (e) {
+      alert(e)
+    }
+  };
 
   return (
-    <Container style={styles.container}>
-      <Text style={styles.text}>🔥🔥 HOT PICKS 🔥🔥</Text>
-      <Carousel
-        ref={carouselRef}
-        sliderWidth={screenWidth}
-        sliderHeight={screenWidth}
-        itemWidth={screenWidth - 60}
-        data={HotPicks}
-        renderItem={_renderItem}
-        hasParallaxImages={true}
-        loop={true}
-        loopClonesPerSide={5}
-        autoplay={true}
-        lockScrollWhileSnapping={true}
-        autoplayDelay={2000}
-        autoplayInterval={5000}
-      />
-      <Text style={{fontSize: 20, marginLeft: 40,}}>All Categories</Text>
-      <FlatList
-        style={{marginTop: 10, height: screenHeight-370}}
-        data={allCategories}
-        renderItem={({item}) => _renderList(item)}
-        key={({item, index}) => index}
-        removeClippedSubviews={true} // Unmount components when outside of window
-        initialNumToRender={5} // Reduce initial render amount
-        maxToRenderPerBatch={1} // Reduce number in each render batch
-        maxToRenderPerBatch={100} // Increase time between renders
-        windowSize={7} // Reduce the window size
-      />
-        <Footer style={{ backgroundColor:'#fff'}}>
-          <FooterTab style={styles.banner}>
-         <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER}/>
-          </FooterTab> 
-        </Footer>
-    </Container>
+    <Layout style={styles.container}>
+      <ScrollView nestedScrollEnabled={true}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}>
+          <Text style={styles.text}>HOT PICKS 🔥🔥</Text>
+          <Toggle
+            text={`${checkedText}`}
+            checked={checked}
+            onChange={onCheckedChange}
+          />
+        </View>
+        <Carousel
+          ref={carouselRef}
+          sliderWidth={screenWidth}
+          sliderHeight={screenWidth}
+          itemWidth={screenWidth - 60}
+          data={HotPicks}
+          renderItem={_renderItem}
+          hasParallaxImages={true}
+          loop={true}
+          loopClonesPerSide={5}
+          autoplay={true}
+          lockScrollWhileSnapping={true}
+          autoplayDelay={2000}
+          autoplayInterval={5000}
+        />
+        <Text style={{fontSize: 20, marginLeft: 40, marginTop: 10}}>
+          All Categories
+        </Text>
+        <FlatList
+          style={{marginTop: 10}}
+          data={allCategories}
+          renderItem={({item}) => _renderList(item)}
+          key={({item, index}) => index}
+          removeClippedSubviews={true} // Unmount components when outside of window
+          initialNumToRender={5} // Reduce initial render amount
+          maxToRenderPerBatch={1} // Reduce number in each render batch
+          maxToRenderPerBatch={100} // Increase time between renders
+          windowSize={7} // Reduce the window size
+          nestedScrollEnabled={true}
+        />
+      </ScrollView>
+      <Footer style={{backgroundColor: '#fff'}}>
+        <FooterTab style={styles.banner}>
+          <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER} />
+        </FooterTab>
+      </Footer>
+    </Layout>
   );
 };
 export default MyCarousel;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    flex: 1,
+    // padding:5,
   },
   item: {
     width: screenWidth - 60,
-    height: screenWidth-210,
+    height: screenWidth - 160,
   },
   imageContainer: {
     flex: 1,
@@ -132,22 +188,24 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 22,
+    marginTop: 5,
+    fontSize: 20,
   },
   text: {
     textAlign: 'center',
-    fontSize: 25,
-    marginBottom: 10,
+    fontSize: 20,
+    marginBottom: 20,
+    marginTop: 20,
   },
   card: {
     width: screenWidth - 80,
     alignSelf: 'center',
   },
-  banner:{
-    width:screenWidth-80,
-    flex:0,
-    alignContent:'center',
-    alignSelf:'center',
-    backgroundColor:'#fff'
-  }
+  banner: {
+    width: screenWidth - 80,
+    flex: 0,
+    alignContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+  },
 });

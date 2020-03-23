@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Text, FlatList,BackHandler} from 'react-native';
+import { FlatList,BackHandler} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
 import { List, ListItem } from 'native-base';
 import { InterstitialAd, TestIds } from '@react-native-firebase/admob';
 import { AdEventType } from '@react-native-firebase/admob';
- 
+ import {Text} from '@ui-kitten/components';
+
 import { INTERSTITIAL } from '../ADS/AD-IDs';
 
 const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL, {

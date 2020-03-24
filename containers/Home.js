@@ -8,8 +8,10 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  StatusBar,
+  Text as T 
 } from 'react-native';
-import {Card, CardItem, Left, Footer, FooterTab, Container} from 'native-base';
+import {Card, CardItem,Footer, FooterTab, Header, Icon} from 'native-base';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Layout, Text, Toggle} from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -45,7 +47,7 @@ const MyCarousel = ({navigation}) => {
         />
       </CardItem>
       <Layout>
-        <Text style={{fontSize: 20, marginTop: 15}}>{item.name}</Text>
+        <Text style={{fontSize: 20, margin: 10}}>{item.name}</Text>
       </Layout>
     </Card>
   );
@@ -113,20 +115,27 @@ const MyCarousel = ({navigation}) => {
   return (
     <Layout style={styles.container}>
       <ScrollView nestedScrollEnabled={true}>
-        <View
+      <Header transparent androidStatusBarColor={checked?'#000':'#8F9BB3'}>
+        <Icon name="settings-outline" type="MaterialCommunityIcons" style={!checked ?styles.iconLight:styles.iconDark} 
+        onPress={()=>navigation.navigate('settings')}
+        />
+        <T style={!checked ?styles.headerLight:styles.headerDark}>HKSJ</T>     
+        <Toggle
+          style={{flex:1,justifyContent:'flex-end'}}
+            text={`${checkedText}`}
+            checked={checked}
+            onChange={onCheckedChange}
+          />
+      </Header>
+      <View
           style={{
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
           <Text style={styles.text}>HOT PICKS 🔥🔥</Text>
-          <Toggle
-            text={`${checkedText}`}
-            checked={checked}
-            onChange={onCheckedChange}
-          />
         </View>
-        <Carousel
+             <Carousel
           ref={carouselRef}
           sliderWidth={screenWidth}
           sliderHeight={screenWidth}
@@ -213,5 +222,41 @@ const styles = StyleSheet.create({
   },
   footerDark:{
     backgroundColor: '#121212'
+  },
+  headerLight:
+  {
+    color:'#000',
+    fontSize:30,
+    flex:1,
+    alignSelf:'center',
+    textAlign:'center',
+    paddingRight:'5%',
+    fontWeight:'bold',
+  },
+  headerDark:
+  {
+    color:'#C2913F',
+    fontSize:30,
+    fontWeight:'bold',
+    flex:1,
+    alignSelf:'center',
+    textAlign:'center',
+    paddingRight:'5%'
+  },
+  iconLight:
+  {
+    color:'#000',
+    fontSize:30,
+    flex:1,
+    alignSelf:'center',
+    textAlign:'justify',
+  },
+  iconDark:
+  {
+    color:'#C2913F',
+    fontSize:30,
+    flex:1,
+    alignSelf:'center',
+    textAlign:'justify'
   }
 });

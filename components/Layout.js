@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { Container } from 'native-base'
-import {Layout as View, Text, Toggle} from '@ui-kitten/components';
+import {Layout as View} from '@ui-kitten/components';
 
 import TopHeader from './Header';
 

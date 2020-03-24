@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-  Text,
   Dimensions,
   StyleSheet,
-  View,
   PermissionsAndroid,
 } from 'react-native';
 import {Container, Button} from 'native-base';
@@ -11,6 +9,9 @@ import {BASE_URL} from 'react-native-dotenv';
 import {WebView} from 'react-native-webview';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import RNFetchBlob from 'rn-fetch-blob';
+import {Text,Layout as View} from '@ui-kitten/components';
+
+import {ThemeContext} from '../theme-context';
 import TopHeader from './Header';
 import GoogleADBanner from '../ADS/GoogleADBanner';
 
@@ -18,7 +19,8 @@ const {width: screenWidth} = Dimensions.get('window');
 
 export default function VideosLayout({navigation}) {
   const name = BASE_URL + navigation.getParam('name');
-
+  const themeContext = React.useContext(ThemeContext);
+  const theme = themeContext.theme
   async function requestStoragePermission() {
     try {
       const granted = await PermissionsAndroid.request(
@@ -65,7 +67,7 @@ export default function VideosLayout({navigation}) {
     requestStoragePermission();
   };
   return (
-    <Container>
+    <View style={{flex:1}}>
       <TopHeader drawer="true" text="HKSJ" />
       <View
         style={{
@@ -77,7 +79,7 @@ export default function VideosLayout({navigation}) {
          <GoogleADBanner type={BannerAdSize.SMART_BANNER} name="VIDEO_TOP"/>
       </View>
       <WebView
-        style={styles.Video}
+        style={{...styles.Video,backgroundColor:theme==='light'?"#fff":'#000'}}
         allowsFullscreenVideo={true}
         startInLoadingState={true}
         javaScriptEnabled={true}
@@ -96,15 +98,14 @@ export default function VideosLayout({navigation}) {
       <View style={styles.banner}>
         <GoogleADBanner type={BannerAdSize.MEDIUM_RECTANGLE} name="VIDEO_BOTTOM"/>
       </View>
-    </Container>
+    </View>
   );
 }
 
+
 const styles = StyleSheet.create({
   Video: {
-    width: 1,
     width: Dimensions.get('window').width * 1.6,
-    height: (Dimensions.get('window').height * 9) / 25,
     marginTop: 50,
   },
   banner: {

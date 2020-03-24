@@ -157,9 +157,9 @@ const MyCarousel = ({navigation}) => {
           nestedScrollEnabled={true}
         />
       </ScrollView>
-      <Footer style={{backgroundColor: '#fff'}}>
+      <Footer style={checked ? styles.footerDark : styles.footerLight}>
         <FooterTab style={styles.banner}>
-          <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER} />
+          <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER} name="FIXED_BOTTOM"/>
         </FooterTab>
       </Footer>
     </Layout>
@@ -208,4 +208,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#fff',
   },
+  footerLight:{
+    backgroundColor: '#fff'
+  },
+  footerDark:{
+    backgroundColor: '#121212'
+  }
 });

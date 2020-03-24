@@ -74,7 +74,7 @@ export default function VideosLayout({navigation}) {
           alignContent: 'center',
           alignSelf: 'center',
         }}>
-         <GoogleADBanner type={BannerAdSize.SMART_BANNER} />
+         <GoogleADBanner type={BannerAdSize.SMART_BANNER} name="VIDEO_TOP"/>
       </View>
       <WebView
         style={styles.Video}
@@ -94,7 +94,7 @@ export default function VideosLayout({navigation}) {
         <Text style={{color:'#eee'}}>Download</Text>
       </Button>
       <View style={styles.banner}>
-        <GoogleADBanner type={BannerAdSize.MEDIUM_RECTANGLE} />
+        <GoogleADBanner type={BannerAdSize.MEDIUM_RECTANGLE} name="VIDEO_BOTTOM"/>
       </View>
     </Container>
   );

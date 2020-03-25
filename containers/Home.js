@@ -36,7 +36,7 @@ const MyCarousel = ({navigation}) => {
       <CardItem
         cardBody
         button
-        onPress={() => navigation.navigate('selectedCategory', {name: item.id})}
+        onPress={() => navigation.navigate('selectedCategory', {name: item.id,heading:item.name})}
         key={item.name}>
         <Image
           source={{
@@ -57,7 +57,7 @@ const MyCarousel = ({navigation}) => {
       <TouchableOpacity
         style={styles.item}
         onPress={() =>
-          navigation.navigate('selectedCategory', {name: item.id})
+          navigation.navigate('selectedCategory', {name: item.id,heading:item.name})
         }>
         <ParallaxImage
           source={{uri: item.uri}}

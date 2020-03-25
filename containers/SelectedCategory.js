@@ -84,7 +84,7 @@ const SelectedCategory = ({navigation}) => {
   );
   return (
     <View style={{flex: 1}}>
-      <TopHeader text={navigation.getParam('name').slice(0, 28)} />
+      <TopHeader text={navigation.getParam('heading').slice(0, 28)} />
       {data.length>1 ? (
         <List
           style={{backgroundColor: theme === 'light' ? '#F2F6FF' : '#000'}}

@@ -69,9 +69,6 @@ export default function VideosLayout({navigation}) {
   return (
     <View style={{flex:1}}>
       <TopHeader text="HKSJ" />
-      <View style={styles.banner,{marginTop:20}}>
-        <GoogleADBanner type={BannerAdSize.SMART_BANNER} name="VIDEO_TOP"/>
-      </View>
       <WebView
         style={{...styles.Video,backgroundColor:theme==='light'?"#fff":'#171B20'}}
         allowsFullscreenVideo={true}
@@ -86,6 +83,9 @@ export default function VideosLayout({navigation}) {
           `,
         }}
       />
+      <View style={styles.banner,{marginTop:20}}>
+        <GoogleADBanner type={BannerAdSize.BANNER} name="VIDEO_TOP"/>
+      </View>
       <Button full style={styles.button} onPress={() => download()}>
         <Text style={{color:'#eee'}}>Download</Text>
       </Button>
@@ -100,7 +100,7 @@ export default function VideosLayout({navigation}) {
 const styles = StyleSheet.create({
   Video: {
     width: Dimensions.get('window').width * 1.6,
-    marginTop: 50,
+    marginTop: 10,
   },
   banner: {
     width: screenWidth - 90,

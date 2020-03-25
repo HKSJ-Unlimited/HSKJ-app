@@ -175,7 +175,7 @@ export const HotPicks = [
       },
       {
         name:'japanese uncensored',
-        id:'',
+        id:'japaneseUncensored',
         uri:''
       },
       {
@@ -230,12 +230,12 @@ export const HotPicks = [
       },
       {
         name:'Russian Institute',
-        id:'Russian Institute',
+        id:'RussiaInstitute',
         uri:''
       },
       {
         name:'Russian Amateur',
-        id:'RUSSIAN Amateur',
+        id:'RussianAmaetur',
         uri:''
       },
       {

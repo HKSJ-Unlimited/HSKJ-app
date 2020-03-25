@@ -1,3 +1,3 @@
 export const Colors={
-    stastubarColor:'#C2913F'
+    stastubarColor:'#171B20'
 }

@@ -68,11 +68,11 @@ export default function VideosLayout({navigation}) {
   };
   return (
     <View style={{flex:1}}>
-      <TopHeader drawer="true" text="HKSJ" />
+      <TopHeader text="HKSJ" />
       <View
         style={{
           width: screenWidth ,
-          flex: 0,
+          // flex: 0,
           alignContent: 'center',
           alignSelf: 'center',
         }}>

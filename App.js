@@ -10,6 +10,7 @@ import VideosLayout from './components/VideosLayout';
 import SelectedCategory from './containers/SelectedCategory';
 import Home from './containers/Home';
 import { ThemeContext } from './theme-context';
+import Splash from './components/splash/Splash';
 
 const AppNavigator = createStackNavigator(
   {
@@ -27,6 +28,7 @@ const AppNavigator = createStackNavigator(
 
 const AppSwitchNavigator = createAppContainer(
   createSwitchNavigator({
+    splash : {screen:Splash},
     dashboard: {screen: AppNavigator},
   }),
 );

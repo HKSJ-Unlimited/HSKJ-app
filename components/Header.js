@@ -7,17 +7,18 @@ import {Layout as View} from '@ui-kitten/components';
 import {ThemeContext} from '../theme-context';
 import {Colors} from './Theme';
 
-export const TopHeader = (props) => {
+  const TopHeader = (props,{navigation}) => {
     const themeContext = React.useContext(ThemeContext);
     const themeToggle = themeContext.theme;
     const {drawer, icon, text} = props;
+
     return (
       <View >
           <Header
         androidStatusBarColor={themeToggle === 'light' ? '#8F9BB3' : '#000'}
         style={{
           borderRadius: 8,
-          backgroundColor: Colors.stastubarColor,
+          backgroundColor: themeToggle === 'light' ? '#fff' : Colors.stastubarColor,
           marginTop: '10%',
           marginHorizontal: '3%',
           height: 40,
@@ -27,17 +28,17 @@ export const TopHeader = (props) => {
             <Button
               transparent
               onPress={() => {
-                this.props.navigation.navigate('settings');
+                navigation.navigate('settings');
               }}>
               <Icon size={25} color="#eee" name="md-settings" type="Ionicons" />
             </Button>
           </Left>
         ) : (
           <Left style={{position: 'absolute', left: 0}}>
-            <Button
+            {/* <Button
               transparent
               onPress={() => {
-                this.props.navigation.goBack();
+                navigation.goBack();
               }}>
               <Icon
                 size={25}
@@ -45,11 +46,11 @@ export const TopHeader = (props) => {
                 name="arrow-back"
                 type="MaterialIcons"
               />
-            </Button>
+            </Button> */}
           </Left>
         )}
         <Body style={{position: 'absolute'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18, color: '#eee'}}>
+          <Text style={{fontWeight: 'bold', fontSize: 20, color: '#F0B823',fontFamily:'serif',}}>
             {text}
           </Text>
         </Body>

@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
     textAlign:'center',
     paddingRight:'5%',
     fontWeight:'bold',
+    fontFamily:'serif',
   },
   headerDark:
   {
@@ -241,7 +242,8 @@ const styles = StyleSheet.create({
     flex:1,
     alignSelf:'center',
     textAlign:'center',
-    paddingRight:'5%'
+    paddingRight:'5%',
+    fontFamily:'serif',
   },
   iconLight:
   {

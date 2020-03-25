@@ -63,15 +63,15 @@ if(navigation.state.routeName==='selectedCategory'){
     // backgroundColor: "#121212",
   }
   :{
-    height: 4,
+    height: 2,
     marginTop:2,
-    backgroundColor: "#C2913F",
+    backgroundColor: "#F0B823",
   }
   }
 />
   return (
     <View style={{flex:1}}>
-      <TopHeader drawer="true"  text={navigation.getParam('name').slice(0,28)}/>
+      <TopHeader text={navigation.getParam('name').slice(0,28)}/>
      <List
      style={{backgroundColor:theme==='light'?'#F2F6FF':'#000'}}
         contentContainerStyle={{paddingBottom: 100,marginHorizontal:10,}}

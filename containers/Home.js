@@ -47,7 +47,7 @@ const MyCarousel = ({navigation}) => {
         />
       </CardItem>
       <Layout>
-        <Text style={{fontSize: 20, margin: 10}}>{item.name}</Text>
+        <Text style={{fontSize: 20, margin: 10,fontFamily:'Lato-Regular',}}>{item.name}</Text>
       </Layout>
     </Card>
   );
@@ -150,7 +150,7 @@ const MyCarousel = ({navigation}) => {
           autoplayDelay={2000}
           autoplayInterval={5000}
         />
-        <Text style={{fontSize: 20, marginLeft: 40, marginTop: 10}}>
+        <Text style={{fontSize: 20, marginLeft: 40, marginTop: 10,fontFamily:'Lato-Regular',}}>
           All Categories
         </Text>
         <FlatList
@@ -199,12 +199,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
     fontSize: 20,
+    fontFamily:'Lato-Regular',
   },
   text: {
     textAlign: 'center',
     fontSize: 20,
     marginBottom: 20,
     marginTop: 20,
+    fontFamily:'Lato-Regular',
   },
   card: {
     width: screenWidth - 80,
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
     textAlign:'center',
     paddingRight:'5%',
     fontWeight:'bold',
-    fontFamily:'serif',
+    fontFamily:'Raleway-Regular',
   },
   headerDark:
   {
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     textAlign:'center',
     paddingRight:'5%',
-    fontFamily:'serif',
+    fontFamily:'Raleway-Regular',
   },
   iconLight:
   {

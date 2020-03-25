@@ -22,6 +22,7 @@ import {Colors} from './Theme';
           marginTop: '10%',
           marginHorizontal: '3%',
           height: 40,
+          fontFamily:'Raleway-Regular',
         }}>
         {drawer ? (
           <Left style={{position: 'absolute', left: 0}}>

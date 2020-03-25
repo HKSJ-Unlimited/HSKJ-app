@@ -48,7 +48,7 @@ if(navigation.state.routeName==='selectedCategory'){
           onPress={() =>
             navigation.navigate('videosLayout', {name: navigation.getParam('name')+'/'+item.name})
           }>
-          <Text style={{fontSize:15,textAlign:'center',flex:1,margin:5}}>{name}</Text>
+          <Text style={{fontSize:15,textAlign:'center',flex:1,margin:5,fontFamily:'Lato-Regular',}}>{name}</Text>
         </ListItem>
       )
   }

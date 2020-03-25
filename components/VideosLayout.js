@@ -69,17 +69,11 @@ export default function VideosLayout({navigation}) {
   return (
     <View style={{flex:1}}>
       <TopHeader text="HKSJ" />
-      <View
-        style={{
-          width: screenWidth ,
-          // flex: 0,
-          alignContent: 'center',
-          alignSelf: 'center',
-        }}>
-         <GoogleADBanner type={BannerAdSize.SMART_BANNER} name="VIDEO_TOP"/>
+      <View style={styles.banner,{marginTop:20}}>
+        <GoogleADBanner type={BannerAdSize.SMART_BANNER} name="VIDEO_TOP"/>
       </View>
       <WebView
-        style={{...styles.Video,backgroundColor:theme==='light'?"#fff":'#000'}}
+        style={{...styles.Video,backgroundColor:theme==='light'?"#fff":'#171B20'}}
         allowsFullscreenVideo={true}
         startInLoadingState={true}
         javaScriptEnabled={true}

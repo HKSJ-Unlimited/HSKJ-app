@@ -43,7 +43,7 @@ export default class App extends Component {
           style={{
             textAlign: 'center',
             fontSize: 100,
-            fontFamily:'serif',
+            fontFamily:'Raleway-Regular',
             color: '#F0B823',
             backgroundColor: '#171B20',
           }}

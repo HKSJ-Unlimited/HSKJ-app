@@ -75,7 +75,7 @@ const MyCarousel = ({navigation}) => {
     );
   };
   const [checked, setChecked] = React.useState(false);
-  const [checkedText, setCheckedText] = React.useState(' ');
+  const [checkedText, setCheckedText] = React.useState('light');
 
   const _checkData = async () => {
     try {

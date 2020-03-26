@@ -24,7 +24,7 @@ import {Colors} from './Theme';
           height: 40,
           fontFamily:'Raleway-Regular',
         }}>
-        {drawer ? (
+        {/* {drawer ? (
           <Left style={{position: 'absolute', left: 0}}>
             <Button
               transparent
@@ -34,8 +34,8 @@ import {Colors} from './Theme';
               <Icon size={25} color="#eee" name="md-settings" type="Ionicons" />
             </Button>
           </Left>
-        ) : (
-          <Left style={{position: 'absolute', left: 0}}>
+        ) : ( */}
+          {/* <Left style={{position: 'absolute', left: 0}}> */}
             {/* <Button
               transparent
               onPress={() => {
@@ -48,8 +48,8 @@ import {Colors} from './Theme';
                 type="MaterialIcons"
               />
             </Button> */}
-          </Left>
-        )}
+          {/* </Left> */}
+        {/* // )} */}
         <Body style={{position: 'absolute'}}>
           <Text style={{fontWeight: 'bold', fontSize: 20, color: '#F0B823',fontFamily:'serif',}}>
             {text}

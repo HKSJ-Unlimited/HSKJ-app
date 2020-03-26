@@ -48,7 +48,7 @@ export default class App extends Component {
             backgroundColor: '#171B20',
           }}
         >
-          HSKJ
+          HKSJ
           <Animation
             style={{
               backgroundColor: '#171B20',

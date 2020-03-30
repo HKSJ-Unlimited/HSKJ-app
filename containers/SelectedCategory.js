@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, BackHandler} from 'react-native';
+import {FlatList, Image} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
 // import { List, ListItem } from 'native-base';
@@ -26,26 +26,69 @@ const SelectedCategory = ({navigation}) => {
   const themeContext = React.useContext(ThemeContext);
   const [data, setRes] = useState([]);
   const [theme, setTheme] = useState('');
+  const [thumbnails,setThumbnails] = useState([])
   if (navigation.state.routeName === 'selectedCategory') {
-    interstitial.load();
+    // interstitial.load();
   }
   useEffect(() => {
     setTheme(themeContext.theme);
     fetchData();
-    return () => setRes(0);
-  }, [navigation]);
+  }, []);
 
   const fetchData = async () => {
     const response = await get(navigation.getParam('name') + '/');
-    setRes(response);
+    // setRes(response);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: {},
+      redirect: 'follow'
+    };
+  const responseThumb = await fetch("https://www.googleapis.com/drive/v3/files?q=%271dMM5AV9bCZCafVByXkBTuw_RV5rQ7fob%27+in+parents&fields=files(id,name,thumbnailLink)&key=", requestOptions)
+  if(responseThumb){
+  const res = await responseThumb.json()
+  //  setThumbnails(res)
+   _matchThumbsToCategory(response,res)
+  }
   };
 
+  const _matchThumbsToCategory = (response,res) =>{
+    let names = [];
+    let thumbs = res.files;
+    let files = response;
+
+
+data.forEach(e => {
+  const regex = /.mp4/gi;
+  let name = e.name.replace(regex, "");
+  names.push(name);
+});
+
+thumbs.forEach(e => {
+    const regex = /.jpg/gi;
+    let name = e.name.replace(regex, "");
+    let index = thumbs.indexOf(e);
+    thumbs.fill(e.name=name, index, index++);
+  });
+
+for(let i = 0 ; i < thumbs.length;i++){
+    let obj = files.find(e=>e.name===thumbs[i].name+'.mp4')
+if(obj!==undefined){
+    let index = files.indexOf(obj);
+    files.fill(obj.size=thumbs[i].thumbnailLink, index, index++);
+}
+}
+setRes(files)
+
+  }
+
   const _renderList = item => {
+    // console.log(item.size)
     const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|[0-9]/gi;
     let name = item.name.replace(regex, '').slice(0, 120);
     return (
       <ListItem
-        style={{height: 90, marginTop: 5, borderRadius: 6}}
+        style={{height: 330, marginTop: 5, borderRadius: 6,flex:1,flexDirection:'column'}}
         onPress={() =>
           navigation.navigate('videosLayout', {
             name: navigation.getParam('name') + '/' + item.name,
@@ -55,12 +98,14 @@ const SelectedCategory = ({navigation}) => {
           style={{
             fontSize: 15,
             textAlign: 'center',
-            flex: 1,
             margin: 5,
             fontFamily: 'Lato-Regular',
           }}>
           {name}
         </Text>
+       {/* { thumbnails.length>0 ? ( */}
+       <Image style={{height:250,width:'100%',marginTop:10,resizeMode:'contain',alignSelf:'center'}} source={{uri:item.size}}/>
+      {/* //  ): ( <Loader />)} */}
       </ListItem>
     );
   };

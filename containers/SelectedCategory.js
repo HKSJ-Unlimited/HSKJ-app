@@ -6,6 +6,7 @@ import {get} from '../utils/APi';
 import {InterstitialAd, TestIds} from '@react-native-firebase/admob';
 import {AdEventType} from '@react-native-firebase/admob';
 import {Text, List, ListItem, Layout as View} from '@ui-kitten/components';
+import { GOOGLE_API } from 'react-native-dotenv'
 
 import {ThemeContext} from '../theme-context';
 import {INTERSTITIAL} from '../ADS/AD-IDs';
@@ -27,9 +28,11 @@ const SelectedCategory = ({navigation}) => {
   const [data, setRes] = useState([]);
   const [theme, setTheme] = useState('');
   const [thumbnails,setThumbnails] = useState([])
+  
   if (navigation.state.routeName === 'selectedCategory') {
     // interstitial.load();
   }
+
   useEffect(() => {
     setTheme(themeContext.theme);
     fetchData();
@@ -37,14 +40,14 @@ const SelectedCategory = ({navigation}) => {
 
   const fetchData = async () => {
     const response = await get(navigation.getParam('name') + '/');
-    // setRes(response);
+    const folderID = await navigation.getParam('folderID');
 
     var requestOptions = {
       method: 'GET',
       headers: {},
       redirect: 'follow'
     };
-  const responseThumb = await fetch("https://www.googleapis.com/drive/v3/files?q=%271dMM5AV9bCZCafVByXkBTuw_RV5rQ7fob%27+in+parents&fields=files(id,name,thumbnailLink)&key=", requestOptions)
+  const responseThumb = await fetch(`https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink)&key=${GOOGLE_API}`, requestOptions)
   if(responseThumb){
   const res = await responseThumb.json()
   //  setThumbnails(res)
@@ -59,7 +62,7 @@ const SelectedCategory = ({navigation}) => {
 
 
 data.forEach(e => {
-  const regex = /.mp4/gi;
+  const regex = /.mp4|=s220/gi;
   let name = e.name.replace(regex, "");
   names.push(name);
 });
@@ -77,18 +80,21 @@ if(obj!==undefined){
     let index = files.indexOf(obj);
     files.fill(obj.size=thumbs[i].thumbnailLink, index, index++);
 }
+else{
+  let index = files.indexOf(obj);
+  files.fill(obj.size='https://image.shutterstock.com/image-photo/grunge-black-background-texture-space-260nw-373662322.jpg', index, index++);
+}
 }
 setRes(files)
 
   }
 
   const _renderList = item => {
-    // console.log(item.size)
     const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|[0-9]/gi;
-    let name = item.name.replace(regex, '').slice(0, 120);
+    let name = item.name.replace(regex, '').slice(0, 100).toLowerCase();
     return (
       <ListItem
-        style={{height: 330, marginTop: 5, borderRadius: 6,flex:1,flexDirection:'column'}}
+        style={{height: 290, marginTop: 5, borderRadius: 6,flex:1,flexDirection:'column'}}
         onPress={() =>
           navigation.navigate('videosLayout', {
             name: navigation.getParam('name') + '/' + item.name,
@@ -104,7 +110,7 @@ setRes(files)
           {name}
         </Text>
        {/* { thumbnails.length>0 ? ( */}
-       <Image style={{height:250,width:'100%',marginTop:10,resizeMode:'contain',alignSelf:'center'}} source={{uri:item.size}}/>
+       <Image style={{height:200,width:'100%',marginTop:10,resizeMode:'cover',alignSelf:'center'}} source={{uri:item.size}}/>
       {/* //  ): ( <Loader />)} */}
       </ListItem>
     );

@@ -36,14 +36,15 @@ const MyCarousel = ({navigation}) => {
       <CardItem
         cardBody
         button
-        onPress={() => navigation.navigate('selectedCategory', {name: item.id,heading:item.name})}
-        key={item.name}>
+        onPress={() => navigation.navigate('selectedCategory', {name: item.id,heading:item.name,folderID:item.folder})}
+        key={item.folder}>
         <Image
+          key={item.uri}
           source={{
             uri:
-              'https://static.v2.paysites.czechcash.com/media/czechav.com/images/opengraph.jpg?190912',
+              item.uri,
           }}
-          style={{height: 150, width: null, flex: 1}}
+          style={{height: 200, width: '100%', flex: 1,resizeMode:'cover'}}
         />
       </CardItem>
       <Layout>
@@ -57,7 +58,7 @@ const MyCarousel = ({navigation}) => {
       <TouchableOpacity
         style={styles.item}
         onPress={() =>
-          navigation.navigate('selectedCategory', {name: item.id,heading:item.name})
+          navigation.navigate('selectedCategory', {name: item.id,heading:item.name,folderID:item.folder})
         }>
         <ParallaxImage
           source={{uri: item.uri}}
@@ -112,9 +113,38 @@ const MyCarousel = ({navigation}) => {
     }
   };
 
+  const headerComponent = ()=> 
+  <>
+  <View
+  style={{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  }}>
+  <Text style={styles.text}>HOT PICKS 🔥🔥</Text>
+</View>
+     <Carousel
+  ref={carouselRef}
+  sliderWidth={screenWidth}
+  sliderHeight={screenWidth}
+  itemWidth={screenWidth - 60}
+  data={HotPicks}
+  renderItem={_renderItem}
+  hasParallaxImages={true}
+  loop={true}
+  loopClonesPerSide={5}
+  autoplay={true}
+  lockScrollWhileSnapping={true}
+  autoplayDelay={2000}
+  autoplayInterval={5000}
+/>
+<Text style={{fontSize: 20, marginLeft: 40, marginTop: 10,fontFamily:'Lato-Regular',}}>
+          All Categories
+        </Text>
+</>
   return (
     <Layout style={styles.container}>
-      <ScrollView nestedScrollEnabled={true}>
+      {/* <ScrollView nestedScrollEnabled={true}> */}
       <Header transparent androidStatusBarColor={checked?'#000':'#8F9BB3'}>
         <Icon name="settings-outline" type="MaterialCommunityIcons" style={!checked ?styles.iconLight:styles.iconDark} 
         onPress={()=>navigation.navigate('settings')}
@@ -126,46 +156,21 @@ const MyCarousel = ({navigation}) => {
             checked={checked}
             onChange={onCheckedChange}
           />
-      </Header>
-      <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-          }}>
-          <Text style={styles.text}>HOT PICKS 🔥🔥</Text>
-        </View>
-             <Carousel
-          ref={carouselRef}
-          sliderWidth={screenWidth}
-          sliderHeight={screenWidth}
-          itemWidth={screenWidth - 60}
-          data={HotPicks}
-          renderItem={_renderItem}
-          hasParallaxImages={true}
-          loop={true}
-          loopClonesPerSide={5}
-          autoplay={true}
-          lockScrollWhileSnapping={true}
-          autoplayDelay={2000}
-          autoplayInterval={5000}
-        />
-        <Text style={{fontSize: 20, marginLeft: 40, marginTop: 10,fontFamily:'Lato-Regular',}}>
-          All Categories
-        </Text>
+      </Header>            
         <FlatList
           style={{marginTop: 10}}
           data={allCategories}
           renderItem={({item}) => _renderList(item)}
-          key={({item, index}) => index}
+          key={({item}) => item.folder}
           removeClippedSubviews={true} // Unmount components when outside of window
           initialNumToRender={5} // Reduce initial render amount
           maxToRenderPerBatch={1} // Reduce number in each render batch
           maxToRenderPerBatch={100} // Increase time between renders
           windowSize={7} // Reduce the window size
           nestedScrollEnabled={true}
+          ListHeaderComponent={headerComponent}
         />
-      </ScrollView>
+      {/* </ScrollView> */}
       <Footer style={checked ? styles.footerDark : styles.footerLight}>
         <FooterTab style={styles.banner}>
           <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER} name="FIXED_BOTTOM"/>

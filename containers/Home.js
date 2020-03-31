@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     fontFamily:'Lato-Regular',
   },
   card: {
-    width: screenWidth - 80,
+    width: screenWidth - 40,
     alignSelf: 'center',
   },
   banner: {

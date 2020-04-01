@@ -4,13 +4,14 @@ import {createStackNavigator} from 'react-navigation-stack';
 import { ApplicationProvider} from '@ui-kitten/components';
 import { mapping, light,dark } from '@eva-design/eva';
 
-import settings from './containers/settings';
+import Settings from './containers/settings/settings';
 import Categories from './containers/Categories';
 import VideosLayout from './components/VideosLayout';
 import SelectedCategory from './containers/SelectedCategory';
 import Home from './containers/Home';
 import { ThemeContext } from './theme-context';
 import Splash from './components/splash/Splash';
+import Download_Changelog from './containers/settings/Download_Changelog';
 
 const AppNavigator = createStackNavigator(
   {
@@ -18,7 +19,8 @@ const AppNavigator = createStackNavigator(
     categories: {screen: Categories},
     selectedCategory: {screen: SelectedCategory},
     videosLayout: {screen: VideosLayout},
-    settings: {screen: settings},
+    settings: {screen: Settings},
+    download: {screen:Download_Changelog}
   },
   {
     initialRouteName: 'home',

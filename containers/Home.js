@@ -171,9 +171,9 @@ const MyCarousel = ({navigation}) => {
           ListHeaderComponent={headerComponent}
         />
       {/* </ScrollView> */}
-      <Footer style={checked ? styles.footerDark : styles.footerLight}>
-        <FooterTab style={styles.banner}>
-          <GoogleADBanner style={styles.banner} type={BannerAdSize.BANNER} name="FIXED_BOTTOM"/>
+      <Footer style={checked ? {backgroundColor:'#000'} : {backgroundColor:'#fff'}}>
+        <FooterTab style={checked ? styles.footerDark : styles.footerLight}>
+          <GoogleADBanner  type={BannerAdSize.BANNER} name="FIXED_BOTTOM"/>
         </FooterTab>
       </Footer>
     </Layout>
@@ -218,17 +218,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   banner: {
-    width: screenWidth - 80,
-    flex: 0,
+    width: screenWidth ,
+    flex: 1,
+    justifyContent:'center',
     alignContent: 'center',
     alignSelf: 'center',
-    backgroundColor: '#fff',
   },
   footerLight:{
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    flex: 1,
+    justifyContent:'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+
   },
   footerDark:{
-    backgroundColor: '#121212'
+    backgroundColor: '#121212',
+    flex: 1,
+    justifyContent:'center',
+    alignContent: 'center',
+    alignSelf: 'center',
   },
   headerLight:
   {

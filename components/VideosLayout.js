@@ -4,6 +4,7 @@ import {
   StyleSheet,
   PermissionsAndroid,
   StatusBar,
+  BackHandler
 } from 'react-native';
 import {Button} from 'native-base';
 import {BASE_URL} from 'react-native-dotenv';
@@ -25,17 +26,27 @@ export default function VideosLayout({navigation}) {
   const height = width * 0.5625;
   const [fullscreen, setFullscreen] = useState(false);
   const themeContext = React.useContext(ThemeContext);
+  const videoRef = React.createRef();
+  const [state,setState] = useState({
+    currentTime:0,
+    duration:0
+  })
 
   const _handleOrientation = orientation => {
     orientation === 'LANDSCAPE' ? setFullscreen(true) : setFullscreen(false);
   };
   useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress",_backHandler)
     Orientation.addOrientationListener(_handleOrientation);
     return () => {
       Orientation.removeOrientationListener(_handleOrientation);
+      BackHandler.removeEventListener("hardwareBackPress",_backHandler)
     };
   }, []);
-
+  const _backHandler = ()=>{
+    Orientation.unlockAllOrientations();
+    Orientation.lockToPortrait()
+  }
   const _HandleFullscreen = () => {
     Orientation.unlockAllOrientations();
     fullscreen
@@ -87,17 +98,36 @@ export default function VideosLayout({navigation}) {
   const download = () => {
     requestStoragePermission();
   };
+const _onLoadHandler = (data)=>{
+  setState(s => ({
+    ...s,
+    duration: data.duration,
+    currentTime: data.currentTime,
+  }));
+}
+const _HandleProgress = (data)=>{
+  setState(s => ({
+    ...s,
+    currentTime: data.currentTime,
+  }));
+}
 
   const VideoView = () => (
     <VideoPlayer
       repeat
+      controls={false}
+      paused={true}
+      onLoad={_onLoadHandler}
+      ref={videoRef}
       style={fullscreen ? styles.fullscreenVideo : styles.video}
       source={{uri: name}}
       paused={true}
       onEnterFullscreen={_HandleFullscreen}
       onExitFullscreen={_HandleFullscreen}
+      // onProgress={_HandleProgress}
       disableBack
       disableVolume
+      onEnd={()=>videoRef.current.seek(0)}
     />
   );
 
@@ -108,9 +138,9 @@ export default function VideosLayout({navigation}) {
       <VideoView />
       {!fullscreen && (
         <>
-          <View style={(styles.banner, {marginTop: 20})}>
+          {/* <View style={(styles.banner, { marginLeft:'5%',marginTop: 5})}>
             <GoogleADBanner type={BannerAdSize.BANNER} name="VIDEO_TOP" />
-          </View>
+          </View> */}
           <Button full style={styles.button} onPress={() => download()}>
             <Text style={{color: '#eee'}}>Download</Text>
           </Button>
@@ -119,6 +149,7 @@ export default function VideosLayout({navigation}) {
               type={BannerAdSize.MEDIUM_RECTANGLE}
               name="VIDEO_BOTTOM"
             />
+              <GoogleADBanner type={BannerAdSize.BANNER} name="VIDEO_TOP" />
           </View>
         </>
       )}
@@ -129,27 +160,30 @@ export default function VideosLayout({navigation}) {
 const styles = StyleSheet.create({
   Video: {
     width: Dimensions.get('window').width * 1.6,
-    marginTop: 10,
+    // height:350
   },
   banner: {
-    width: screenWidth - 90,
-    flex: 0,
-    alignContent: 'flex-end',
-    alignSelf: 'center',
+    flex: 1,
+    marginLeft:'10%',
+    flexDirection:'column',
+    justifyContent:'space-between'
   },
   button: {
     marginHorizontal: '10%',
-    marginBottom: 30,
+    marginBottom: 5,
+    marginTop:5,
     backgroundColor: '#C2913F',
   },
   video: {
+    flex:1,
     height: Dimensions.get('window').width * (9 / 16),
     width: Dimensions.get('window').width,
     backgroundColor: 'black',
-    marginTop:30,
+    marginTop:10,
     backgroundColor:'#fff'
   },
   fullscreenVideo: {
+    flex:1,
     height: Dimensions.get('window').width,
     width: Dimensions.get('screen').height,
     backgroundColor: 'black',

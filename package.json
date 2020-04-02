@@ -27,6 +27,7 @@
     "react-native-safe-area-context": "^0.6.2",
     "react-native-screens": "^2.0.0-alpha.22",
     "react-native-snap-carousel": "^3.8.4",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.0.3",
     "react-native-vector-icons": "^6.6.0",
     "react-native-video": "^5.0.2",

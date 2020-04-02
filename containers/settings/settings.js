@@ -58,12 +58,14 @@ export default Settings;
 const style = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:'column',
+    justifyContent:'space-evenly'
   },
   seperator: {
     margin: 10,
   },
   list: {
-    paddingTop: '30%',
+    paddingTop: '5%',
   },
   listItem: {
     marginHorizontal: '5%',
@@ -78,7 +80,7 @@ const style = StyleSheet.create({
     height: '100%',
   },
   title: {
-    flex: 1,
+    flex: 4,
     textAlign: 'center',
     fontSize: 100,
     fontFamily: 'Raleway-Regular',

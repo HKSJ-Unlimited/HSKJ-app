@@ -21,7 +21,8 @@ import {Colors} from './Theme';
           backgroundColor: themeToggle === 'light' ? '#fff' : Colors.stastubarColor,
           marginTop: '10%',
           marginHorizontal: '3%',
-          height: 40,
+          padding:5,
+          height: themeToggle === 'light' ?  40: 55,
           fontFamily:'Raleway-Regular',
         }}>
         {/* {drawer ? (
@@ -51,7 +52,7 @@ import {Colors} from './Theme';
           {/* </Left> */}
         {/* // )} */}
         <Body style={{position: 'absolute'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 20, color: '#F0B823',fontFamily:'serif',}}>
+          <Text style={{fontWeight: 'bold', fontSize: 18, color: '#f79817',fontFamily:'serif',}}>
             {text}
           </Text>
         </Body>

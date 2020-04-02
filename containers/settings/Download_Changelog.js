@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Linking} from 'react-native';
 import {Layout, ListItem, Text} from '@ui-kitten/components';
-import {gihubAPI} from '../../utils/APi';
+import DeviceInfo from 'react-native-device-info';
 
+import {gihubAPI} from '../../utils/APi';
 import Loader from '../Loader';
 
 const Download_Changelog = () => {

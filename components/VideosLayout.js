@@ -114,11 +114,9 @@ const _HandleProgress = (data)=>{
 
   const VideoView = () => (
     <VideoPlayer
-      repeat
       controls={false}
-      paused={true}
-      onLoad={_onLoadHandler}
-      ref={videoRef}
+      // onLoad={_onLoadHandler}
+      // ref={videoRef}
       style={fullscreen ? styles.fullscreenVideo : styles.video}
       source={{uri: name}}
       paused={true}
@@ -127,7 +125,7 @@ const _HandleProgress = (data)=>{
       // onProgress={_HandleProgress}
       disableBack
       disableVolume
-      onEnd={()=>videoRef.current.seek(0)}
+      // onEnd={()=>videoRef.current.seek(0)}
     />
   );
 
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: 'black',
     marginTop:10,
-    backgroundColor:'#fff'
+    // backgroundColor:'black'
   },
   fullscreenVideo: {
     flex:1,

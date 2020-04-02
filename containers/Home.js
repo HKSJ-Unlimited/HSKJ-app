@@ -15,6 +15,7 @@ import {Card, CardItem,Footer, FooterTab, Header, Icon} from 'native-base';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Layout, Text, Toggle} from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
+import SplashScreen from 'react-native-splash-screen'
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
@@ -85,6 +86,10 @@ const MyCarousel = ({navigation}) => {
         if(value==='Light') setChecked(false)
         else {setChecked(true); themeContext.toggleTheme();}
         setCheckedText(value);
+        SplashScreen.hide()
+      }
+      else{
+        SplashScreen.hide()
       }
     } catch (e) {
       // error reading value

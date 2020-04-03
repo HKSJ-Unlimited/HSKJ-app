@@ -5,8 +5,8 @@ const Loader = () => {
     return (
         <View style={{
             flex:1,
-            justifyContent:'space-around',
-            alignSelf:'center'
+            justifyContent:'center',
+            alignSelf:'center',
 
         }}>
             <Spinner status='warning' size='giant' />

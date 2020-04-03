@@ -10,6 +10,8 @@ import SelectedCategory from './containers/SelectedCategory';
 import Home from './containers/Home';
 import { ThemeContext } from './theme-context';
 import Download_Changelog from './containers/settings/Download_Changelog';
+import { RewardedAd, TestIds,RewardedAdEventType  } from '@react-native-firebase/admob';
+import {REWARDS} from './ADS/AD-IDs';
 
 const AppNavigator = createStackNavigator(
   {
@@ -37,7 +39,24 @@ const App = () => {
 const themes = { light,dark };
 const [theme, setTheme] = React.useState('light');
 const currentTheme = themes[theme];
+useEffect(()=>{
+  const rewarded = RewardedAd.createForAdRequest(REWARDS, {
+    requestNonPersonalizedAdsOnly: false,
+});
+  rewarded.onAdEvent((type, error, reward) => {
+    if (type === RewardedAdEventType.LOADED) {
+      rewarded.show();
+    }
+    if (type === RewardedAdEventType.EARNED_REWARD) {
+      console.log('User earned reward of ', reward);
+    }
 
+  });
+   
+  setTimeout(()=>{
+    // rewarded.load();
+  },15000)
+},[])
 const toggleTheme = () => {
   const nextTheme = theme === 'light' ? 'dark' : 'light';
   setTheme(nextTheme);

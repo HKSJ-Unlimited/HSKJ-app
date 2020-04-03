@@ -17,11 +17,6 @@ const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL, {
   requestNonPersonalizedAdsOnly: true,
 });
 
-interstitial.onAdEvent(type => {
-  if (type === AdEventType.LOADED) {
-    interstitial.show();
-  }
-});
 
 const SelectedCategory = ({navigation}) => {
   const themeContext = React.useContext(ThemeContext);
@@ -30,12 +25,17 @@ const SelectedCategory = ({navigation}) => {
   const [thumbnails,setThumbnails] = useState([])
   
   if (navigation.state.routeName === 'selectedCategory') {
-    // interstitial.load();
+    interstitial.load();
   }
 
   useEffect(() => {
     setTheme(themeContext.theme);
     fetchData();
+    interstitial.onAdEvent(type => {
+      if (type === AdEventType.LOADED) {
+        interstitial.show();
+      }
+    });
   }, []);
 
   const fetchData = async () => {

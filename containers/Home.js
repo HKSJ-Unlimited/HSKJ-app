@@ -86,7 +86,9 @@ const MyCarousel = ({navigation}) => {
         if(value==='Light') setChecked(false)
         else {setChecked(true); themeContext.toggleTheme();}
         setCheckedText(value);
-        SplashScreen.hide()
+        setTimeout(()=>{
+          SplashScreen.hide()
+        },500)
       }
       else{
         SplashScreen.hide()

@@ -11,7 +11,7 @@ const Download_Changelog = () => {
     data: null,
   });
 
-  const [arch,setArch] = useState('')
+  const [arch, setArch] = useState('');
   const regex = /app|-release.apk|-/gi;
   const installedVersion = DeviceInfo.getVersion();
 
@@ -20,15 +20,14 @@ const Download_Changelog = () => {
     setState({data: response});
   };
 
-  const _getCpuArch = async()=>{
-  const cpuArch = await DeviceInfo.supported64BitAbis();
-  if(cpuArch[0].includes('arm64-v8a')) {
-    setArch('64 bit')
+  const _getCpuArch = async () => {
+    const cpuArch = await DeviceInfo.supportedAbis();
+    if (cpuArch.includes('arm64-v8a')) {
+      setArch('64 bit');
+    } else {
+      setArch('only 32 bit');
     }
-    else {
-      setArch('32 bit')
-    }
-  }
+  };
   useEffect(() => {
     _getCpuArch();
     _getData();
@@ -36,7 +35,7 @@ const Download_Changelog = () => {
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {state.data ? (
           <Layout style={{flex: 1}}>
             <ListItem
@@ -66,7 +65,7 @@ const Download_Changelog = () => {
             <ListItem
               title="Download Latest Version from below"
               titleStyle={{fontSize: 20}}
-              description={'You phone supports '+arch}
+              description={'You phone supports ' + arch}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
               style={{marginTop: '5%'}}></ListItem>
             <ListItem

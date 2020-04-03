@@ -12,7 +12,7 @@ const Listata = [
   {
     name: 'About',
     id: 1,
-    link:'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/readme.md'
+    link:'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/README.md'
   },
   {
     name: 'Donwload and Changelog',
@@ -27,7 +27,7 @@ const Listata = [
   {
     name: 'Privacy Policy',
     id: 4,
-    link:'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/readme.md'
+    link:'https://gist.github.com/rocknegi/9199c91305b12ee48ee924c9794914d5'
   },
 ];
 const _renderItem = (item, navigation) => (

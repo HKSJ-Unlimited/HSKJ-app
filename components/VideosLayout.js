@@ -6,7 +6,7 @@ import {
   StatusBar,
   BackHandler,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import {Button, Fab} from 'native-base';
 import {BASE_URL} from 'react-native-dotenv';
@@ -19,8 +19,9 @@ import Video from 'react-native-video';
 import {FullscreenClose, FullscreenOpen} from '../assets/icons';
 import TopHeader from './Header';
 import GoogleADBanner from '../ADS/GoogleADBanner';
-import { Icon } from 'native-base';
+import {Icon} from 'native-base';
 import PlayerControls from './PlayerControls';
+import ProgressBar from './ProgressBar';
 
 export default class VideosLayout extends React.Component {
   state = {
@@ -29,9 +30,9 @@ export default class VideosLayout extends React.Component {
     currentTime: 0,
     isLoading: true,
     paused: false,
-    play:false,
+    play: false,
     nane: '',
-    showControls:false
+    showControls: false,
   };
   _onLoadHandler = data => {
     this.setState(s => ({
@@ -88,34 +89,35 @@ export default class VideosLayout extends React.Component {
   };
 
   onSeek = seek => {
-    this.videoPlayer.seek(seek);
+    // alert(JSON.stringify(seek))
+    this.player.seek(seek.seekTime);
   };
 
   onSeeking = currentTime => this.setState({currentTime});
 
   _showControls = () => {
     this.state.showControls
-    ? this.setState({showControls: false})
-    : this.setState({showControls: true});
+      ? this.setState({showControls: false})
+      : this.setState({showControls: true},()=> setTimeout(() => this.setState(s => ({...s, showControls: false})), 1000)) 
   };
 
-  handlePlayPause=()=> {
+  handlePlayPause = () => {
     if (this.state.play) {
       this.setState({play: false, showControls: true});
       return;
     }
     this.setState({play: true});
     setTimeout(() => this.setState(s => ({...s, showControls: false})), 2000);
-  }
-   skipBackward=()=>  {
+  };
+  skipBackward = () => {
     this.player.seek(this.state.currentTime - 15);
     this.setState({currentTime: this.state.currentTime - 15});
-  }
+  };
 
-  skipForward=()=>  {
+  skipForward = () => {
     this.player.seek(this.state.currentTime + 15);
     this.setState({currentTime: this.state.currentTime + 15});
-  }
+  };
   render() {
     return (
       <View style={{flex: 1}}>
@@ -125,9 +127,9 @@ export default class VideosLayout extends React.Component {
           <View style={{flex: 1}}>
             <Video
               controls={false}
-              ref={(ref) => {
-                this.player = ref
-              }} 
+              ref={ref => {
+                this.player = ref;
+              }}
               onLoad={this._onLoadHandler}
               style={
                 this.state.fullscreen ? styles.fullscreenVideo : styles.video
@@ -142,14 +144,18 @@ export default class VideosLayout extends React.Component {
               paused={this.state.play}
             />
             {this.state.showControls && (
-              <View style={styles.controlOverlay}> 
-               <TouchableOpacity
+              <View style={styles.controlOverlay}>
+                <TouchableOpacity
                   onPress={this._HandleFullscreen}
                   hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                   style={styles.fullscreenButton}>
-                  {this.state.fullscreen ? <FullscreenClose /> : <FullscreenOpen />}
-                </TouchableOpacity> 
-                 <PlayerControls
+                  {this.state.fullscreen ? (
+                    <FullscreenClose />
+                  ) : (
+                    <FullscreenOpen />
+                  )}
+                </TouchableOpacity>
+                <PlayerControls
                   onPlay={this.handlePlayPause}
                   onPause={this.handlePlayPause}
                   playing={this.state.play}
@@ -157,11 +163,18 @@ export default class VideosLayout extends React.Component {
                   showSkip={true}
                   skipBackwards={this.skipBackward}
                   skipForwards={this.skipForward}
-                /> 
-             </View> 
+                />
+                <ProgressBar
+                  currentTime={this.state.currentTime}
+                  duration={this.state.duration > 0 ? this.state.duration : 0}
+                  onSlideStart={this.handlePlayPause}
+                  onSlideComplete={this.handlePlayPause}
+                  onSlideCapture={this.onSeek}
+                />
+              </View>
             )}
-          </View> 
-         </TouchableWithoutFeedback> 
+          </View>
+        </TouchableWithoutFeedback>
 
         {!this.state.fullscreen && (
           <>

@@ -54,7 +54,7 @@ useEffect(()=>{
   });
    
   setTimeout(()=>{
-    rewarded.load();
+    // rewarded.load();
   },15000)
 },[])
 const toggleTheme = () => {

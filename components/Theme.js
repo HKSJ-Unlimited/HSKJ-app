@@ -1,3 +1,3 @@
-export const Colors={
-    stastubarColor:'#171B20'
-}
+export const Colors = {
+  stastubarColor: '#171B20',
+};

@@ -12,7 +12,7 @@ const Listata = [
   {
     name: 'About',
     id: 1,
-    link:'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/README.md'
+    link: 'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/README.md',
   },
   {
     name: 'Donwload and Changelog',
@@ -22,22 +22,26 @@ const Listata = [
   {
     name: 'Join the support group',
     id: 3,
-    link:'https://t.me/hksjapp'
+    link: 'https://t.me/hksjapp',
   },
   {
     name: 'Privacy Policy',
     id: 4,
-    link:'https://gist.github.com/rocknegi/9199c91305b12ee48ee924c9794914d5'
+    link: 'https://gist.github.com/rocknegi/9199c91305b12ee48ee924c9794914d5',
   },
 ];
 const _renderItem = (item, navigation) => (
   <ListItem
     style={style.listItem}
-    onPress={item.route?() => navigation.navigate(item.route):()=>Linking.openURL(item.link)}>
+    onPress={
+      item.route
+        ? () => navigation.navigate(item.route)
+        : () => Linking.openURL(item.link)
+    }>
     <T style={style.text}>{item.name}</T>
   </ListItem>
 );
-const _renderSeperator = () => <View style={style.seperator}></View>;
+const _renderSeperator = () => <View style={style.seperator} />;
 
 const Settings = ({navigation}) => {
   return (
@@ -58,8 +62,8 @@ export default Settings;
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection:'column',
-    justifyContent:'space-evenly'
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
   seperator: {
     margin: 10,

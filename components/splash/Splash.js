@@ -20,7 +20,7 @@ export default class App extends Component {
   componentDidMount() {
     setTimeout(this.animate, 0);
     setTimeout(() => {
-        this.props.navigation.navigate('dashboard');
+      this.props.navigation.navigate('dashboard');
     }, 3000);
   }
 
@@ -43,11 +43,10 @@ export default class App extends Component {
           style={{
             textAlign: 'center',
             fontSize: 100,
-            fontFamily:'Raleway-Regular',
+            fontFamily: 'Raleway-Regular',
             color: '#F0B823',
             backgroundColor: '#171B20',
-          }}
-        >
+          }}>
           HKSJ
           <Animation
             style={{

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {FlatList, Image} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
-// import { List, ListItem } from 'native-base';
 import {InterstitialAd, TestIds} from '@react-native-firebase/admob';
 import {AdEventType} from '@react-native-firebase/admob';
 import {Text, List, ListItem, Layout as View} from '@ui-kitten/components';
@@ -48,6 +47,7 @@ const SelectedCategory = ({navigation}) => {
       redirect: 'follow'
     };
   const responseThumb = await fetch(`https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink)&key=${GOOGLE_API}`, requestOptions)
+  
   if(responseThumb){
   const res = await responseThumb.json()
   //  setThumbnails(res)
@@ -70,15 +70,15 @@ data.forEach(e => {
 thumbs.forEach(e => {
     const regex = /.jpg/gi;
     let name = e.name.replace(regex, "");
-    let index = thumbs.indexOf(e);
-    thumbs.fill(e.name=name, index, index++);
+    e.name=name
   });
 
 for(let i = 0 ; i < thumbs.length;i++){
     let obj = files.find(e=>e.name===thumbs[i].name+'.mp4')
 if(obj!==undefined){
-    let index = files.indexOf(obj);
-    files.fill(obj.size=thumbs[i].thumbnailLink, index, index++);
+    const regex = /=s220/gi;
+    const newThumbLink = obj.size=thumbs[i].thumbnailLink.replace(regex, "=s720");
+    files[i].size=newThumbLink
 }
 else{
   let index = files.indexOf(obj);

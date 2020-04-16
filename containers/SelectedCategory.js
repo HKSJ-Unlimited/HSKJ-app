@@ -81,8 +81,7 @@ if(obj!==undefined){
     files[i].size=newThumbLink
 }
 else{
-  let index = files.indexOf(obj);
-  files.fill(obj.size='https://image.shutterstock.com/image-photo/grunge-black-background-texture-space-260nw-373662322.jpg', index, index++);
+  files[i].size = 'https://image.shutterstock.com/image-photo/grunge-black-background-texture-space-260nw-373662322.jpg'
 }
 }
 setRes(files)

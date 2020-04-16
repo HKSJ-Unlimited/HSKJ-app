@@ -7,6 +7,7 @@ import {
   BackHandler,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import {Button, Fab} from 'native-base';
 import {BASE_URL} from 'react-native-dotenv';
@@ -15,13 +16,14 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {Text, Layout as View} from '@ui-kitten/components';
 import Orientation from 'react-native-orientation';
 import Video from 'react-native-video';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import {FullscreenClose, FullscreenOpen} from '../assets/icons';
 import TopHeader from './Header';
 import GoogleADBanner from '../ADS/GoogleADBanner';
-import {Icon} from 'native-base';
 import PlayerControls from './PlayerControls';
 import ProgressBar from './ProgressBar';
+import Loader from '../containers/Loader';
 
 export default class VideosLayout extends React.Component {
   state = {
@@ -31,10 +33,13 @@ export default class VideosLayout extends React.Component {
     isLoading: true,
     paused: false,
     play: false,
-    nane: '',
+    name: null,
     showControls: false,
+    buffering: true,
+    animated: new Animated.Value(0),
   };
   _onLoadHandler = data => {
+    this.triggerBufferAnimation();
     this.setState(s => ({
       ...s,
       duration: data.duration,
@@ -123,31 +128,69 @@ export default class VideosLayout extends React.Component {
     this.player.seek(this.state.currentTime + 15);
     this.setState({currentTime: this.state.currentTime + 15});
   };
+
+  triggerBufferAnimation = () => {
+    this.loopingAnimation && this.loopingAnimation.stopAnimation();
+    this.loopingAnimation = Animated.loop(
+      Animated.timing(this.state.animated, {
+        toValue: 1,
+        duration: 350,
+      }),
+    ).start();
+  };
+
+  _handleBuffer = meta => {
+    meta.isBuffering && this.triggerBufferAnimation();
+
+    if (this.loopingAnimation && !meta.isBuffering) {
+      this.loopingAnimation.stopAnimation();
+    }
+
+    this.setState({
+      buffering: meta.isBuffering,
+    });
+  };
   render() {
+    const {buffering} = this.state;
+    const interpolatedAnimation = this.state.animated.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg'],
+    });
+
+    const rotateStyle = {
+      transform: [{rotate: interpolatedAnimation}],
+    };
     return (
       <View style={{flex: 1}}>
         <StatusBar hidden={this.state.fullscreen} />
         {!this.state.fullscreen && <TopHeader text="HKSJ" />}
         <TouchableWithoutFeedback onPress={this._showControls}>
-          <View style={{flex: 1}}>
+          <View style={buffering ? styles.buffering : {flex: 1}}>
             <Video
               controls={false}
               ref={ref => {
                 this.player = ref;
               }}
+              onBuffer={this._handleBuffer}
               onLoad={this._onLoadHandler}
               style={
                 this.state.fullscreen ? styles.fullscreenVideo : styles.video
               }
               source={{
-                uri:
-                  'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                uri: this.state.name,
               }}
               onEnterFullscreen={this._HandleFullscreen}
               onExitFullscreen={this._HandleFullscreen}
               onProgress={this._HandleProgress}
               paused={this.state.play}
             />
+            <View style={styles.videoCover}>
+              {buffering && (
+                <Animated.View style={rotateStyle}>
+                  <Icon name="circle-o-notch" size={50} color="white" />
+                </Animated.View>
+              )}
+            </View>
             {this.state.showControls && (
               <View style={styles.controlOverlay}>
                 <TouchableOpacity
@@ -168,6 +211,7 @@ export default class VideosLayout extends React.Component {
                   showSkip={true}
                   skipBackwards={this.skipBackward}
                   skipForwards={this.skipForward}
+                  onB
                 />
                 <ProgressBar
                   currentTime={this.state.currentTime}
@@ -211,9 +255,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    marginHorizontal: '10%',
+    marginHorizontal: '20%',
     marginBottom: 5,
-    marginTop: 5,
+    marginTop: 15,
     backgroundColor: '#C2913F',
   },
   video: {
@@ -245,5 +289,19 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#000000c4',
     justifyContent: 'space-between',
+  },
+  videoCover: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "transparent",
+  },
+  buffering: {
+    backgroundColor: '#000',
+    flex: 1,
   },
 });

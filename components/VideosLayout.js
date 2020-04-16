@@ -98,7 +98,12 @@ export default class VideosLayout extends React.Component {
   _showControls = () => {
     this.state.showControls
       ? this.setState({showControls: false})
-      : this.setState({showControls: true},()=> setTimeout(() => this.setState(s => ({...s, showControls: false})), 1000)) 
+      : this.setState({showControls: true}, () =>
+          setTimeout(
+            () => this.setState(s => ({...s, showControls: false})),
+            1000,
+          ),
+        );
   };
 
   handlePlayPause = () => {

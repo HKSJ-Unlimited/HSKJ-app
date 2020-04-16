@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Linking, ScrollView} from 'react-native';
-import {Layout, ListItem, Text} from '@ui-kitten/components';
+import {Layout, ListItem} from '@ui-kitten/components';
 import DeviceInfo from 'react-native-device-info';
 
 import {gihubAPI} from '../../utils/APi';
@@ -43,31 +43,36 @@ const Download_Changelog = () => {
               titleStyle={{fontSize: 20}}
               description={state.data.name}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '20%'}}></ListItem>
+              style={{marginTop: '20%'}}
+            />
             <ListItem
               title="Version Installed"
               titleStyle={{fontSize: 20}}
               description={installedVersion}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '5%'}}></ListItem>
+              style={{marginTop: '5%'}}
+            />
             <ListItem
               title="Author"
               titleStyle={{fontSize: 20}}
               description={state.data.author.login}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '5%'}}></ListItem>
+              style={{marginTop: '5%'}}
+            />
             <ListItem
               title="Latest Changelog"
               titleStyle={{fontSize: 20}}
               description={state.data.body}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '5%'}}></ListItem>
+              style={{marginTop: '5%'}}
+            />
             <ListItem
               title="Download Latest Version from below"
               titleStyle={{fontSize: 20}}
               description={'You phone supports ' + arch}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '5%'}}></ListItem>
+              style={{marginTop: '5%'}}
+            />
             <ListItem
               onPress={() =>
                 Linking.openURL(state.data.assets[0].browser_download_url)
@@ -80,7 +85,8 @@ const Download_Changelog = () => {
               titleStyle={{fontSize: 25}}
               description={state.data.assets[0].name}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '10%'}}></ListItem>
+              style={{marginTop: '10%'}}
+            />
             <ListItem
               onPress={() =>
                 Linking.openURL(state.data.assets[1].browser_download_url)
@@ -93,7 +99,8 @@ const Download_Changelog = () => {
               titleStyle={{fontSize: 25}}
               description={state.data.assets[1].name}
               descriptionStyle={{fontSize: 16, marginTop: 5}}
-              style={{marginTop: '10%'}}></ListItem>
+              style={{marginTop: '10%'}}
+            />
           </Layout>
         ) : (
           <Loader />

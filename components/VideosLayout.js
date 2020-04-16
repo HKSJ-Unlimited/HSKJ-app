@@ -150,6 +150,52 @@ export default class VideosLayout extends React.Component {
       buffering: meta.isBuffering,
     });
   };
+  download = () => {
+    this.requestStoragePermission();
+  };
+    requestStoragePermission =async()=> {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'HKSJ needs Storage Permission',
+          message:
+            'HKSJ needs access to your Device Storage uwu ' +
+            'so you can fap when offline.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        let dirs = RNFetchBlob.fs.dirs.DownloadDir + '/HKSJ';
+        const android = RNFetchBlob.android;
+        const fileName = this.state.name.replace(BASE_URL, '');
+        RNFetchBlob.config({
+          addAndroidDownloads: {
+            useDownloadManager: true,
+            notification: true,
+            description: 'File downloaded.',
+            path: dirs + `/${fileName}`,
+            mediaScannable: true,
+            title: fileName,
+          },
+        })
+          .fetch('GET', this.state.name)
+          .then(res => {
+            android.actionViewIntent(res.path(), 'image/png');
+          })
+          .catch(err => {
+            alert('Deer you canceled the download');
+          });
+      } else {
+        Alert('Cum on Nibba you want to download or not?');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
     const {buffering} = this.state;
     const interpolatedAnimation = this.state.animated.interpolate({
@@ -227,8 +273,8 @@ export default class VideosLayout extends React.Component {
 
         {!this.state.fullscreen && (
           <>
-            <Button full style={styles.button} onPress={() => download()}>
-              <Text style={{color: '#eee'}}>Download</Text>
+            <Button full style={styles.button} onPress={() => this.download()}>
+              <Text style={{color: '#eee',fontSize:18}}>Download</Text>
             </Button>
             <View style={styles.banner}>
               <GoogleADBanner
@@ -259,6 +305,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 15,
     backgroundColor: '#C2913F',
+    borderRadius:10
   },
   video: {
     flex: 1,
@@ -266,7 +313,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: 'black',
     marginTop: 10,
-    // backgroundColor:'black'
+    borderRadius:10
   },
   fullscreenVideo: {
     flex: 1,

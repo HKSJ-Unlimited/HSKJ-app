@@ -23,7 +23,7 @@ const SelectedCategory = ({navigation}) => {
   const [thumbnails, setThumbnails] = useState([]);
 
   if (navigation.state.routeName === 'selectedCategory') {
-    // interstitial.load();
+    interstitial.load();
   }
 
   useEffect(() => {

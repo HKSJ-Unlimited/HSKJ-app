@@ -76,8 +76,8 @@ const MyCarousel = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-  const [checked, setChecked] = React.useState(false);
-  const [checkedText, setCheckedText] = React.useState('light');
+  const [checked, setChecked] = React.useState(true);
+  const [checkedText, setCheckedText] = React.useState('dark');
 
   const _checkData = async () => {
     try {
@@ -91,6 +91,7 @@ const MyCarousel = ({navigation}) => {
         },500)
       }
       else{
+        themeContext.toggleTheme();
         SplashScreen.hide()
       }
     } catch (e) {

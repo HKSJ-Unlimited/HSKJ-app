@@ -30,7 +30,6 @@ const AppNavigator = createStackNavigator(
 
 const AppSwitchNavigator = createAppContainer(
   createSwitchNavigator({
-    // splash : {screen:Splash},
     dashboard: {screen: AppNavigator},
   }),
 );

@@ -12,6 +12,7 @@ import { ThemeContext } from './theme-context';
 import Download_Changelog from './containers/settings/Download_Changelog';
 import { RewardedAd, TestIds,RewardedAdEventType  } from '@react-native-firebase/admob';
 import {REWARDS} from './ADS/AD-IDs';
+import AppLock from './containers/settings/AppLock';
 
 const AppNavigator = createStackNavigator(
   {
@@ -20,7 +21,8 @@ const AppNavigator = createStackNavigator(
     selectedCategory: {screen: SelectedCategory},
     videosLayout: {screen: VideosLayout},
     settings: {screen: Settings},
-    download: {screen:Download_Changelog}
+    download: {screen:Download_Changelog},
+    lock: AppLock
   },
   {
     initialRouteName: 'home',

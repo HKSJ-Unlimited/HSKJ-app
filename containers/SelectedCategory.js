@@ -38,7 +38,6 @@ const SelectedCategory = ({navigation}) => {
 
   const fetchData = async () => {
     const response = await get(navigation.getParam('name') + '/');
-    console.log(JSON.stringify(response,undefined,3))
     const folderID = await navigation.getParam('folderID');
 
     var requestOptions = {

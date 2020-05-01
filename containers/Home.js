@@ -16,6 +16,7 @@ import {BannerAdSize} from '@react-native-firebase/admob';
 import {Layout, Text, Toggle} from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
 import SplashScreen from 'react-native-splash-screen';
+import PINCode from '@haskkor/react-native-pincode'
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
@@ -25,6 +26,7 @@ const {width: screenWidth} = Dimensions.get('window');
 const {height: screenHeight} = Dimensions.get('window');
 
 const MyCarousel = ({navigation}) => {
+  const [auth,setAuth] = useState(false);
   const carouselRef = useRef(null);
   const themeContext = React.useContext(ThemeContext);
   // setInterval(()=>{
@@ -170,6 +172,10 @@ const MyCarousel = ({navigation}) => {
       </Text>
     </>
   );
+
+  const giveAuth =()=>{
+    setAuth(true)
+  }
   return (
     <Layout style={styles.container}>
       {/* <ScrollView nestedScrollEnabled={true}> */}
@@ -188,7 +194,9 @@ const MyCarousel = ({navigation}) => {
           onChange={onCheckedChange}
         />
       </Header>
-      <FlatList
+
+{auth?     <View>
+  <FlatList
         style={{marginTop: 10}}
         data={allCategories}
         renderItem={({item}) => _renderList(item)}
@@ -201,13 +209,16 @@ const MyCarousel = ({navigation}) => {
         nestedScrollEnabled={true}
         ListHeaderComponent={headerComponent}
       />
-      {/* </ScrollView> */}
       <Footer
         style={checked ? {backgroundColor: '#000'} : {backgroundColor: '#fff'}}>
         <FooterTab style={checked ? styles.footerDark : styles.footerLight}>
           <GoogleADBanner type={BannerAdSize.BANNER} name="FIXED_BOTTOM" />
         </FooterTab>
       </Footer>
+</View>:      <PINCode status={'enter'}
+                finishProcess={giveAuth}
+                disableLockScreen={true}
+            />}
     </Layout>
   );
 };

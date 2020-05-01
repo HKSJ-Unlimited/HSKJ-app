@@ -29,6 +29,11 @@ const Listata = [
     id: 4,
     link: 'https://gist.github.com/rocknegi/9199c91305b12ee48ee924c9794914d5',
   },
+  {
+    name: 'Set App lock',
+    id: 5,
+    route: 'lock',
+  },
 ];
 const _renderItem = (item, navigation) => (
   <ListItem

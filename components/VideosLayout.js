@@ -71,7 +71,7 @@ export default class VideosLayout extends React.Component {
   };
   componentDidMount() {
     const name = BASE_URL + this.props.navigation.getParam('name');
-    this.setState({name});
+    this.setState({name},()=>console.log(this.state.name));
     BackHandler.addEventListener('hardwareBackPress', this._backHandler);
     Orientation.addOrientationListener(this._handleOrientation);
   }

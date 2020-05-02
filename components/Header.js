@@ -22,9 +22,9 @@ const TopHeader = (props, {navigation}) => {
             themeToggle === 'light' ? '#fff' : Colors.stastubarColor,
           marginTop: '10%',
           marginHorizontal: '3%',
-          padding: 5,
-          height: themeToggle === 'light' ? 40 : 55,
+          marginBottom: 10,
           fontFamily: 'Raleway-Regular',
+          elevation:10
         }}>
         {/* {drawer ? (
           <Left style={{position: 'absolute', left: 0}}>

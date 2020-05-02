@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {FlatList, Image} from 'react-native';
+import React, {useState, useEffect,useRef} from 'react';
+import {FlatList, Image, Animated} from 'react-native';
 import Layout from '../components/Layout';
 import {get} from '../utils/APi';
 import {InterstitialAd, TestIds} from '@react-native-firebase/admob';
@@ -11,7 +11,8 @@ import {ThemeContext} from '../theme-context';
 import {INTERSTITIAL} from '../ADS/AD-IDs';
 import TopHeader from '../components/Header';
 import Loader from './Loader';
- 
+import { Colors } from '../components/Theme';
+
 const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL, {
  requestNonPersonalizedAdsOnly: true,
 });
@@ -21,7 +22,9 @@ const SelectedCategory = ({navigation}) => {
  const [data, setRes] = useState([]);
  const [theme, setTheme] = useState('');
  const [thumbnails, setThumbnails] = useState([]);
- 
+ const themeToggle = themeContext.theme;
+ const slideAnim = useRef(new Animated.Value(0)).current;
+
  if (navigation.state.routeName === 'selectedCategory') {
    interstitial.load();
  }
@@ -34,6 +37,11 @@ const SelectedCategory = ({navigation}) => {
        interstitial.show();
      }
    });
+   Animated.spring(slideAnim,{
+     toValue:1,
+     friction:1,
+     useNativeDriver:true
+   }).start()
  }, []);
  
  const fetchData = async () => {
@@ -81,25 +89,28 @@ const SelectedCategory = ({navigation}) => {
        list[i].link = 'https://image.shutterstock.com/image-photo/grunge-black-background-texture-space-260nw-373662322.jpg'
      }
   }
-  alert(JSON.stringify(list,undefined,3))
    setRes(list);
  };
  
  const _renderList = item => {
-   const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|[0-9]/gi;
+   const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|[0-9]/gi;
    let name = item.name
-     .replace(regex, '')
+     .replace(regex, ' ')
      .slice(0, 100)
      .toLowerCase();
    return (
-     <ListItem
-       style={{
-         height: 290,
-         marginTop: 5,
+<Animated.View>
+<ListItem
+       style={[{
+         height: 'auto',
+         marginBottom:'3%',
          borderRadius: 6,
          flex: 1,
          flexDirection: 'column',
-       }}
+         elevation:5,
+         backgroundColor:
+            themeToggle === 'light' ? '#fff' : Colors.stastubarColor,
+       },{transform:[{scaleY:slideAnim}]}]}
        onPress={() =>
          navigation.navigate('videosLayout', {
            name: navigation.getParam('name') + '/' + item.name + '.mp4',
@@ -107,10 +118,10 @@ const SelectedCategory = ({navigation}) => {
        }>
        <Text
          style={{
-           fontSize: 15,
            textAlign: 'center',
            margin: 5,
            fontFamily: 'Lato-Regular',
+           fontWeight:'bold'
          }}>
          {name}
        </Text>
@@ -127,6 +138,7 @@ const SelectedCategory = ({navigation}) => {
        />
        {/* //  ): ( <Loader />)} */}
      </ListItem>
+</Animated.View>
    );
  };
  
@@ -153,11 +165,11 @@ const SelectedCategory = ({navigation}) => {
      {data.length > 1 ? (
        <List
          style={{backgroundColor: theme === 'light' ? '#F2F6FF' : '#000'}}
-         contentContainerStyle={{paddingBottom: 100, marginHorizontal: 10}}
+         contentContainerStyle={{marginHorizontal: 10}}
          data={data}
          renderItem={({item}) => _renderList(item)}
          key={item => item.id}
-         ItemSeparatorComponent={_renderSeperator}
+        //  ItemSeparatorComponent={_renderSeperator}
        />
      ) : (
        <Loader />

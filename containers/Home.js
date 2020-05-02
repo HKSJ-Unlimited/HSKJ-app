@@ -80,7 +80,7 @@ const MyCarousel = ({navigation}) => {
         }>
         <ParallaxImage
           source={{uri: item.uri}}
-          containerStyle={styles.imageContainer}
+          containerStyle={[styles.imageContainer,{elevation:10}]}
           style={styles.image}
           parallaxFactor={0.4}
           showSpinner={true}
@@ -275,6 +275,9 @@ const styles = StyleSheet.create({
   card: {
     width: screenWidth - 40,
     alignSelf: 'center',
+    elevation:10,
+    borderWidth:0,
+    borderColor:'#C2913F'
   },
   banner: {
     width: screenWidth,

@@ -10,6 +10,9 @@ import {
   TouchableOpacity,
   StatusBar,
   Text as T,
+  BackHandler,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 import {Card, CardItem, Footer, FooterTab, Header, Icon} from 'native-base';
 import {BannerAdSize} from '@react-native-firebase/admob';
@@ -17,6 +20,7 @@ import {Layout, Text, Toggle} from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 import PINCode from '@haskkor/react-native-pincode'
+import { hasUserSetPinCode } from '@haskkor/react-native-pincode'
 
 import GoogleADBanner from '../ADS/GoogleADBanner';
 import {HotPicks, allCategories} from '../utils/Data';
@@ -113,8 +117,20 @@ const MyCarousel = ({navigation}) => {
       // error reading value
     }
   };
+  const checkUserPIN = async () => {
+    try {
+     const auth = await hasUserSetPinCode()
+     setAuth(auth)
+    }catch{
+      ToastAndroid.showWithGravity('Who dis?',ToastAndroid.LONG,ToastAndroid.CENTER)
+      BackHandler.exitApp()
+    }
+
+ }
+
   useEffect(() => {
     _checkData();
+    checkUserPIN();
   }, []);
 
   useEffect(() => {
@@ -174,7 +190,7 @@ const MyCarousel = ({navigation}) => {
   );
 
   const giveAuth =()=>{
-    setAuth(true)
+    setAuth(false)
   }
   return (
     <Layout style={styles.container}>
@@ -195,7 +211,7 @@ const MyCarousel = ({navigation}) => {
         />
       </Header>
 
-{auth?     <View>
+{!auth?     <View>
   <FlatList
         style={{marginTop: 10}}
         data={allCategories}

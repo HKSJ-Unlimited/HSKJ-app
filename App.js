@@ -1,74 +1,114 @@
-import React, { useEffect } from 'react';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import { ApplicationProvider} from '@ui-kitten/components';
-import { mapping, light,dark } from '@eva-design/eva';
-import Settings from './containers/settings/settings';
-import Categories from './containers/Categories';
-import VideosLayout from './components/VideosLayout';
-import SelectedCategory from './containers/SelectedCategory';
-import Home from './containers/Home';
-import { ThemeContext } from './theme-context';
-import Download_Changelog from './containers/settings/Download_Changelog';
-import { RewardedAd, TestIds,RewardedAdEventType  } from '@react-native-firebase/admob';
-import {REWARDS} from './ADS/AD-IDs';
-import AppLock from './containers/settings/AppLock';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
 
-const AppNavigator = createStackNavigator(
-  {
-    home: {screen: Home},
-    categories: {screen: Categories},
-    selectedCategory: {screen: SelectedCategory},
-    videosLayout: {screen: VideosLayout},
-    settings: {screen: Settings},
-    download: {screen:Download_Changelog},
-    lock: AppLock
-  },
-  {
-    initialRouteName: 'home',
-    headerMode: 'none',
-  },
-);
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+} from 'react-native';
 
-const AppSwitchNavigator = createAppContainer(
-  createSwitchNavigator({
-    dashboard: {screen: AppNavigator},
-  }),
-);
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
 
-const App = () => {
-const themes = { light,dark };
-const [theme, setTheme] = React.useState('light');
-const currentTheme = themes[theme];
-useEffect(()=>{
-  const rewarded = RewardedAd.createForAdRequest(REWARDS, {
-    requestNonPersonalizedAdsOnly: false,
-});
-  rewarded.onAdEvent((type, error, reward) => {
-    if (type === RewardedAdEventType.LOADED) {
-      rewarded.show();
-    }
-    if (type === RewardedAdEventType.EARNED_REWARD) {
-      console.log('User earned reward of ', reward);
-    }
-
-  });
-   
-  setTimeout(()=>{
-    rewarded.load();
-  },15000)
-},[])
-const toggleTheme = () => {
-  const nextTheme = theme === 'light' ? 'dark' : 'light';
-  setTheme(nextTheme);
- 
-};
- return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-    <ApplicationProvider mapping={mapping} theme={currentTheme}>
-      <AppSwitchNavigator/>
-    </ApplicationProvider>
-  </ThemeContext.Provider>
+const App: () => React$Node = () => {
+  return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <Header />
+          {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>App.js</Text> to change this
+                screen and then come back to see your edits.
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionDescription}>
+                <ReloadInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionDescription}>
+                <DebugInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionDescription}>
+                Read the docs to discover what to do next:
+              </Text>
+            </View>
+            <LearnMoreLinks />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
-export default App
+
+const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: Colors.lighter,
+  },
+  engine: {
+    position: 'absolute',
+    right: 0,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+    color: Colors.dark,
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  footer: {
+    color: Colors.dark,
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 4,
+    paddingRight: 12,
+    textAlign: 'right',
+  },
+});
+
+export default App;

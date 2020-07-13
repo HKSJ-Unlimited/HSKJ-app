@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+MaterialCommunityIcons.loadFont();
 
 import HomeScreen from './src/screens/HomeScreen';
 

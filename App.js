@@ -1,29 +1,49 @@
 import React, {useState} from 'react';
-import {Text, SafeAreaView} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-
-import ThemeContext from './src/theme';
-import HomeScreen from './src/screens/HomeScreen';
-// import CustomDrawerScreen from './src/screens/CustomDrawerScreen';
-import AppLockScreen from './src/screens/AppLockScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-Feather.loadFont();
+import ThemeContext from './src/theme';
+import HomeScreen from './src/screens/HomeScreen';
+import CustomDrawerScreen from './src/screens/CustomDrawerScreen';
+import AppLockScreen from './src/screens/AppLockScreen';
+import SplashScreen from './src/screens/SplashScreen';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 
-// const Dashboard = createStackNavigator({});
+MaterialCommunityIcons.loadFont();
 
-const AppNavigator = createSwitchNavigator(
+const Dashboard = createDrawerNavigator(
   {
     HomeScreen,
   },
   {
+    contentOptions: {
+      activeTintColor: '#fd6d24',
+      backgroundTintColor: '#fdbf83',
+    },
     initialRouteName: 'HomeScreen',
+    drawerType: 'slide',
+    contentComponent: (props) => <CustomDrawerScreen {...props} />,
   },
 );
 
-const App = () => {
+const AppNavigator = createSwitchNavigator(
+  {
+    SplashScreen,
+    Dashboard,
+  },
+  {
+    initialRouteName: 'SplashScreen',
+  },
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default App = () => {
   const themeHook = useState('light');
-  return <ThemeContext.Provider value={themeHook}></ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={themeHook}>
+      <AppContainer />
+    </ThemeContext.Provider>
+  );
 };
-export default createAppContainer(AppNavigator);

@@ -1,158 +1,123 @@
 import React, {useContext} from 'react';
-import {View, Text, SafeAreaView, Linking, StyleSheet} from 'react-native';
+import {View, Text, FlatList, Switch, StyleSheet, Linking} from 'react-native';
 
 import ThemeContext from '../theme';
 import {lightTheme} from '../theme/light-theme';
 import {darkTheme} from '../theme/dark-theme';
-import {Switch} from 'react-native-gesture-handler';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CommonLayout from '../theme/CommonLayout';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function CustomDrawerScreen(props) {
+export default function CustomDrawerScreen({navigation}) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
 
+  const getTheme = (prop) => {
+    switch (prop) {
+      case 'icon':
+        return themeMode === 'light' ? '#000' : '#fff';
+      case 'text':
+        return themeMode === 'light' ? lightTheme.text : darkTheme.text;
+      case 'bgTint':
+        return themeMode === 'light' ? '#eee' : '#D87314';
+      default:
+        return null;
+    }
+  };
+
   const styles = StyleSheet.create({
-    icon: {
-      color: themeMode === 'light' ? '#000' : '#fff',
+    switch: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: 5,
+      alignItems: 'center',
+      marginBottom: '80%',
+    },
+    text: {
+      textAlign: 'right',
     },
   });
 
+  const list = [
+    {
+      name: 'Home',
+      id: 0,
+      link: 'HomeScreen',
+      icon: 'home',
+    },
+    {
+      name: 'About',
+      id: 1,
+      link: 'https://github.com/HKSJ-Unlimited/HSKJ-app/blob/master/README.md',
+      icon: 'information',
+    },
+    {
+      name: 'Donwload and Changelog',
+      id: 2,
+      route: 'download',
+      icon: 'download',
+    },
+    {
+      name: 'Join the support group',
+      id: 3,
+      link: 'https://t.me/hksjapp',
+      icon: 'telegram',
+    },
+    {
+      name: 'Privacy Policy',
+      id: 4,
+      link: 'https://gist.github.com/rocknegi/9199c91305b12ee48ee924c9794914d5',
+      icon: 'file-document-outline',
+    },
+    {
+      name: 'Set App lock',
+      id: 5,
+      route: 'lock',
+      icon: 'shield-lock',
+    },
+  ];
+
   const toggleTheme = () => {
     setThemeMode(themeMode === 'light' ? 'dark' : 'light');
-    // props.navigation.closeDrawer();
   };
 
+  const renderList = (item) => (
+    <View style={lightTheme.flatlist} key={item.id}>
+      <TouchableOpacity
+        onPress={
+          item.route
+            ? () => navigation.navigate(item.route)
+            : () => Linking.openURL(item.link)
+        }
+        style={{
+          flexDirection: 'row',
+          backgroundColor:
+            navigation.state.index === item.id ? getTheme('bgTint') : null,
+          height: 50,
+          alignItems: 'center',
+        }}>
+        <Icon
+          style={{
+            fontSize: 25,
+            flex: 0.5,
+            marginLeft: 5,
+            color: getTheme('icon'),
+          }}
+          name={item.icon}
+        />
+        <Text style={[getTheme('text'), styles.text]}>{item.name}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
-    <SafeAreaView
-      style={
-        themeMode === 'light' ? lightTheme.container : darkTheme.container
-      }>
-      <View style={{flex: 1}}>
-        <DrawerContentScrollView {...props}>
-          <View
-            style={
-              themeMode === 'light'
-                ? lightTheme.customDrawerContent
-                : darkTheme.container
-            }>
-            <DrawerItem
-              icon={({size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  Home
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  About
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  Download and changelog
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  Join the support group
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  Privacy policy
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="home" style={styles.icon} size={size} />
-              )}
-              label={() => (
-                <Text
-                  style={
-                    themeMode === 'light' ? lightTheme.text : darkTheme.text
-                  }>
-                  Set app lock
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate('AppLock');
-              }}
-            />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: 20,
-                padding: 5,
-              }}>
-              <Text
-                style={
-                  themeMode === 'light' ? lightTheme.text : darkTheme.text
-                }>
-                Dark Theme
-              </Text>
-              <Switch
-                value={themeMode === 'dark'}
-                onValueChange={toggleTheme}
-              />
-            </View>
-          </View>
-        </DrawerContentScrollView>
+    <CommonLayout>
+      <FlatList data={list} renderItem={({item}) => renderList(item)} />
+      <View style={styles.switch}>
+        <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
+          Black AF Theme
+        </Text>
+        <Switch value={themeMode === 'dark'} onValueChange={toggleTheme} />
       </View>
-    </SafeAreaView>
+    </CommonLayout>
   );
 }

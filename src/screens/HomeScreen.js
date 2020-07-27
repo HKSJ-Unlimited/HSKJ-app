@@ -5,14 +5,12 @@ import Header from '../components/Header';
 import {lightTheme} from '../theme/light-theme';
 import ThemeContext from '../theme';
 import {darkTheme} from '../theme/dark-theme';
+import CommonLayout from '../theme/CommonLayout';
 
 export default function HomeScreen({navigation}) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
   return (
-    <SafeAreaView
-      style={
-        themeMode === 'light' ? lightTheme.container : darkTheme.container
-      }>
+    <CommonLayout>
       <Header navigation={navigation} />
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text
@@ -23,6 +21,6 @@ export default function HomeScreen({navigation}) {
           HKSJ
         </Text>
       </View>
-    </SafeAreaView>
+    </CommonLayout>
   );
 }

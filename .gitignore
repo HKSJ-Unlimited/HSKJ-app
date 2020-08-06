@@ -57,3 +57,9 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# My config
+/src/api/Data.js
+
+# dotenv environment variable files
+*.env

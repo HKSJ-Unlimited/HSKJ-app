@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
@@ -11,6 +12,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 
 MaterialCommunityIcons.loadFont();
+Feather.loadFont();
 
 const Dashboard = createDrawerNavigator(
   {

@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import {Switch} from 'react-native-gesture-handler';
 
 import {lightTheme} from '../theme/light-theme';
@@ -20,14 +21,15 @@ export default function Header({navigation}) {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
+        marginBottom: 10,
       }}>
       <Icon
         name="menu"
-        size={40}
+        size={35}
         onPress={() => navigation.openDrawer()}
         style={styles.icon}
       />
-      <Icon name="search-web" size={40} style={styles.icon} />
+      <Feather name="search" size={35} style={styles.icon} />
     </View>
   );
 }

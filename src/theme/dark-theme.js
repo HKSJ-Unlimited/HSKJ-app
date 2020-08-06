@@ -18,4 +18,11 @@ export const darkTheme = StyleSheet.create({
   text: {
     color: '#fff',
   },
+  textHeading: {
+    color: colors.PrimaryColor,
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 15,
+    fontWeight: 'bold',
+  },
 });

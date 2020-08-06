@@ -23,4 +23,11 @@ export const lightTheme = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 6,
   },
+  textHeading: {
+    color: '#000',
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 15,
+    fontWeight: '600',
+  },
 });

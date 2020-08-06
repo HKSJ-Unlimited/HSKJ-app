@@ -45,12 +45,16 @@ export default function CarouselComponent({onPress}) {
     },
   });
 
+  const _onCarouselPress = (...args) => {
+    console.log(args);
+  };
+
   const _renderItem = ({item, index}, parallaxProps) => {
-    console.log(item);
     return (
       <TouchableOpacity
+        key={item.name}
         style={styles.item}
-        onPress={() => onPress(item.id, item.name, item.folder)}>
+        onPress={() => _onCarouselPress(item.id, item.name, item.folder)}>
         <ParallaxImage
           source={{uri: item.uri}}
           containerStyle={[styles.imageContainer, {elevation: 10}]}

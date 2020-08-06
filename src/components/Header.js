@@ -29,7 +29,7 @@ export default function Header({navigation}) {
         onPress={() => navigation.openDrawer()}
         style={styles.icon}
       />
-      <Feather name="search" size={35} style={styles.icon} />
+      <Feather name="search" size={33} style={styles.icon} />
     </View>
   );
 }

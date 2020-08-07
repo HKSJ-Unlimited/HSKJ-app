@@ -16,7 +16,7 @@ import {HotPicks} from '../api/Data';
 const {width: screenWidth} = Dimensions.get('window');
 
 export default function CarouselComponent({onPress}) {
-  console.log(HotPicks);
+  // console.log(HotPicks);
   const carouselRef = useRef(null);
   const [themeMode, setThemeMode] = useContext(ThemeContext);
 
@@ -34,7 +34,7 @@ export default function CarouselComponent({onPress}) {
     },
     item: {
       width: screenWidth - 60,
-      height: screenWidth - 160,
+      height: screenWidth - 170,
     },
     title: {
       textAlign: 'center',

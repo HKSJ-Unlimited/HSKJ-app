@@ -1,68 +1,106 @@
 import React, {useContext} from 'react';
-import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 
-import {allCategories} from '../api/Data';
 import CarouselComponent from './CarouselComponent';
 import ThemeContext from '../theme';
 import {lightTheme} from '../theme/light-theme';
 import {darkTheme} from '../theme/dark-theme';
+import {allCategories} from '../api/Data';
+import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function CategoryList() {
+  const fakeData = [...allCategories];
+
+  fakeData.forEach((e) => {
+    e['type'] = 'NORMAL';
+  });
+
   const [themeMode, setThemeMode] = useContext(ThemeContext);
   const styles = StyleSheet.create({
     card: {
-      width: '100%',
-      alignSelf: 'center',
-      borderRadius: 6,
-      marginBottom: 10,
       backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#000',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    image: {
+      height: 120,
+      width: 180,
+      resizeMode: 'contain',
+    },
+    body: {
+      flex: 1,
+      marginLeft: 10,
+      marginRight: 10,
+      maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
     },
   });
-  const _renderList = (item) => (
-    <View style={styles.card}>
-      <Image
-        key={item.uri}
-        source={{
-          uri: item.uri,
-        }}
-        style={{
-          height: 220,
-          resizeMode: 'contain',
-          width: '100%',
-          alignSelf: 'center',
-          borderRadius: 6,
-          marginBottom: -25,
-        }}
-      />
-      <Text
-        style={[
-          themeMode === 'light'
-            ? lightTheme.textHeading
-            : darkTheme.textHeading,
-          {
-            paddingTop: 30,
-            padding: 5,
-          },
-        ]}>
-        {item.name}
-      </Text>
-    </View>
+
+  const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(fakeData);
+
+  const layoutProv = new LayoutProvider(
+    (i) => {
+      return list.getDataForIndex(i).type;
+    },
+    (type, dim) => {
+      switch (type) {
+        case 'NORMAL':
+          dim.width = SCREEN_WIDTH;
+          dim.height = 100;
+          break;
+        default:
+          dim.width = 0;
+          dim.height = 0;
+          break;
+      }
+    },
   );
 
+  const rowRenderer = (type, data) => {
+    const {uri, name} = data;
+    return (
+      <View style={styles.card}>
+        <Image
+          source={{
+            uri: uri,
+          }}
+          style={styles.image}
+        />
+        <View style={styles.body}>
+          <Text
+            style={[
+              themeMode === 'light'
+                ? lightTheme.textHeading
+                : darkTheme.textHeading,
+              {fontSize: 16, flexWrap: 'wrap', flex: 0},
+            ]}>
+            {name}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <FlatList
-      data={allCategories}
-      renderItem={({item}) => _renderList(item)}
-      key={({item}) => item.name}
-      removeClippedSubviews={true} // Unmount components when outside of window
-      initialNumToRender={5} // Reduce initial render amount
-      maxToRenderPerBatch={1} // Reduce number in each render batch
-      maxToRenderPerBatch={100} // Increase time between renders
-      windowSize={7} // Reduce the window size
-      nestedScrollEnabled={true}
-      ListHeaderComponent={CarouselComponent}
-      ListHeaderComponentStyle={{marginBottom: 10}}
-      showsVerticalScrollIndicator={false}
-    />
+    <View style={{flex: 1}}>
+      <View style={{marginBottom: 10}}>
+        <CarouselComponent />
+      </View>
+      <RecyclerListView
+        scrollViewProps={{showsVerticalScrollIndicator: false}}
+        dataProvider={list}
+        layoutProvider={layoutProv}
+        rowRenderer={rowRenderer}
+      />
+    </View>
   );
 }

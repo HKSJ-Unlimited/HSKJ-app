@@ -12,7 +12,6 @@ import CarouselComponent from '../components/CarouselComponent';
 
 export default function HomeScreen({navigation}) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
-  const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
   return (
     <CommonLayout>
@@ -23,7 +22,6 @@ export default function HomeScreen({navigation}) {
         }>
         HOT PICKS 🔥🔥
       </Text>
-      {/* <CarouselComponent onPress={_onCarouselPress} /> */}
       <CategoryList />
     </CommonLayout>
   );

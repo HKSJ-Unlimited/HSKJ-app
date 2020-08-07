@@ -21,7 +21,6 @@ export default function Header({navigation}) {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        marginBottom: 10,
       }}>
       <Icon
         name="menu"

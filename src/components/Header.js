@@ -1,20 +1,16 @@
-import React, {useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import {Switch} from 'react-native-gesture-handler';
 
-import {lightTheme} from '../theme/light-theme';
 import ThemeContext from '../theme';
-import {darkTheme} from '../theme/dark-theme';
+import { lightTheme } from '../theme/light-theme';
+import { darkTheme } from '../theme/dark-theme';
 
-export default function Header({navigation}) {
+
+export default function Header({ navigation }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
-  const styles = StyleSheet.create({
-    icon: {
-      color: themeMode === 'light' ? '#000' : '#D87314',
-    },
-  });
+
   return (
     <View
       style={{
@@ -26,9 +22,9 @@ export default function Header({navigation}) {
         name="menu"
         size={35}
         onPress={() => navigation.openDrawer()}
-        style={styles.icon}
+        style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon}
       />
-      <Feather name="search" size={33} style={styles.icon} />
+      <Feather name="search" size={30} style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon} />
     </View>
   );
 }

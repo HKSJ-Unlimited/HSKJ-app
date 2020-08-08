@@ -1,29 +1,40 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import {createSwitchNavigator, createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import ThemeContext from './src/theme';
 import HomeScreen from './src/screens/HomeScreen';
 import CustomDrawerScreen from './src/screens/CustomDrawerScreen';
 import AppLockScreen from './src/screens/AppLockScreen';
 import SplashScreen from './src/screens/SplashScreen';
-import {createDrawerNavigator} from 'react-navigation-drawer';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import SelectedCategory from './src/screens/SelectedCategory';
 
 MaterialCommunityIcons.loadFont();
 Feather.loadFont();
 
+const MainNavigator = createStackNavigator({
+  HomeScreen,
+  SelectedCategory
+}, {
+  initialRouteName: 'HomeScreen',
+  headerMode: 'none',
+  mode: 'modal',
+  keyboardHandlingEnabled: true
+})
+
 const Dashboard = createDrawerNavigator(
   {
-    HomeScreen,
+    MainNavigator
   },
   {
     contentOptions: {
       activeTintColor: '#fd6d24',
       backgroundTintColor: '#fdbf83',
     },
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'MainNavigator',
     drawerType: 'slide',
     contentComponent: (props) => <CustomDrawerScreen {...props} />,
   },

@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
-import {View, Text, FlatList, Switch, StyleSheet, Linking} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, FlatList, Switch, StyleSheet, Linking } from 'react-native';
 
 import ThemeContext from '../theme';
-import {lightTheme} from '../theme/light-theme';
-import {darkTheme} from '../theme/dark-theme';
+import { lightTheme } from '../theme/light-theme';
+import { darkTheme } from '../theme/dark-theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonLayout from '../theme/CommonLayout';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CustomDrawerScreen({navigation}) {
+export default function CustomDrawerScreen({ navigation }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
 
   const getTheme = (prop) => {
@@ -33,7 +33,8 @@ export default function CustomDrawerScreen({navigation}) {
       marginBottom: '80%',
     },
     text: {
-      textAlign: 'right',
+      justifyContent: 'center',
+      marginLeft: 10
     },
   });
 
@@ -111,7 +112,7 @@ export default function CustomDrawerScreen({navigation}) {
 
   return (
     <CommonLayout>
-      <FlatList data={list} renderItem={({item}) => renderList(item)} />
+      <FlatList data={list} renderItem={({ item }) => renderList(item)} />
       <View style={styles.switch}>
         <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
           Black AF Theme

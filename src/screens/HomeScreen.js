@@ -1,18 +1,25 @@
-import React, {useContext} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
-import {Animated, FlatList} from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Animated, FlatList } from 'react-native';
 
 import Header from '../components/Header';
-import {lightTheme} from '../theme/light-theme';
+import { lightTheme } from '../theme/light-theme';
 import ThemeContext from '../theme';
-import {darkTheme} from '../theme/dark-theme';
+import { darkTheme } from '../theme/dark-theme';
 import CommonLayout from '../theme/CommonLayout';
 import CategoryList from '../components/CategoryList';
 import CarouselComponent from '../components/CarouselComponent';
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({ navigation }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
+  const _onCatergorySelected = (args) => {
 
+    navigation.navigate('SelectedCategory', {
+      name: args.id,
+      heading: args.name,
+      folderID: args.folder,
+    })
+  }
   return (
     <CommonLayout>
       <Header navigation={navigation} />
@@ -22,7 +29,7 @@ export default function HomeScreen({navigation}) {
         }>
         HOT PICKS 🔥🔥
       </Text>
-      <CategoryList />
+      <CategoryList onPressItem={_onCatergorySelected} />
     </CommonLayout>
   );
 }

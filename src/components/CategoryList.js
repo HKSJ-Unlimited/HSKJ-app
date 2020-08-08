@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -6,18 +6,19 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import CarouselComponent from './CarouselComponent';
 import ThemeContext from '../theme';
-import {lightTheme} from '../theme/light-theme';
-import {darkTheme} from '../theme/dark-theme';
-import {allCategories} from '../api/Data';
-import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
+import { lightTheme } from '../theme/light-theme';
+import { darkTheme } from '../theme/dark-theme';
+import { allCategories } from '../api/Data';
+import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function CategoryList() {
+export default function CategoryList({ onPressItem }) {
   const fakeData = [...allCategories];
 
   fakeData.forEach((e) => {
@@ -66,37 +67,39 @@ export default function CategoryList() {
   );
 
   const rowRenderer = (type, data) => {
-    const {uri, name} = data;
+    const { uri, name } = data;
     return (
-      <View style={styles.card}>
-        <Image
-          source={{
-            uri: uri,
-          }}
-          style={styles.image}
-        />
-        <View style={styles.body}>
-          <Text
-            style={[
-              themeMode === 'light'
-                ? lightTheme.textHeading
-                : darkTheme.textHeading,
-              {fontSize: 16, flexWrap: 'wrap', flex: 0},
-            ]}>
-            {name}
-          </Text>
+      <TouchableWithoutFeedback onPress={() => onPressItem(data)} key={uri}>
+        <View style={styles.card}>
+          <Image
+            source={{
+              uri: uri,
+            }}
+            style={styles.image}
+          />
+          <View style={styles.body}>
+            <Text
+              style={[
+                themeMode === 'light'
+                  ? lightTheme.textHeading
+                  : darkTheme.textHeading,
+                { fontSize: 15, flexWrap: 'wrap', flex: 0 },
+              ]}>
+              {name}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   };
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{marginBottom: 10}}>
+    <View style={{ flex: 1 }}>
+      <View style={{ marginBottom: 10 }}>
         <CarouselComponent />
       </View>
       <RecyclerListView
-        scrollViewProps={{showsVerticalScrollIndicator: false}}
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
         dataProvider={list}
         layoutProvider={layoutProv}
         rowRenderer={rowRenderer}

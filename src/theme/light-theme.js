@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const colors = {
   PrimaryColor: '#fafafa',
@@ -29,5 +29,8 @@ export const lightTheme = StyleSheet.create({
     fontSize: 20,
     marginBottom: 15,
     fontWeight: '600',
+  },
+  icon: {
+    color: '#000',
   },
 });

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  TouchableWithoutFeedback,
+  TouchableHighlight,
 } from 'react-native';
 
 import CarouselComponent from './CarouselComponent';
@@ -28,21 +28,22 @@ export default function CategoryList({ onPressItem }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
   const styles = StyleSheet.create({
     card: {
-      backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#000',
-      flexDirection: 'row',
+      backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#171813',
+      flex: 1,
+      // flexDirection: 'row',
+      justifyContent: 'flex-start',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      padding: 8
     },
     image: {
-      height: 120,
-      width: 180,
-      resizeMode: 'contain',
+      width: '100%',
+      height: 200,
+      resizeMode: 'contain'
     },
     body: {
-      flex: 1,
-      marginLeft: 10,
-      marginRight: 10,
-      maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
+      // marginLeft: 10,
+      // marginRight: 10,
+      // maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
     },
   });
 
@@ -56,10 +57,10 @@ export default function CategoryList({ onPressItem }) {
       switch (type) {
         case 'NORMAL':
           dim.width = SCREEN_WIDTH;
-          dim.height = 100;
+          dim.height = 245;
           break;
         default:
-          dim.width = 0;
+          dim.width = SCREEN_WIDTH;
           dim.height = 0;
           break;
       }
@@ -69,7 +70,7 @@ export default function CategoryList({ onPressItem }) {
   const rowRenderer = (type, data) => {
     const { uri, name } = data;
     return (
-      <TouchableWithoutFeedback onPress={() => onPressItem(data)} key={uri}>
+      <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 1, height: 240 }} underlayColor="#878787" onPress={() => onPressItem(data)} key={uri}>
         <View style={styles.card}>
           <Image
             source={{
@@ -83,13 +84,13 @@ export default function CategoryList({ onPressItem }) {
                 themeMode === 'light'
                   ? lightTheme.textHeading
                   : darkTheme.textHeading,
-                { fontSize: 15, flexWrap: 'wrap', flex: 0 },
+                { fontSize: 21, fontWeight: '900' },
               ]}>
               {name}
             </Text>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableHighlight>
     );
   };
 

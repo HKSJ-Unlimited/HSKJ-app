@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
-import {SafeAreaView, View, StatusBar, Platform} from 'react-native';
+import React, { useContext } from 'react';
+import { SafeAreaView, View, StatusBar, Platform } from 'react-native';
 
-import {lightTheme} from './light-theme';
+import { lightTheme } from './light-theme';
 import ThemeContext from './';
-import {darkTheme} from './dark-theme';
+import { darkTheme } from './dark-theme';
 
-export default function CommonLayout({children}) {
+export default function CommonLayout({ children }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
 
   const getTheme = (prop) => {
@@ -32,7 +32,7 @@ export default function CommonLayout({children}) {
         <StatusBar barStyle={getTheme('android')} />
       )}
 
-      <View style={[getTheme(), {paddingTop: 5}]}>{children}</View>
+      <View style={[getTheme(), { paddingTop: 5 }]}>{children}</View>
     </>
   );
 }

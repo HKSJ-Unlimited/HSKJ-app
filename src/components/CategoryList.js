@@ -84,7 +84,7 @@ export default function CategoryList({ onPressItem }) {
                 themeMode === 'light'
                   ? lightTheme.textHeading
                   : darkTheme.textHeading,
-                { fontSize: 21, fontWeight: '900' },
+                { fontSize: 20, fontWeight: '900' },
               ]}>
               {name}
             </Text>

@@ -3,7 +3,7 @@ import { View, Text, FlatList, Switch, StyleSheet, Linking } from 'react-native'
 
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
-import { darkTheme } from '../theme/dark-theme';
+import { darkTheme, colors } from '../theme/dark-theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonLayout from '../theme/CommonLayout';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -18,7 +18,7 @@ export default function CustomDrawerScreen({ navigation }) {
       case 'text':
         return themeMode === 'light' ? lightTheme.text : darkTheme.text;
       case 'bgTint':
-        return themeMode === 'light' ? '#eee' : '#D87314';
+        return themeMode === 'light' ? '#eee' : '#1a8a98';
       default:
         return null;
     }
@@ -117,7 +117,7 @@ export default function CustomDrawerScreen({ navigation }) {
         <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
           Black AF Theme
         </Text>
-        <Switch value={themeMode === 'dark'} onValueChange={toggleTheme} />
+        <Switch thumbColor="#1a8a98" trackColor={{ false: '#e4e4e4', true: '#1a8a98' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
       </View>
     </CommonLayout>
   );

@@ -18,7 +18,6 @@ export default function SelectedCategory({ navigation }) {
 
     const [themeMode, setThemeMode] = useContext(ThemeContext);
     const { data } = useFetch(GOOGLE_API, BASE_URL, folderID, name);
-    console.log(data);
 
     const styles = StyleSheet.create({
         header: {
@@ -41,8 +40,9 @@ export default function SelectedCategory({ navigation }) {
             marginLeft: -10
         },
         card: {
-            backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#171813',
+            backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#121212',
             flex: 1,
+            borderRadius: 12
         },
         image: {
             height: 180,
@@ -87,7 +87,7 @@ export default function SelectedCategory({ navigation }) {
             .slice(0, 100)
             .toLowerCase();
         return (
-            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 7, width: '98%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={link}>
+            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={link}>
                 <View style={styles.card}>
                     <Image
                         source={{
@@ -103,7 +103,7 @@ export default function SelectedCategory({ navigation }) {
                                     : darkTheme.textHeading,
                                 {
                                     fontWeight: 'bold', textAlign: 'center',
-                                    fontSize: 12, padding: 5
+                                    fontSize: 12, padding: 5, top: -5
                                 },
                             ]}>
                             {trimmedName}

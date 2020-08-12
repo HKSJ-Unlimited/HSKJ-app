@@ -52,7 +52,7 @@ export default function CustomDrawerScreen({ navigation }) {
       icon: 'information',
     },
     {
-      name: 'Donwload and Changelog',
+      name: 'Download and Changelog',
       id: 2,
       route: 'download',
       icon: 'download',
@@ -112,12 +112,12 @@ export default function CustomDrawerScreen({ navigation }) {
 
   return (
     <CommonLayout>
-      <FlatList data={list} renderItem={({ item }) => renderList(item)} />
+      <FlatList keyExtractor={(item, index) => index.toString()} data={list} renderItem={({ item }) => renderList(item)} />
       <View style={styles.switch}>
         <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
           Black AF Theme
         </Text>
-        <Switch thumbColor="#1a8a98" trackColor={{ false: '#e4e4e4', true: '#1a8a98' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
+        <Switch thumbColor="#1a8a98" trackColor={{ false: '#e4e4e4', true: '#358c96' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
       </View>
     </CommonLayout>
   );

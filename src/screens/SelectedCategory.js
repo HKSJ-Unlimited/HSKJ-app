@@ -1,12 +1,13 @@
-import React, { useContext } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import React, { useContext, useEffect } from 'react'
+import { View, Text, StyleSheet, Dimensions, Image, TouchableHighlight } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
-
+import { GOOGLE_API, BASE_URL } from 'react-native-dotenv';
+import { useFetch } from '../api/fetchHook'
 import CommonLayout from '../theme/CommonLayout'
-import Header from '../components/Header'
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
 import { darkTheme, colors } from '../theme/dark-theme';
+import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview';
 
 export default function SelectedCategory({ navigation }) {
 
@@ -16,17 +17,20 @@ export default function SelectedCategory({ navigation }) {
     const SCREEN_WIDTH = Dimensions.get('window').width;
 
     const [themeMode, setThemeMode] = useContext(ThemeContext);
+    const { data } = useFetch(GOOGLE_API, BASE_URL, folderID, name);
+    console.log(data);
 
     const styles = StyleSheet.create({
         header: {
             flexDirection: 'row',
             backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#2C3335',
             alignItems: 'center',
-            height: 40,
+            height: '6%',
             width: SCREEN_WIDTH - 30,
             margin: 5,
             borderRadius: 6,
-            elevation: 3
+            elevation: 3,
+            marginBottom: 10
         },
         heading: {
             fontSize: 18,
@@ -34,8 +38,81 @@ export default function SelectedCategory({ navigation }) {
             justifyContent: 'center',
             flex: 1,
             textAlign: 'center',
-        }
+            marginLeft: -10
+        },
+        card: {
+            backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#171813',
+            flex: 1,
+        },
+        image: {
+            height: 180,
+            width: '100%',
+            marginTop: 10,
+            resizeMode: 'contain',
+            alignSelf: 'center',
+            marginBottom: 5
+        },
+        body: {
+            // flex: 1,
+            // marginLeft: 10,
+            // marginRight: 10,
+            // maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
+            // borderTopWidth: 2
+        },
     })
+    const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
+    const layoutProv = new LayoutProvider(
+        (i) => {
+            return list.getDataForIndex(i).type;
+        },
+        (type, dim) => {
+            switch (type) {
+                case 'NORMAL':
+                    dim.width = SCREEN_WIDTH;
+                    dim.height = 245;
+                    break;
+                default:
+                    dim.width = SCREEN_WIDTH;
+                    dim.height = 0;
+                    break;
+            }
+        },
+    );
+
+    const rowRenderer = (type, data) => {
+        const { link, name } = data;
+        const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|[0-9]/gi;
+        let trimmedName = name
+            .replace(regex, ' ')
+            .slice(0, 100)
+            .toLowerCase();
+        return (
+            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 7, width: '98%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={link}>
+                <View style={styles.card}>
+                    <Image
+                        source={{
+                            uri: link,
+                        }}
+                        style={styles.image}
+                    />
+                    <View style={styles.body}>
+                        <Text
+                            style={[
+                                themeMode === 'light'
+                                    ? lightTheme.textHeading
+                                    : darkTheme.textHeading,
+                                {
+                                    fontWeight: 'bold', textAlign: 'center',
+                                    fontSize: 12, padding: 5
+                                },
+                            ]}>
+                            {trimmedName}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        );
+    };
 
     return (
         <CommonLayout>
@@ -44,10 +121,16 @@ export default function SelectedCategory({ navigation }) {
                     name="arrow-left"
                     size={25}
                     onPress={() => navigation.goBack()}
-                    style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon}
+                    style={[themeMode === 'light' ? lightTheme.icon : darkTheme.icon, { paddingLeft: 5 }]}
                 />
                 <Text style={[styles.heading, { color: themeMode === 'light' ? lightTheme.text.color : colors.PrimaryColor }]}>{heading}</Text>
             </View>
+            {data.length > 0 && <RecyclerListView
+                scrollViewProps={{ showsVerticalScrollIndicator: false }}
+                dataProvider={list}
+                layoutProvider={layoutProv}
+                rowRenderer={rowRenderer}
+            />}
         </CommonLayout>
     )
 }

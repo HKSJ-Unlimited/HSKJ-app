@@ -18,7 +18,7 @@ export default function CustomDrawerScreen({ navigation }) {
       case 'text':
         return themeMode === 'light' ? lightTheme.text : darkTheme.text;
       case 'bgTint':
-        return themeMode === 'light' ? '#eee' : '#1a8a98';
+        return themeMode === 'light' ? '#eee' : '#01CBC6';
       default:
         return null;
     }

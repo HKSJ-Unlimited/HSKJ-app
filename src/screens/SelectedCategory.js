@@ -87,7 +87,12 @@ export default function SelectedCategory({ navigation }) {
             .slice(0, 100)
             .toLowerCase();
         return (
-            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={link}>
+            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }}
+                underlayColor="#878787"
+                onPress={() => navigation.navigate('VideoScreen', {
+                    name: navigation.getParam('name') + '/' + name + '.mp4',
+                })}
+                key={link}>
                 <View style={styles.card}>
                     <Image
                         source={{

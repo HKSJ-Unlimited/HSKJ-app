@@ -11,13 +11,15 @@ import AppLockScreen from './src/screens/AppLockScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import SelectedCategory from './src/screens/SelectedCategory';
+import VideoLayout from './src/components/VideoLayout';
 
 MaterialCommunityIcons.loadFont();
 Feather.loadFont();
 
 const MainNavigator = createStackNavigator({
   HomeScreen,
-  SelectedCategory
+  SelectedCategory,
+  VideoScreen: VideoLayout
 }, {
   initialRouteName: 'HomeScreen',
   headerMode: 'none',

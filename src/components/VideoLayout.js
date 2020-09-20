@@ -14,10 +14,10 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 import Orientation from 'react-native-orientation';
 import Video from 'react-native-video';
-import Icon from "react-native-vector-icons/FontAwesome";
+// import Icon from "react-native-vector-icons/FontAwesome";
 
 import { FullscreenClose, FullscreenOpen } from '../assets/icons';
-import TopHeader from './Header';
+import Header from './Header';
 
 import PlayerControls from './PlayerControls';
 import ProgressBar from './ProgressBar';
@@ -32,7 +32,7 @@ export default class VideoLayout extends React.Component {
         play: false,
         name: null,
         showControls: false,
-        buffering: true,
+        buffering: false,
         animated: new Animated.Value(0),
     };
     _onLoadHandler = data => {
@@ -68,7 +68,7 @@ export default class VideoLayout extends React.Component {
     };
     componentDidMount() {
         const name = BASE_URL + this.props.navigation.getParam('name');
-        this.setState({ name }, () => console.log(this.state.name));
+        this.setState({ name });
         BackHandler.addEventListener('hardwareBackPress', this._backHandler);
         Orientation.addOrientationListener(this._handleOrientation);
     }
@@ -114,7 +114,7 @@ export default class VideoLayout extends React.Component {
             return;
         }
         this.setState({ play: true });
-        setTimeout(() => this.setState(s => ({ ...s, showControls: false })), 2000);
+        setTimeout(() => this.setState(s => ({ ...s, showControls: false })), 3000);
     };
     skipBackward = () => {
         this.player.seek(this.state.currentTime - 15);
@@ -139,7 +139,6 @@ export default class VideoLayout extends React.Component {
 
     _handleBuffer = meta => {
         meta.isBuffering && this.triggerBufferAnimation();
-
         if (this.loopingAnimation && !meta.isBuffering) {
             this.loopingAnimation.stopAnimation();
         }
@@ -205,17 +204,17 @@ export default class VideoLayout extends React.Component {
             transform: [{ rotate: interpolatedAnimation }],
         };
         return (
-            <View style={{ flex: 1 }}>
+            <View>
                 <StatusBar hidden={this.state.fullscreen} />
-                {!this.state.fullscreen && <TopHeader text="HKSJ" />}
+                {!this.state.fullscreen && <Header navigation={this.props.navigation} />}
                 <TouchableWithoutFeedback onPress={this._showControls}>
-                    <View style={buffering ? styles.buffering : { flex: 1 }}>
-                        <Video
+                    <View >
+                        {this.state.name && <Video
                             controls={false}
                             ref={ref => {
                                 this.player = ref;
                             }}
-                            onBuffer={this._handleBuffer}
+                            // onBuffer={this._handleBuffer}
                             onLoad={this._onLoadHandler}
                             style={
                                 this.state.fullscreen ? styles.fullscreenVideo : styles.video
@@ -227,14 +226,15 @@ export default class VideoLayout extends React.Component {
                             onExitFullscreen={this._HandleFullscreen}
                             onProgress={this._HandleProgress}
                             paused={this.state.play}
-                        />
-                        <View style={styles.videoCover}>
+                            resizeMode="contain"
+                        />}
+                        {/* <View style={styles.videoCover}>
                             {buffering && (
                                 <Animated.View style={rotateStyle}>
                                     <Icon name="circle-o-notch" size={50} color="white" />
                                 </Animated.View>
                             )}
-                        </View>
+                        </View> */}
                         {this.state.showControls && (
                             <View style={styles.controlOverlay}>
                                 <TouchableOpacity
@@ -272,7 +272,7 @@ export default class VideoLayout extends React.Component {
                 {!this.state.fullscreen && (
                     <>
                         <TouchableOpacity full style={styles.button} onPress={() => this.download()}>
-                            <Text style={{ color: '#eee', fontSize: 18 }}>Download</Text>
+                            <Text style={{ color: '#eee', fontSize: 18, textAlign: 'center' }}>Download</Text>
                         </TouchableOpacity>
                         {/* <View style={styles.banner}>
               <GoogleADBanner
@@ -303,18 +303,17 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 15,
         backgroundColor: '#C2913F',
-        borderRadius: 10
+        borderRadius: 10,
+        padding: 10
     },
     video: {
-        flex: 1,
+        // flex: 1,
         height: Dimensions.get('window').width * (9 / 16),
         width: Dimensions.get('window').width,
         backgroundColor: 'black',
         marginTop: 10,
-        borderRadius: 10
     },
     fullscreenVideo: {
-        flex: 1,
         height: Dimensions.get('window').width,
         width: Dimensions.get('screen').height,
         backgroundColor: 'black',

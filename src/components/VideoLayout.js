@@ -18,7 +18,8 @@ import Video from 'react-native-video';
 
 import { FullscreenClose, FullscreenOpen } from '../assets/icons';
 import Header from './Header';
-
+import { lightTheme } from '../theme/light-theme';
+import { colors, darkTheme } from '../theme/dark-theme';
 import PlayerControls from './PlayerControls';
 import ProgressBar from './ProgressBar';
 
@@ -34,6 +35,7 @@ export default class VideoLayout extends React.Component {
         showControls: false,
         buffering: false,
         animated: new Animated.Value(0),
+        themeMode: this.props.themeMode
     };
     _onLoadHandler = data => {
         this.triggerBufferAnimation();
@@ -67,7 +69,7 @@ export default class VideoLayout extends React.Component {
         Orientation.lockToPortrait();
     };
     componentDidMount() {
-        const name = BASE_URL + this.props.navigation.getParam('name');
+        const name = BASE_URL + this.props.name;
         this.setState({ name });
         BackHandler.addEventListener('hardwareBackPress', this._backHandler);
         Orientation.addOrientationListener(this._handleOrientation);
@@ -76,10 +78,15 @@ export default class VideoLayout extends React.Component {
         Orientation.removeOrientationListener(this._handleOrientation);
         BackHandler.removeEventListener('hardwareBackPress', this._backHandler);
     }
+    componentDidUpdate(prevProps) {
+        if (this.props.themeMode !== prevProps.themeMode) {
+            this.setState({ themeMode: this.props.themeMode })
+        }
+    }
 
     renderToolbar = () => (
         <View>
-            <Text> {this.props.navigation.getParam('name')} </Text>
+            <Text> {this.props.name} </Text>
         </View>
     );
 
@@ -204,7 +211,7 @@ export default class VideoLayout extends React.Component {
             transform: [{ rotate: interpolatedAnimation }],
         };
         return (
-            <View>
+            <View style={{ marginLeft: -10 }}>
                 <StatusBar hidden={this.state.fullscreen} />
                 {!this.state.fullscreen && <Header navigation={this.props.navigation} />}
                 <TouchableWithoutFeedback onPress={this._showControls}>
@@ -271,8 +278,11 @@ export default class VideoLayout extends React.Component {
 
                 {!this.state.fullscreen && (
                     <>
-                        <TouchableOpacity full style={styles.button} onPress={() => this.download()}>
-                            <Text style={{ color: '#eee', fontSize: 18, textAlign: 'center' }}>Download</Text>
+                        <TouchableOpacity full style={[styles.button, { backgroundColor: this.state.themeMode === 'light' ? '#eee' : colors.PrimaryColor }]} onPress={() => this.download()}>
+                            <Text style={{
+                                color: this.state.themeMode === 'light' ? lightTheme.text : darkTheme.text,
+                                fontSize: 18, textAlign: 'center'
+                            }}>Download</Text>
                         </TouchableOpacity>
                         {/* <View style={styles.banner}>
               <GoogleADBanner
@@ -289,7 +299,7 @@ export default class VideoLayout extends React.Component {
 }
 const styles = StyleSheet.create({
     Video: {
-        width: Dimensions.get('window').width * 1.6,
+        width: Dimensions.get('window').width * (9 / 16),
         // height:350
     },
     banner: {
@@ -302,7 +312,6 @@ const styles = StyleSheet.create({
         marginHorizontal: '20%',
         marginBottom: 5,
         marginTop: 15,
-        backgroundColor: '#C2913F',
         borderRadius: 10,
         padding: 10
     },
@@ -328,10 +337,10 @@ const styles = StyleSheet.create({
     controlOverlay: {
         position: 'absolute',
         top: 0,
-        bottom: 0,
-        left: 0,
+        bottom: 10,
+        left: 10,
         right: 0,
-        backgroundColor: '#000000c4',
+        backfaceVisibility: 'hidden',
         justifyContent: 'space-between',
     },
     videoCover: {

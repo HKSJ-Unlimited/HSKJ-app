@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Animated, FlatList } from 'react-native';
+import { Text } from 'react-native';
 
 import Header from '../components/Header';
 import { lightTheme } from '../theme/light-theme';

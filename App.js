@@ -11,7 +11,7 @@ import AppLockScreen from './src/screens/AppLockScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import SelectedCategory from './src/screens/SelectedCategory';
-import VideoLayout from './src/components/VideoLayout';
+import VideoPlayer from './src/components/VideoPlayer';
 
 MaterialCommunityIcons.loadFont();
 Feather.loadFont();
@@ -19,7 +19,7 @@ Feather.loadFont();
 const MainNavigator = createStackNavigator({
   HomeScreen,
   SelectedCategory,
-  VideoScreen: VideoLayout
+  VideoScreen: VideoPlayer
 }, {
   initialRouteName: 'HomeScreen',
   headerMode: 'none',

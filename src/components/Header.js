@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
 import ThemeContext from '../theme';
-import { lightTheme } from '../theme/light-theme';
+import { colors, lightTheme } from '../theme/light-theme';
 import { darkTheme } from '../theme/dark-theme';
 
 
@@ -17,6 +17,7 @@ export default function Header({ navigation }) {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
+        backgroundColor: themeMode === 'light' ? colors.PrimaryColor : lightTheme.icon.color
       }}>
       <Icon
         name="menu"
@@ -24,7 +25,6 @@ export default function Header({ navigation }) {
         onPress={() => navigation.openDrawer()}
         style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon}
       />
-      <Feather name="search" size={30} style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon} />
     </View>
   );
 }

@@ -21,9 +21,6 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function CategoryList({ onPressItem }) {
   const fakeData = [...allCategories];
 
-  fakeData.forEach((e) => {
-    e['type'] = 'NORMAL';
-  });
 
   const [themeMode, setThemeMode] = useContext(ThemeContext);
   const styles = StyleSheet.create({
@@ -56,13 +53,9 @@ export default function CategoryList({ onPressItem }) {
     },
     (type, dim) => {
       switch (type) {
-        case 'NORMAL':
-          dim.width = SCREEN_WIDTH;
-          dim.height = 245;
-          break;
         default:
-          dim.width = SCREEN_WIDTH;
-          dim.height = 0;
+          dim.width = SCREEN_WIDTH / 2;
+          dim.height = 245;
           break;
       }
     },

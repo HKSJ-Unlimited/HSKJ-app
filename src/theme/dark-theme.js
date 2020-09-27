@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const colors = {
-  PrimaryColor: '#01CBC6',
+  PrimaryColor: '#00E676',
   BackgroundColor: '#000',
 };
 
@@ -28,4 +28,7 @@ export const darkTheme = StyleSheet.create({
   icon: {
     color: colors.PrimaryColor,
   },
+  color: {
+    color: colors.PrimaryColor
+  }
 });

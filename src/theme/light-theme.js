@@ -33,4 +33,7 @@ export const lightTheme = StyleSheet.create({
   icon: {
     color: '#000',
   },
+  color: {
+    color: colors.PrimaryColor
+  }
 });

@@ -1,4 +1,4 @@
-import React, {useRef, useContext} from 'react';
+import React, { useRef, useContext } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -6,16 +6,16 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 
 import ThemeContext from '../theme';
-import {lightTheme} from '../theme/light-theme';
-import {darkTheme, colors} from '../theme/dark-theme';
-import {HotPicks} from '../api/Data';
+import { lightTheme } from '../theme/light-theme';
+import { darkTheme, colors } from '../theme/dark-theme';
+import { HotPicks } from '../api/Data';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
-export default function CarouselComponent({onPress}) {
+export default function CarouselComponent({ onPress }) {
   // console.log(HotPicks);
   const carouselRef = useRef(null);
   const [themeMode, setThemeMode] = useContext(ThemeContext);
@@ -23,18 +23,18 @@ export default function CarouselComponent({onPress}) {
   const styles = StyleSheet.create({
     imageContainer: {
       flex: 1,
-      marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
+      marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
       backgroundColor: 'white',
       borderRadius: 8,
     },
     image: {
-      width: 200,
-      height: 200,
+      width: screenWidth - 60,
+      height: screenWidth - 200,
       resizeMode: 'contain',
     },
     item: {
       width: screenWidth - 60,
-      height: screenWidth - 170,
+      height: screenWidth - 200,
     },
     title: {
       textAlign: 'center',
@@ -49,15 +49,15 @@ export default function CarouselComponent({onPress}) {
     console.log(args);
   };
 
-  const _renderItem = ({item, index}, parallaxProps) => {
+  const _renderItem = ({ item, index }, parallaxProps) => {
     return (
       <TouchableOpacity
         key={item.name}
         style={styles.item}
         onPress={() => _onCarouselPress(item.id, item.name, item.folder)}>
         <ParallaxImage
-          source={{uri: item.uri}}
-          containerStyle={[styles.imageContainer, {elevation: 10}]}
+          source={{ uri: item.uri }}
+          containerStyle={[styles.imageContainer, { elevation: 10 }]}
           style={styles.image}
           parallaxFactor={0.4}
           showSpinner={true}

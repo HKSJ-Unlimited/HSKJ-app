@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, View, StatusBar, Platform } from 'react-native';
+import { SafeAreaView, View, StatusBar, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 import { lightTheme } from './light-theme';
 import ThemeContext from './';
@@ -31,8 +31,10 @@ export default function CommonLayout({ children }) {
       {Platform.OS === 'android' && (
         <StatusBar barStyle={getTheme('android')} />
       )}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={[getTheme(), { paddingTop: 5, flex: 1 }]}>{children}</View>
 
-      <View style={[getTheme(), { paddingTop: 5 }]}>{children}</View>
+      </TouchableWithoutFeedback>
     </>
   );
 }

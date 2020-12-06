@@ -21,6 +21,9 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function CategoryList({ onPressItem }) {
   const fakeData = [...allCategories];
 
+  fakeData.forEach((e) => {
+    e['type'] = 'NORMAL';
+  });
 
   const [themeMode, setThemeMode] = useContext(ThemeContext);
   const styles = StyleSheet.create({
@@ -39,9 +42,6 @@ export default function CategoryList({ onPressItem }) {
       resizeMode: 'contain'
     },
     body: {
-      // marginLeft: 10,
-      // marginRight: 10,
-      // maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
     },
   });
 
@@ -54,7 +54,7 @@ export default function CategoryList({ onPressItem }) {
     (type, dim) => {
       switch (type) {
         default:
-          dim.width = SCREEN_WIDTH / 2;
+          dim.width = SCREEN_WIDTH;
           dim.height = 245;
           break;
       }
@@ -64,30 +64,30 @@ export default function CategoryList({ onPressItem }) {
   const rowRenderer = (type, data) => {
     const { uri, name } = data;
     return (
-      <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 237, borderRadius: 20, width: '100%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={uri}>
-        <View style={styles.card}>
-          <Image
-            source={{
-              uri: uri,
-            }}
-            style={styles.image}
-          />
-          <View style={styles.body}>
-            <Text
-              style={[
-                themeMode === 'light'
-                  ? lightTheme.textHeading
-                  : darkTheme.textHeading,
-                {
-                  fontWeight: 'bold',
-                  fontSize: 18, top: -5
-                },
-              ]}>
-              {name}
-            </Text>
+      <>
+        <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 207, borderRadius: 20, width: '95%', alignSelf: 'center' }} underlayColor="#878787" onPress={() => onPressItem(data)} key={uri}>
+          <View style={styles.card}>
+            <Image
+              source={{
+                uri: uri,
+              }}
+              style={styles.image}
+            />
           </View>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+        <Text
+          style={[
+            themeMode === 'light'
+              ? lightTheme.textHeading
+              : darkTheme.textHeading,
+            {
+              fontWeight: 'bold',
+              fontSize: 18,
+            },
+          ]}>
+          {name}
+        </Text>
+      </>
     );
   };
 

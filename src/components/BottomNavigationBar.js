@@ -11,31 +11,22 @@ import ThemeContext from '../theme';
 import CommonLayout from '../theme/CommonLayout';
 import SearchSchreen from '../screens/SearchSchreen';
 
-const Home = () => {
-    const [themeMode, setThemeMode] = useContext(ThemeContext);
-    const _onCatergorySelected = (args) => {
 
-        navigation.navigate('SelectedCategory', {
-            name: args.id,
-            heading: args.name,
-            folderID: args.folder,
-        })
+const BottomNavigationBar = ({ navigation }) => {
+    const Home = () => {
+        return (
+            <CommonLayout>
+                <Text
+                    style={
+                        themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading
+                    }>
+                    HOT PICKS 🔥🔥
+      </Text>
+                <CategoryList onPressItem={_onCatergorySelected} />
+            </CommonLayout>
+        )
     }
-    return (
-        <CommonLayout>
-            <Text
-                style={
-                    themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading
-                }>
-                HOT PICKS 🔥🔥
-  </Text>
-            <CategoryList onPressItem={_onCatergorySelected} />
-        </CommonLayout>
-    )
-}
 
-
-const BottomNavigationBar = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'videos', title: 'Video', icon: 'video' },
@@ -49,6 +40,15 @@ const BottomNavigationBar = () => {
         photos: PhotosScreen,
         search: SearchSchreen
     });
+    const _onCatergorySelected = (args) => {
+
+        navigation.navigate('SelectedCategory', {
+            name: args.id,
+            heading: args.name,
+            folderID: args.folder,
+        })
+    }
+
 
     return (
         <BottomNavigation

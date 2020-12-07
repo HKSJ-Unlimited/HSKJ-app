@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { Text, TextInput, } from 'react-native'
+import { Text, TextInput, View } from 'react-native'
 import { useSearch } from '../api/SearchDataHook';
 import ThemeContext from '../theme';
 import CommonLayout from '../theme/CommonLayout'
+import { withNavigation } from 'react-navigation';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function SearchSchreen() {
+function SearchSchreen({ navigation }) {
     const [themeMode, setThemeMode] = useContext(ThemeContext);
     const [query, setQuery] = useState('');
     const { data, status } = useSearch(query);
@@ -27,7 +29,19 @@ export default function SearchSchreen() {
                 }}
             />
             <Text>{status}</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {data.length > 0 && data.map(item => (
+                    <Text
+                        onPress={() => navigation.navigate('VideoScreen', {
+                            name: item.name,
+                        })}
+                        style={{ margin: 10 }}
+                        key={item.key}
+                    >{item.name}</Text>
+                ))}
+            </ScrollView>
         </CommonLayout>
 
     )
 }
+export default withNavigation(SearchSchreen);

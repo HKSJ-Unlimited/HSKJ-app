@@ -1,22 +1,36 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useCallback } from 'react'
 import { Text, TextInput, View } from 'react-native'
+import { withNavigation } from 'react-navigation';
+import { ScrollView } from 'react-native-gesture-handler';
+import debounce from 'lodash.debounce';
+
 import { useSearch } from '../api/SearchDataHook';
 import ThemeContext from '../theme';
 import CommonLayout from '../theme/CommonLayout'
-import { withNavigation } from 'react-navigation';
-import { ScrollView } from 'react-native-gesture-handler';
 
 function SearchSchreen({ navigation }) {
     const [themeMode, setThemeMode] = useContext(ThemeContext);
     const [query, setQuery] = useState('');
+    const [text, setText] = useState('');
     const { data, status } = useSearch(query);
 
+    const debouncedSave = useCallback(
+        debounce(nextValue => setQuery(nextValue), 1000),
+        []
+    );
+
+    const handleChange = (e) => {
+        setText(e);
+        debouncedSave(e)
+
+    }
     return (
         <CommonLayout>
             <TextInput
                 placeholder="Search"
                 autoFocus
-                onChangeText={(text) => setQuery(text)}
+                onChangeText={(text) => handleChange(text)}
+                onEndEditing={() => setQuery(text)}
                 autoCapitalize="none"
                 autoFocus
                 style={{

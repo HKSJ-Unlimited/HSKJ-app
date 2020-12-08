@@ -71,6 +71,7 @@ export default class VideoLayout extends React.Component {
     componentDidMount() {
         const name = BASE_URL + this.props.name;
         this.setState({ name });
+        console.log(name)
         BackHandler.addEventListener('hardwareBackPress', this._backHandler);
         Orientation.addOrientationListener(this._handleOrientation);
     }

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { View, Text, StyleSheet, Dimensions, Image, TouchableHighlight } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
-import { GOOGLE_API, BASE_URL } from 'react-native-dotenv';
 import { useFetch } from '../api/fetchHook'
 import CommonLayout from '../theme/CommonLayout'
 import ThemeContext from '../theme';
@@ -11,13 +10,12 @@ import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview
 
 export default function SelectedCategory({ navigation }) {
 
-    const name = navigation.getParam('name');
     const heading = navigation.getParam('heading');
     const folderID = navigation.getParam('folderID');
     const SCREEN_WIDTH = Dimensions.get('window').width;
 
     const [themeMode, setThemeMode] = useContext(ThemeContext);
-    const { data } = useFetch(GOOGLE_API, BASE_URL, folderID, name);
+    const { data } = useFetch(folderID);
 
     const styles = StyleSheet.create({
         header: {
@@ -59,7 +57,8 @@ export default function SelectedCategory({ navigation }) {
             // maxWidth: SCREEN_WIDTH - (80 + 10 + 20),
             // borderTopWidth: 2
         },
-    })
+    });
+
     const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
     const layoutProv = new LayoutProvider(
         (i) => {
@@ -80,23 +79,27 @@ export default function SelectedCategory({ navigation }) {
     );
 
     const rowRenderer = (type, data) => {
-        const { link, name } = data;
-        const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|[0-9]/gi;
+
+        const { thumbnailLink, name } = data;
+        const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|-|[0-9]/gi;
+
         let trimmedName = name
-            .replace(regex, ' ')
+            .replace(regex, '.')
             .slice(0, 100)
             .toLowerCase();
+
         return (
             <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }}
                 underlayColor="#878787"
                 onPress={() => navigation.navigate('VideoScreen', {
-                    name: navigation.getParam('name') + '/' + name + '.mp4',
+                    name: navigation.getParam('name') + '/' + name,
                 })}
-                key={link}>
+
+                key={thumbnailLink}>
                 <View style={styles.card}>
                     <Image
                         source={{
-                            uri: link,
+                            uri: thumbnailLink,
                         }}
                         style={styles.image}
                     />
@@ -108,7 +111,7 @@ export default function SelectedCategory({ navigation }) {
                                     : darkTheme.textHeading,
                                 {
                                     fontWeight: 'bold', textAlign: 'center',
-                                    fontSize: 12, padding: 5, top: -5
+                                    fontSize: 12, padding: 10, top: -5,
                                 },
                             ]}>
                             {trimmedName}

@@ -1,12 +1,20 @@
 import React, { useContext, useEffect } from 'react'
 import { View, Text, StyleSheet, Dimensions, Image, TouchableHighlight } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
+import { InterstitialAd, TestIds } from '@react-native-firebase/admob';
+import { AdEventType } from '@react-native-firebase/admob';
+
+import { INTERSTITIAL } from '../api/Data';
 import { useFetch } from '../api/fetchHook'
 import CommonLayout from '../theme/CommonLayout'
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
 import { darkTheme, colors } from '../theme/dark-theme';
 import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview';
+
+const interstitial = InterstitialAd.createForAdRequest(INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: false,
+});
 
 export default function SelectedCategory({ navigation }) {
 
@@ -58,7 +66,14 @@ export default function SelectedCategory({ navigation }) {
             // borderTopWidth: 2
         },
     });
-
+    useEffect(() => {
+        interstitial.load();
+        interstitial.onAdEvent(type => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+    }, [navigation.getParam('name')])
     const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
     const layoutProv = new LayoutProvider(
         (i) => {

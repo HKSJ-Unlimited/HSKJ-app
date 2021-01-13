@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import { BASE_URL } from 'react-native-dotenv';
 import RNFetchBlob from 'rn-fetch-blob';
-
+import { BannerAdSize } from '@react-native-firebase/admob';
 import Orientation from 'react-native-orientation';
 import Video from 'react-native-video';
 // import Icon from "react-native-vector-icons/FontAwesome";
-
+import GoogleADBanner from './GoogleADBanner';
 import { FullscreenClose, FullscreenOpen } from '../assets/icons';
 import Header from './Header';
 import { lightTheme } from '../theme/light-theme';
@@ -280,17 +280,17 @@ export default class VideoLayout extends React.Component {
                     <>
                         <TouchableOpacity full style={[styles.button, { backgroundColor: this.state.themeMode === 'light' ? '#eee' : colors.PrimaryColor }]} onPress={() => this.download()}>
                             <Text style={{
-                                color: this.state.themeMode === 'light' ? lightTheme.text : darkTheme.text,
+                                color: this.state.themeMode === 'light' ? lightTheme.text.color : darkTheme.text.color,
                                 fontSize: 18, textAlign: 'center'
                             }}>Download</Text>
                         </TouchableOpacity>
-                        {/* <View style={styles.banner}>
-              <GoogleADBanner
-                type={BannerAdSize.MEDIUM_RECTANGLE}
-                name="VIDEO_BOTTOM"
-              />
-              <GoogleADBanner type={BannerAdSize.BANNER} name="VIDEO_TOP" />
-            </View> */}
+                        <View style={styles.banner}>
+                            <GoogleADBanner type={BannerAdSize.BANNER} name="VIDEO_TOP" />
+                            <GoogleADBanner
+                                type={BannerAdSize.MEDIUM_RECTANGLE}
+                                name="VIDEO_BOTTOM"
+                            />
+                        </View>
                     </>
                 )}
             </View>
@@ -304,9 +304,9 @@ const styles = StyleSheet.create({
     },
     banner: {
         flex: 1,
-        marginLeft: '10%',
+        alignSelf: 'center',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        marginTop: '5%'
     },
     button: {
         marginHorizontal: '20%',

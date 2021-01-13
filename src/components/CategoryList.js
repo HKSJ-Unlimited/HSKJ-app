@@ -8,7 +8,9 @@ import {
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
+import { BannerAdSize } from '@react-native-firebase/admob';
 
+import GoogleADBanner from './GoogleADBanner';
 import CarouselComponent from './CarouselComponent';
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
@@ -102,6 +104,14 @@ export default function CategoryList({ onPressItem }) {
         layoutProvider={layoutProv}
         rowRenderer={rowRenderer}
       />
+      {/* <View style={{
+        position: 'absolute',
+        bottom: 0,
+        flex: 1,
+        alignSelf: 'center',
+      }}>
+        <GoogleADBanner type={BannerAdSize.BANNER} name="FIXED_BOTTOM" />
+      </View> */}
     </View>
   );
 }

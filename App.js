@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { RewardedAd, TestIds, RewardedAdEventType } from '@react-native-firebase/admob';
 
+import { REWARDS } from './src/api/Data';
 import ThemeContext from './src/theme';
 import HomeScreen from './src/screens/HomeScreen';
 import CustomDrawerScreen from './src/screens/CustomDrawerScreen';
@@ -55,6 +57,26 @@ const AppNavigator = createSwitchNavigator(
 const AppContainer = createAppContainer(AppNavigator);
 
 export default App = () => {
+
+  useEffect(() => {
+    const rewarded = RewardedAd.createForAdRequest(REWARDS, {
+      requestNonPersonalizedAdsOnly: false,
+    });
+    rewarded.onAdEvent((type, error, reward) => {
+      if (type === RewardedAdEventType.LOADED) {
+        rewarded.show();
+      }
+      if (type === RewardedAdEventType.EARNED_REWARD) {
+        console.log('User earned reward of ', reward);
+      }
+
+    });
+
+    setTimeout(() => {
+      rewarded.load();
+    }, 5000)
+  }, []);
+
   const themeHook = useState('light');
   return (
     <ThemeContext.Provider value={themeHook}>

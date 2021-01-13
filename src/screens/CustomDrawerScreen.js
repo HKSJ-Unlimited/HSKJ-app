@@ -10,7 +10,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function CustomDrawerScreen({ navigation }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
-
   const getTheme = (prop) => {
     switch (prop) {
       case 'icon':

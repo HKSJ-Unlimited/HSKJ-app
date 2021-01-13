@@ -1,16 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { BottomNavigation } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
+
 import { lightTheme } from '../theme/light-theme';
 import { colors, darkTheme } from '../theme/dark-theme';
 import CategoryList from '../components/CategoryList';
-import CarouselComponent from '../components/CarouselComponent';
 import PhotosScreen from '../screens/PhotosScreen';
 import ThemeContext from '../theme';
 import CommonLayout from '../theme/CommonLayout';
 import SearchSchreen from '../screens/SearchSchreen';
-
 
 const BottomNavigationBar = ({ navigation }) => {
     const Home = () => {
@@ -23,6 +22,7 @@ const BottomNavigationBar = ({ navigation }) => {
                     HOT PICKS 🔥🔥
       </Text>
                 <CategoryList onPressItem={_onCatergorySelected} />
+
             </CommonLayout>
         )
     }

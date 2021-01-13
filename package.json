@@ -12,6 +12,8 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/slider": "^3.0.3",
+    "@react-native-firebase/admob": "6.3.4",
+    "@react-native-firebase/app": "6.3.4",
     "react": "16.13.1",
     "react-native": "0.63.0",
     "react-native-dotenv": "0.2.0",

@@ -1,0 +1,40 @@
+{
+    "project_info": {
+        "project_number": "662995721610",
+        "firebase_url": "https://hksj-d4b41.firebaseio.com",
+        "project_id": "hksj-d4b41",
+        "storage_bucket": "hksj-d4b41.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:662995721610:android:fc97bbaa1040122b1cbc73",
+                "android_client_info": {
+                    "package_name": "com.hksj"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "662995721610-63sdej20u8e2o8g45fb6io72a3m7q4q5.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyA2phmXlN4KO2K04q7Fk0rJYPXu3GsUDpo"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "662995721610-63sdej20u8e2o8g45fb6io72a3m7q4q5.apps.googleusercontent.com",
+                            "client_type": 3
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

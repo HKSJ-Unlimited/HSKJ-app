@@ -60,6 +60,7 @@ buck-out/
 
 # My config
 /src/api/Data.js
+firebase.json
 
 # dotenv environment variable files
 *.env

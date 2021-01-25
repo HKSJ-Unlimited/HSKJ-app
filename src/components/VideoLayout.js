@@ -14,7 +14,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { BannerAdSize } from '@react-native-firebase/admob';
 import Orientation from 'react-native-orientation';
 import Video from 'react-native-video';
-// import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/FontAwesome";
 import GoogleADBanner from './GoogleADBanner';
 import { FullscreenClose, FullscreenOpen } from '../assets/icons';
 import Header from './Header';
@@ -38,10 +38,11 @@ export default class VideoLayout extends React.Component {
         themeMode: this.props.themeMode
     };
     _onLoadHandler = data => {
-        this.triggerBufferAnimation();
+
         this.setState(s => ({
             ...s,
             duration: data.duration,
+            buffering: false
         }));
     };
 
@@ -149,7 +150,6 @@ export default class VideoLayout extends React.Component {
         if (this.loopingAnimation && !meta.isBuffering) {
             this.loopingAnimation.stopAnimation();
         }
-
         this.setState({
             buffering: meta.isBuffering,
         });
@@ -199,6 +199,10 @@ export default class VideoLayout extends React.Component {
             console.log(err);
         }
     }
+    _onLoadStart = () => {
+        this.setState({ buffering: true });
+        this.triggerBufferAnimation();
+    }
 
     render() {
         const { buffering } = this.state;
@@ -221,8 +225,9 @@ export default class VideoLayout extends React.Component {
                             ref={ref => {
                                 this.player = ref;
                             }}
-                            // onBuffer={this._handleBuffer}
+                            onBuffer={this._handleBuffer}
                             onLoad={this._onLoadHandler}
+                            onLoadStart={this._onLoadStart}
                             style={
                                 this.state.fullscreen ? styles.fullscreenVideo : styles.video
                             }
@@ -235,13 +240,13 @@ export default class VideoLayout extends React.Component {
                             paused={this.state.play}
                             resizeMode="contain"
                         />}
-                        {/* <View style={styles.videoCover}>
+                        <View style={styles.videoCover}>
                             {buffering && (
                                 <Animated.View style={rotateStyle}>
                                     <Icon name="circle-o-notch" size={50} color="white" />
                                 </Animated.View>
                             )}
-                        </View> */}
+                        </View>
                         {this.state.showControls && (
                             <View style={styles.controlOverlay}>
                                 <TouchableOpacity
@@ -336,12 +341,13 @@ const styles = StyleSheet.create({
     },
     controlOverlay: {
         position: 'absolute',
-        top: 0,
-        bottom: 10,
-        left: 10,
+        top: 5,
+        bottom: 0,
+        left: 5,
         right: 0,
         backfaceVisibility: 'hidden',
         justifyContent: 'space-between',
+
     },
     videoCover: {
         alignItems: "center",

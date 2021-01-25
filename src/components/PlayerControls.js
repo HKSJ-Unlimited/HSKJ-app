@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'space-evenly',
         flex: 1.2,
+        opacity: 1,
     },
     touchable: {
         padding: 5,

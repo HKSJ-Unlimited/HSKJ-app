@@ -95,9 +95,9 @@ export default function CategoryList({ onPressItem }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginBottom: 10 }}>
+      {/* <View style={{ marginBottom: 10 }}>
         <CarouselComponent />
-      </View>
+      </View> */}
       <RecyclerListView
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
         dataProvider={list}

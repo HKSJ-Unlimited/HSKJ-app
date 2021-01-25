@@ -19,7 +19,7 @@ const BottomNavigationBar = ({ navigation }) => {
                     style={
                         themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading
                     }>
-                    HOT PICKS 🔥🔥
+                    Categories
       </Text>
                 <CategoryList onPressItem={_onCatergorySelected} />
 

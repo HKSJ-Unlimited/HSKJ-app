@@ -14,6 +14,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import SelectedCategory from './src/screens/SelectedCategory';
 import VideoPlayer from './src/components/VideoPlayer';
+import { Appearance } from 'react-native';
 
 MaterialCommunityIcons.loadFont();
 Feather.loadFont();
@@ -57,7 +58,6 @@ const AppNavigator = createSwitchNavigator(
 const AppContainer = createAppContainer(AppNavigator);
 
 export default App = () => {
-
   useEffect(() => {
     const rewarded = RewardedAd.createForAdRequest(REWARDS, {
       requestNonPersonalizedAdsOnly: false,
@@ -73,11 +73,13 @@ export default App = () => {
     });
 
     setTimeout(() => {
-      rewarded.load();
-    }, 5000)
+      // rewarded.load();
+    }, 5000);
+
+
   }, []);
 
-  const themeHook = useState('light');
+  const themeHook = useState(Appearance.getColorScheme());
   return (
     <ThemeContext.Provider value={themeHook}>
       <AppContainer />

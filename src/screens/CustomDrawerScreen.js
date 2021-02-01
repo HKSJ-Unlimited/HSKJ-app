@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, FlatList, Switch, StyleSheet, Linking } from 'react-native';
+import { Appearance } from 'react-native';
 
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
@@ -10,6 +11,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function CustomDrawerScreen({ navigation }) {
   const [themeMode, setThemeMode] = useContext(ThemeContext);
+
+  useEffect(() => {
+    Appearance.addChangeListener(onThemeChange);
+
+    return () => Appearance.removeChangeListener(onThemeChange);
+  }, [])
+
+  const onThemeChange = () => {
+    setThemeMode(Appearance.getColorScheme());
+  }
+
   const getTheme = (prop) => {
     switch (prop) {
       case 'icon':
@@ -17,7 +29,7 @@ export default function CustomDrawerScreen({ navigation }) {
       case 'text':
         return themeMode === 'light' ? lightTheme.text : darkTheme.text;
       case 'bgTint':
-        return themeMode === 'light' ? '#eee' : '#01CBC6';
+        return themeMode === 'light' ? '#eee' : '#424242';
       default:
         return null;
     }
@@ -116,7 +128,7 @@ export default function CustomDrawerScreen({ navigation }) {
         <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
           Black AF Theme
         </Text>
-        <Switch thumbColor="#1a8a98" trackColor={{ false: '#e4e4e4', true: '#358c96' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
+        <Switch thumbColor="#00E676" trackColor={{ false: '#e4e4e4', true: '#424242' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
       </View>
     </CommonLayout>
   );

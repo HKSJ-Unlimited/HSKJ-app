@@ -17,14 +17,20 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "hksj";
   }
-  
+
   @Override
-      public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Intent intent = new Intent("onConfigurationChanged");
-        intent.putExtra("newConfig", newConfig);
-        this.sendBroadcast(intent);
-    }
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    getReactInstanceManager().onConfigurationChanged(this, newConfig);
+  }
+
+  // @Override
+  //     public void onConfigurationChanged(Configuration newConfig) {
+  //       super.onConfigurationChanged(newConfig);
+  //       Intent intent = new Intent("onConfigurationChanged");
+  //       intent.putExtra("newConfig", newConfig);
+  //       this.sendBroadcast(intent);
+  //   }
 
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {

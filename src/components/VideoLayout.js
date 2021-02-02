@@ -7,7 +7,7 @@ import {
     BackHandler,
     TouchableWithoutFeedback,
     Animated,
-    TouchableOpacity, Text, View
+    TouchableOpacity, Text, View, ToastAndroid
 } from 'react-native';
 import { BASE_URL } from 'react-native-dotenv';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -203,6 +203,10 @@ export default class VideoLayout extends React.Component {
         this.setState({ buffering: true });
         this.triggerBufferAnimation();
     }
+    _videoError = error => {
+        console.log(error);
+        ToastAndroid.showWithGravity(`There's some issue with this video, either download it or watch another one`, ToastAndroid.LONG, ToastAndroid.CENTER)
+    }
 
     render() {
         const { buffering } = this.state;
@@ -239,6 +243,7 @@ export default class VideoLayout extends React.Component {
                             onProgress={this._HandleProgress}
                             paused={this.state.play}
                             resizeMode="contain"
+                            onError={this._videoError}
                         />}
                         <View style={styles.videoCover}>
                             {buffering && (

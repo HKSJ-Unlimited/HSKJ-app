@@ -18,7 +18,7 @@ export const useFetch = (folderID) => {
         };
 
         const responseThumb = await fetch(
-            `https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink)&key=${GOOGLE_API}`,
+            `https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink,modifiedTime)&key=${GOOGLE_API}`,
             requestOptions,
         );
 
@@ -32,7 +32,8 @@ export const useFetch = (folderID) => {
                 else
                     temp[i].thumbnailLink = 'https://image.shutterstock.com/image-photo/grunge-black-background-texture-space-260nw-373662322.jpg'
             }
-            setRes(temp);
+
+            setRes(temp.sort((a, b) => (a.modifiedTime < b.modifiedTime) ? 1 : (b.modifiedTime < a.modifiedTime) ? -1 : 0));
         }
     };
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native'
 import { BottomNavigation } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
@@ -10,8 +10,14 @@ import PhotosScreen from '../screens/PhotosScreen';
 import ThemeContext from '../theme';
 import CommonLayout from '../theme/CommonLayout';
 import SearchSchreen from '../screens/SearchSchreen';
+import SplashScreen from 'react-native-splash-screen';
 
 const BottomNavigationBar = ({ navigation }) => {
+
+    useEffect(() => {
+        SplashScreen.hide();
+    }, []);
+
     const Home = () => {
         return (
             <CommonLayout>

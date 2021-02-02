@@ -10,7 +10,6 @@ import ThemeContext from './src/theme';
 import HomeScreen from './src/screens/HomeScreen';
 import CustomDrawerScreen from './src/screens/CustomDrawerScreen';
 import AppLockScreen from './src/screens/AppLockScreen';
-import SplashScreen from './src/screens/SplashScreen';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import SelectedCategory from './src/screens/SelectedCategory';
 import VideoPlayer from './src/components/VideoPlayer';
@@ -47,11 +46,7 @@ const Dashboard = createDrawerNavigator(
 
 const AppNavigator = createSwitchNavigator(
   {
-    SplashScreen,
-    Dashboard,
-  },
-  {
-    initialRouteName: 'SplashScreen',
+    Dashboard
   },
 );
 

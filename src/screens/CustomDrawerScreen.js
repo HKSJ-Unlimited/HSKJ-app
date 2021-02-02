@@ -37,11 +37,12 @@ export default function CustomDrawerScreen({ navigation }) {
 
   const styles = StyleSheet.create({
     switch: {
+      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       padding: 5,
       alignItems: 'center',
-      marginBottom: '80%',
+      // marginBottom: '80%',
     },
     text: {
       justifyContent: 'center',
@@ -123,12 +124,14 @@ export default function CustomDrawerScreen({ navigation }) {
 
   return (
     <CommonLayout>
-      <FlatList keyExtractor={(item, index) => index.toString()} data={list} renderItem={({ item }) => renderList(item)} />
-      <View style={styles.switch}>
-        <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
-          Black AF Theme
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+        <FlatList keyExtractor={(item, index) => index.toString()} data={list} renderItem={({ item }) => renderList(item)} />
+        <View style={styles.switch}>
+          <Text style={themeMode === 'light' ? lightTheme.text : darkTheme.text}>
+            Black AF Theme
         </Text>
-        <Switch thumbColor="#00E676" trackColor={{ false: '#e4e4e4', true: '#424242' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
+          <Switch thumbColor="#00E676" trackColor={{ false: '#e4e4e4', true: '#424242' }} value={themeMode === 'dark'} onValueChange={toggleTheme} />
+        </View>
       </View>
     </CommonLayout>
   );

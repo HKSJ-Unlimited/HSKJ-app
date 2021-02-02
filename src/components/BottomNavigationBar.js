@@ -17,7 +17,7 @@ const BottomNavigationBar = ({ navigation }) => {
             <CommonLayout>
                 <Text
                     style={
-                        themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading
+                        [themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading, { marginHorizontal: '2%' }]
                     }>
                     Categories
       </Text>

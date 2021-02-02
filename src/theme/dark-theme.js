@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const colors = {
-  PrimaryColor: '#00E676',
+  PrimaryColor: '#E7E7E7',
   BackgroundColor: '#000',
 };
 
@@ -20,7 +20,8 @@ export const darkTheme = StyleSheet.create({
   },
   textHeading: {
     color: colors.PrimaryColor,
-    textAlign: 'center',
+    textAlign: 'justify',
+    marginHorizontal: '5%',
     fontSize: 20,
     marginBottom: 15,
     fontWeight: 'bold',

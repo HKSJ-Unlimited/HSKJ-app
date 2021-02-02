@@ -25,7 +25,8 @@ export const lightTheme = StyleSheet.create({
   },
   textHeading: {
     color: '#000',
-    textAlign: 'center',
+    textAlign: 'justify',
+    marginHorizontal: '5%',
     fontSize: 20,
     marginBottom: 15,
     fontWeight: '600',

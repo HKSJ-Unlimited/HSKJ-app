@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { View, Text, StyleSheet, Dimensions, Image, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Image, TouchableHighlight, ActivityIndicator } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
 import { InterstitialAd, TestIds } from '@react-native-firebase/admob';
 import { AdEventType } from '@react-native-firebase/admob';
@@ -46,12 +46,12 @@ export default function SelectedCategory({ navigation }) {
             marginLeft: -10
         },
         card: {
-            backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#121212',
+            // backgroundColor: themeMode === 'light' ? '#F2F6FF' : '#121212',
             flex: 1,
             borderRadius: 12
         },
         image: {
-            height: 180,
+            height: 200,
             width: '100%',
             marginTop: 10,
             resizeMode: 'contain',
@@ -66,14 +66,15 @@ export default function SelectedCategory({ navigation }) {
             // borderTopWidth: 2
         },
     });
-    useEffect(() => {
-        interstitial.load();
-        interstitial.onAdEvent(type => {
-            if (type === AdEventType.LOADED) {
-                interstitial.show();
-            }
-        });
-    }, [navigation.getParam('name')])
+    // useEffect(() => {
+    //     interstitial.load();
+    //     interstitial.onAdEvent(type => {
+    //         if (type === AdEventType.LOADED) {
+    //             interstitial.show();
+    //         }
+    //     });
+    // }, []);
+
     const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
     const layoutProv = new LayoutProvider(
         (i) => {
@@ -83,7 +84,7 @@ export default function SelectedCategory({ navigation }) {
             switch (type) {
                 case 'NORMAL':
                     dim.width = SCREEN_WIDTH;
-                    dim.height = 245;
+                    dim.height = 260;
                     break;
                 default:
                     dim.width = SCREEN_WIDTH;
@@ -100,12 +101,14 @@ export default function SelectedCategory({ navigation }) {
 
         let trimmedName = name
             .replace(regex, '.')
-            .slice(0, 100)
+            .slice(0, 120)
             .toLowerCase();
 
         return (
-            <TouchableHighlight style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }}
-                underlayColor="#878787"
+            <TouchableHighlight
+                style={{ height: 215, marginBottom: 30 }}
+                // style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }}
+                // underlayColor="#878787"
                 onPress={() => navigation.navigate('VideoScreen', {
                     name: navigation.getParam('name') + '/' + name,
                 })}
@@ -125,8 +128,9 @@ export default function SelectedCategory({ navigation }) {
                                     ? lightTheme.textHeading
                                     : darkTheme.textHeading,
                                 {
-                                    fontWeight: 'bold', textAlign: 'center',
-                                    fontSize: 12, padding: 10, top: -5,
+                                    fontWeight: 'bold',
+                                    // textAlign: 'center',
+                                    fontSize: 13, marginBottom: 10,
                                 },
                             ]}>
                             {trimmedName}
@@ -148,7 +152,8 @@ export default function SelectedCategory({ navigation }) {
                 />
                 <Text style={[styles.heading, { color: themeMode === 'light' ? lightTheme.text.color : colors.PrimaryColor }]}>{heading}</Text>
             </View>
-            {data.length > 0 && <RecyclerListView
+            {data.length === 1 && <ActivityIndicator size="large" color="#00E676" style={{ flex: 0.8 }} />}
+            {data.length > 1 && <RecyclerListView
                 scrollViewProps={{ showsVerticalScrollIndicator: false }}
                 dataProvider={list}
                 layoutProvider={layoutProv}

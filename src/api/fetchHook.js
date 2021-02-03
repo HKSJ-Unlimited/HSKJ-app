@@ -18,7 +18,7 @@ export const useFetch = (folderID) => {
         };
 
         const responseThumb = await fetch(
-            `https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink,modifiedTime)&key=${GOOGLE_API}&orderBy=createdTime%20desc`,
+            `https://www.googleapis.com/drive/v3/files?q=%27${folderID}%27+in+parents&fields=files(id,name,thumbnailLink,webContentLink,webViewLink)&key=${GOOGLE_API}&orderBy=createdTime%20desc`,
             requestOptions,
         );
 

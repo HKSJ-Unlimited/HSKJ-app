@@ -96,7 +96,7 @@ export default function SelectedCategory({ navigation }) {
 
     const rowRenderer = (type, data) => {
 
-        const { thumbnailLink, name } = data;
+        const { thumbnailLink, name, webContentLink, webViewLink } = data;
         const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|-|[0-9]/gi;
 
         let trimmedName = name
@@ -110,7 +110,8 @@ export default function SelectedCategory({ navigation }) {
                 // style={{ backgroundColor: "#F7F7F7", elevation: 6, height: 235, borderRadius: 17, width: '100%', alignSelf: 'center' }}
                 // underlayColor="#878787"
                 onPress={() => navigation.navigate('VideoScreen', {
-                    name: navigation.getParam('name') + '/' + name,
+                    name: navigation.getParam('name') + '/' + encodeURIComponent(name),
+                    watchLink: webViewLink
                 })}
 
                 key={thumbnailLink}>

@@ -69,8 +69,10 @@ export default class VideoLayout extends React.Component {
         Orientation.unlockAllOrientations();
         Orientation.lockToPortrait();
     };
-    componentDidMount() {
-        const name = BASE_URL + this.props.name;
+    async componentDidMount() {
+        const regex = /%23/gi;
+        const str = this.props.name.replace(regex, '%2523')
+        const name = BASE_URL + str;
         this.setState({ name });
         BackHandler.addEventListener('hardwareBackPress', this._backHandler);
         Orientation.addOrientationListener(this._handleOrientation);

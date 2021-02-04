@@ -33,16 +33,15 @@ export default class VideoLayout extends React.Component {
         play: false,
         name: null,
         showControls: false,
-        buffering: false,
+        buffering: true,
         animated: new Animated.Value(0),
         themeMode: this.props.themeMode
     };
     _onLoadHandler = data => {
-
+        this.triggerBufferAnimation();
         this.setState(s => ({
             ...s,
             duration: data.duration,
-            buffering: false
         }));
     };
 
@@ -113,7 +112,7 @@ export default class VideoLayout extends React.Component {
             : this.setState({ showControls: true }, () =>
                 setTimeout(
                     () => this.setState(s => ({ ...s, showControls: false })),
-                    1000,
+                    1500,
                 ),
             );
     };
@@ -149,9 +148,11 @@ export default class VideoLayout extends React.Component {
 
     _handleBuffer = meta => {
         meta.isBuffering && this.triggerBufferAnimation();
+
         if (this.loopingAnimation && !meta.isBuffering) {
             this.loopingAnimation.stopAnimation();
         }
+
         this.setState({
             buffering: meta.isBuffering,
         });
@@ -202,8 +203,8 @@ export default class VideoLayout extends React.Component {
         }
     }
     _onLoadStart = () => {
-        this.setState({ buffering: true });
-        this.triggerBufferAnimation();
+        // this.setState({ buffering: true });
+        // this.triggerBufferAnimation();
     }
     _videoError = error => {
         console.log(error);
@@ -233,7 +234,7 @@ export default class VideoLayout extends React.Component {
                             }}
                             onBuffer={this._handleBuffer}
                             onLoad={this._onLoadHandler}
-                            onLoadStart={this._onLoadStart}
+                            // onLoadStart={this._onLoadStart}
                             style={
                                 this.state.fullscreen ? styles.fullscreenVideo : styles.video
                             }
@@ -352,7 +353,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 5,
         right: 0,
-        backfaceVisibility: 'hidden',
+        width: '100%',
+        backgroundColor: '#000000c4',
+        opacity: 0.9,
         justifyContent: 'space-between',
 
     },

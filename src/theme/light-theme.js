@@ -46,5 +46,13 @@ export const lightTheme = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  card: {
+    backgroundColor: '#eee',
+    marginTop: 10,
+    height: 65,
+    justifyContent: 'center',
+    flex: 1,
+    borderRadius: 6
   }
 });

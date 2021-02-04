@@ -44,5 +44,13 @@ export const darkTheme = StyleSheet.create({
   },
   buttonText: {
     color: '#000'
+  },
+  card: {
+    backgroundColor: '#1F1F1F',
+    marginTop: 10,
+    height: 65,
+    justifyContent: 'center',
+    flex: 1,
+    borderRadius: 6
   }
 });

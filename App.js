@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Alert,
+  BackHandler,
+  ToastAndroid,
+} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { RewardedAd, TestIds, RewardedAdEventType } from '@react-native-firebase/admob';
+import PINCode from '@haskkor/react-native-pincode'
+import { hasUserSetPinCode } from '@haskkor/react-native-pincode'
 
 import { REWARDS } from './src/api/Data';
 import ThemeContext from './src/theme';
@@ -31,7 +38,8 @@ const MainNavigator = createStackNavigator({
 
 const Dashboard = createDrawerNavigator(
   {
-    MainNavigator
+    MainNavigator,
+    appLock: AppLockScreen
   },
   {
     contentOptions: {
@@ -53,7 +61,25 @@ const AppNavigator = createSwitchNavigator(
 const AppContainer = createAppContainer(AppNavigator);
 
 export default App = () => {
+  const [auth, setAuth] = useState(false);
+
+  const checkUserPIN = async () => {
+    try {
+      const auth = await hasUserSetPinCode()
+      setAuth(auth)
+    } catch {
+      console.log('here')
+      ToastAndroid.showWithGravity('Who dis?', ToastAndroid.LONG, ToastAndroid.CENTER)
+      BackHandler.exitApp()
+    }
+
+  }
+  const giveAuth = () => {
+    setAuth(false)
+  }
   useEffect(() => {
+    checkUserPIN();
+
     const rewarded = RewardedAd.createForAdRequest(REWARDS, {
       requestNonPersonalizedAdsOnly: false,
     });
@@ -76,8 +102,14 @@ export default App = () => {
 
   const themeHook = useState(Appearance.getColorScheme());
   return (
-    <ThemeContext.Provider value={themeHook}>
-      <AppContainer />
-    </ThemeContext.Provider>
+    !auth ?
+      <ThemeContext.Provider value={themeHook}>
+        <AppContainer />
+
+      </ThemeContext.Provider> :
+      <PINCode status={'enter'}
+        finishProcess={giveAuth}
+        disableLockScreen={true}
+      />
   );
 };

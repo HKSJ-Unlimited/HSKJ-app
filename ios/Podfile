@@ -10,6 +10,10 @@ target 'hksj' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
 
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
   target 'hksjTests' do
     inherit! :complete
     # Pods for testing

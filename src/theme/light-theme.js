@@ -36,5 +36,15 @@ export const lightTheme = StyleSheet.create({
   },
   color: {
     color: colors.PrimaryColor
+  },
+  button: {
+    marginBottom: 10,
+    marginTop: 15,
+    height: 40,
+    marginHorizontal: '10%',
+    backgroundColor: '#00E676',
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });

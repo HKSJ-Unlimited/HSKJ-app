@@ -11,6 +11,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { RewardedAd, TestIds, RewardedAdEventType } from '@react-native-firebase/admob';
 import PINCode from '@haskkor/react-native-pincode'
 import { hasUserSetPinCode } from '@haskkor/react-native-pincode'
+import { Immersive } from 'react-native-immersive';
 
 import { REWARDS } from './src/api/Data';
 import ThemeContext from './src/theme';
@@ -80,6 +81,9 @@ export default App = () => {
   useEffect(() => {
     checkUserPIN();
 
+    Immersive.on();
+    Immersive.setImmersive(true);
+
     const rewarded = RewardedAd.createForAdRequest(REWARDS, {
       requestNonPersonalizedAdsOnly: false,
     });
@@ -94,7 +98,7 @@ export default App = () => {
     });
 
     setTimeout(() => {
-      // rewarded.load();
+      rewarded.load();
     }, 5000);
 
 

@@ -292,7 +292,7 @@ export default class VideoLayout extends React.Component {
                     <>
                         <TouchableOpacity full style={[styles.button, { backgroundColor: this.state.themeMode === 'light' ? '#eee' : colors.PrimaryColor }]} onPress={() => this.download()}>
                             <Text style={{
-                                color: this.state.themeMode === 'light' ? lightTheme.text.color : darkTheme.text.color,
+                                color: this.state.themeMode === 'light' ? lightTheme.text.color : darkTheme.buttonText,
                                 fontSize: 18, textAlign: 'center'
                             }}>Download</Text>
                         </TouchableOpacity>

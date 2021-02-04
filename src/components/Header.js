@@ -18,20 +18,21 @@ export default function Header({ navigation }) {
     <View
       style={{
         flexDirection: 'row',
-        // justifyContent: 'space-between',
+        alignItems: 'center',
+        // justifyContent: 'space-evenly',
         paddingHorizontal: 10,
-        backgroundColor: themeMode === 'light' ? colors.PrimaryColor : lightTheme.icon.color
+        backgroundColor: themeMode === 'light' ? colors.PrimaryColor : lightTheme.icon.color,
+        height: 50
       }}>
 
       <Icon
         name="menu"
         size={35}
         onPress={() => navigation.openDrawer()}
-        style={themeMode === 'light' ? lightTheme.icon : darkTheme.icon}
+        style={[themeMode === 'light' ? lightTheme.icon : darkTheme.icon, { flex: 0 }]}
       />
       <Image
         source={themeMode === 'light' ? require('../assets/images/HKSJ.png') : require('../assets/images/HKSJ-white.png')}
-        style={{ margin: 6 }}
       />
     </View>
   );

@@ -7,10 +7,11 @@ import CommonLayout from '../theme/CommonLayout';
 export default function VideoPlayer({ navigation }) {
     const [themeMode, setThemeMode] = useContext(ThemeContext);
     const name = navigation.getParam('name');
+    const videoHeading = navigation.getParam('heading');
 
     return (
         <CommonLayout>
-            <VideoLayout themeMode={themeMode} name={name} navigation={navigation} />
+            <VideoLayout themeMode={themeMode} name={name} navigation={navigation} heading={videoHeading} />
         </CommonLayout>
     )
 }

@@ -15,9 +15,10 @@ import { BannerAdSize } from '@react-native-firebase/admob';
 import Orientation from 'react-native-orientation';
 import Video from 'react-native-video';
 import Icon from "react-native-vector-icons/FontAwesome";
+import Feather from 'react-native-vector-icons/Feather';
+
 import GoogleADBanner from './GoogleADBanner';
 import { FullscreenClose, FullscreenOpen } from '../assets/icons';
-import Header from './Header';
 import { lightTheme } from '../theme/light-theme';
 import { colors, darkTheme } from '../theme/dark-theme';
 import PlayerControls from './PlayerControls';
@@ -224,7 +225,16 @@ export default class VideoLayout extends React.Component {
         return (
             <View style={{ marginLeft: -10 }}>
                 <StatusBar hidden={this.state.fullscreen} />
-                {!this.state.fullscreen && <Header navigation={this.props.navigation} />}
+                {!this.state.fullscreen &&
+                    <View style={[styles.header, { backgroundColor: this.state.themeMode === 'light' ? '#F2F6FF' : '#2C3335' }]}>
+                        <Feather
+                            name="arrow-left"
+                            size={25}
+                            onPress={() => this.props.navigation.goBack()}
+                            style={[this.state.themeMode === 'light' ? lightTheme.icon : darkTheme.icon, { paddingLeft: 5 }]}
+                        />
+                        <Text style={[styles.heading, { color: this.state.themeMode === 'light' ? lightTheme.text.color : colors.PrimaryColor }]}>{this.props.heading}</Text>
+                    </View>}
                 <TouchableWithoutFeedback onPress={this._showControls}>
                     <View >
                         {this.state.name && <Video
@@ -293,7 +303,7 @@ export default class VideoLayout extends React.Component {
                     <>
                         <TouchableOpacity full style={[styles.button, { backgroundColor: this.state.themeMode === 'light' ? '#eee' : colors.PrimaryColor }]} onPress={() => this.download()}>
                             <Text style={{
-                                color: this.state.themeMode === 'light' ? lightTheme.text.color : darkTheme.buttonText,
+                                color: this.state.themeMode === 'light' ? lightTheme.text.color : darkTheme.buttonText.color,
                                 fontSize: 18, textAlign: 'center'
                             }}>Download</Text>
                         </TouchableOpacity>
@@ -310,6 +320,7 @@ export default class VideoLayout extends React.Component {
         );
     }
 }
+const SCREEN_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     Video: {
         width: Dimensions.get('window').width * (9 / 16),
@@ -372,5 +383,23 @@ const styles = StyleSheet.create({
     buffering: {
         backgroundColor: '#000',
         flex: 1,
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '11%',
+        width: SCREEN_WIDTH - 10,
+        margin: 5,
+        borderRadius: 6,
+        elevation: 3,
+        marginBottom: 10
+    },
+    heading: {
+        fontSize: 18,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        textAlign: 'center',
+        marginLeft: -10
     },
 });

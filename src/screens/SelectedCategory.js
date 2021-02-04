@@ -111,7 +111,7 @@ export default function SelectedCategory({ navigation }) {
                 // underlayColor="#878787"
                 onPress={() => navigation.navigate('VideoScreen', {
                     name: navigation.getParam('name') + '/' + encodeURIComponent(name),
-                    watchLink: webViewLink
+                    heading: trimmedName.slice(0, 40)
                 })}
 
                 key={thumbnailLink}>

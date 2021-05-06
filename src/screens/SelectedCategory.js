@@ -66,14 +66,14 @@ export default function SelectedCategory({ navigation }) {
             // borderTopWidth: 2
         },
     });
-    useEffect(() => {
-        interstitial.load();
-        interstitial.onAdEvent(type => {
-            if (type === AdEventType.LOADED) {
-                interstitial.show();
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     interstitial.load();
+    //     interstitial.onAdEvent(type => {
+    //         if (type === AdEventType.LOADED) {
+    //             interstitial.show();
+    //         }
+    //     });
+    // }, []);
 
     const list = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data);
     const layoutProv = new LayoutProvider(

@@ -11,11 +11,11 @@ import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import ThemeContext from '../theme';
 import { lightTheme } from '../theme/light-theme';
 import { darkTheme, colors } from '../theme/dark-theme';
-import { HotPicks } from '../api/Data';
+import { Trending } from '../api/Data';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export default function CarouselComponent({ onPress }) {
+export default function CarouselComponent({ onPressItem }) {
   // console.log(HotPicks);
   const carouselRef = useRef(null);
   const [themeMode, setThemeMode] = useContext(ThemeContext);
@@ -30,7 +30,7 @@ export default function CarouselComponent({ onPress }) {
     image: {
       width: screenWidth - 60,
       height: screenWidth - 200,
-      resizeMode: 'contain',
+      resizeMode: 'repeat',
     },
     item: {
       width: screenWidth - 60,
@@ -46,7 +46,8 @@ export default function CarouselComponent({ onPress }) {
   });
 
   const _onCarouselPress = (...args) => {
-    console.log(args);
+    const data = { "folder": args[0], "id": args[1], "name": args[2] }
+    onPressItem(data);
   };
 
   const _renderItem = ({ item, index }, parallaxProps) => {
@@ -54,7 +55,7 @@ export default function CarouselComponent({ onPress }) {
       <TouchableOpacity
         key={item.name}
         style={styles.item}
-        onPress={() => _onCarouselPress(item.id, item.name, item.folder)}>
+        onPress={() => _onCarouselPress(item.folder, item.id, item.name,)}>
         <ParallaxImage
           source={{ uri: item.uri }}
           containerStyle={[styles.imageContainer, { elevation: 10 }]}
@@ -76,7 +77,7 @@ export default function CarouselComponent({ onPress }) {
       sliderWidth={screenWidth}
       sliderHeight={screenWidth}
       itemWidth={screenWidth - 60}
-      data={HotPicks}
+      data={Trending}
       renderItem={_renderItem}
       hasParallaxImages={true}
       loop={true}

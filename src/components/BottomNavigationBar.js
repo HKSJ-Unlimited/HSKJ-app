@@ -25,7 +25,7 @@ const BottomNavigationBar = ({ navigation }) => {
                     style={
                         [themeMode === 'light' ? lightTheme.textHeading : darkTheme.textHeading, { marginHorizontal: '2%' }]
                     }>
-                    Categories
+                    Trending 🔥🔥🔥
       </Text>
                 <CategoryList onPressItem={_onCatergorySelected} />
 
@@ -47,6 +47,7 @@ const BottomNavigationBar = ({ navigation }) => {
         search: SearchSchreen
     });
     const _onCatergorySelected = (args) => {
+        console.log(args)
 
         navigation.navigate('SelectedCategory', {
             name: args.id,

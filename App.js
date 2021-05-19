@@ -21,6 +21,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import SelectedCategory from './src/screens/SelectedCategory';
 import VideoPlayer from './src/components/VideoPlayer';
 import { Appearance } from 'react-native';
+import DownloadChangelog from './src/screens/DownloadChangelog';
 
 MaterialCommunityIcons.loadFont();
 Feather.loadFont();
@@ -39,7 +40,8 @@ const MainNavigator = createStackNavigator({
 const Dashboard = createDrawerNavigator(
   {
     MainNavigator,
-    appLock: AppLockScreen
+    appLock: AppLockScreen,
+    download: DownloadChangelog
   },
   {
     contentOptions: {

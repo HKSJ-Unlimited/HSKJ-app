@@ -97,7 +97,7 @@ export default function SelectedCategory({ navigation }) {
     const rowRenderer = (type, data) => {
 
         const { thumbnailLink, name, webContentLink, webViewLink } = data;
-        const regex = /on SexyPorn|.mp4|Pornhub.com|YesPornPlease|Jetload.NET|.md|[()]|[.]|-|[0-9]/gi;
+        const regex = /.mp4|.md|[()]|[.]|-|[0-9]/gi;
 
         let trimmedName = name
             .replace(regex, '.')

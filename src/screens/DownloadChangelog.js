@@ -25,7 +25,6 @@ const DownloadChangelog = ({ navigation }) => {
     const _getData = async () => {
         try {
             const response = await gihubAPI();
-            console.log(JSON.stringify(response, undefined, 2))
             setState({ data: response });
         } catch (e) {
             console.log(e)

@@ -11,6 +11,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { RewardedAd, TestIds, RewardedAdEventType } from '@react-native-firebase/admob';
 import PINCode from '@haskkor/react-native-pincode'
 import { hasUserSetPinCode } from '@haskkor/react-native-pincode'
+import SplashScreen from 'react-native-splash-screen';
 
 import { REWARDS } from './src/api/Data';
 import ThemeContext from './src/theme';
@@ -68,7 +69,8 @@ export default App = () => {
   const checkUserPIN = async () => {
     try {
       const auth = await hasUserSetPinCode()
-      setAuth(auth)
+      setAuth(auth);
+      SplashScreen.hide();
     } catch {
       console.log('here')
       ToastAndroid.showWithGravity('Who dis?', ToastAndroid.LONG, ToastAndroid.CENTER)
@@ -96,7 +98,7 @@ export default App = () => {
     });
 
     setTimeout(() => {
-      // rewarded.load();
+      rewarded.load();
     }, 5000);
 
 

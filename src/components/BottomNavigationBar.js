@@ -14,9 +14,9 @@ import SplashScreen from 'react-native-splash-screen';
 
 const BottomNavigationBar = ({ navigation }) => {
 
-    useEffect(() => {
-        SplashScreen.hide();
-    }, []);
+    // useEffect(() => {
+    //     SplashScreen.hide();
+    // }, []);
 
     const Home = () => {
         return (

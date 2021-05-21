@@ -23,9 +23,13 @@ const DownloadChangelog = ({ navigation }) => {
     const installedVersion = DeviceInfo.getVersion();
 
     const _getData = async () => {
-        const response = await gihubAPI();
-        console.log(JSON.stringify(response, undefined, 2))
-        setState({ data: response });
+        try {
+            const response = await gihubAPI();
+            console.log(JSON.stringify(response, undefined, 2))
+            setState({ data: response });
+        } catch (e) {
+            console.log(e)
+        }
         setLoading(false);
     };
 
